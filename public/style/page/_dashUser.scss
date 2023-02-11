@@ -535,7 +535,7 @@
     }
 }
 
-.fund{
+.fund--1{
 
     &__container{ //container of events
         display: flex;
@@ -714,7 +714,7 @@
 
 
 .dash-user-fund{
-    margin-top: 5rem;
+    margin-top: 1rem;
     &__container{
         display: flex;
         justify-content: space-between;
@@ -731,7 +731,6 @@
 
         &--right{
             flex: 5;
-            height: 10rem;
             display: flex;
             flex-wrap: wrap;
             align-items: center;
@@ -739,7 +738,7 @@
 
             overflow: hidden;
             overflow-y: scroll;
-            height: 45rem;
+            height: 52rem;
 
 
             &::-webkit-scrollbar {
@@ -755,6 +754,56 @@
                 border-radius: 8rem;
             }
         }
+    }
+
+
+    &__add{
+        
+        &-container{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 40rem;
+            margin: 3rem 0;
+            background-color: $white;
+            border-radius: 100rem;
+            box-shadow: 0.5rem 0.5rem 3rem rgba(113, 98, 175, 0.1);
+            padding: 1rem 2rem;
+
+        }
+
+        &__text{
+            font-size: 1.7rem;
+            color: $text-dark;
+        }
+
+        &__btn{
+            &,&:visited,&:link{
+                display: flex;
+                align-items: center;
+                // font-family: primaryFont;
+                font-weight:800;
+                font-size: 1.4rem;
+                color: $primary;
+                background-color: $primary-extra-light;
+                padding: 0.8rem 1.5rem;
+                border-radius: 100rem;
+                text-decoration: none;
+                transition: 0.2s all;
+
+                &:hover{
+                    background-color: $primary-light;
+                    color: $primary-extra-light;
+                }
+            }
+
+
+            &__icon{
+                width: 2.5rem;
+                margin-right: 1rem;
+            }
+        }
+        
     }
 
 }

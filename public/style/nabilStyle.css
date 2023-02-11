@@ -1390,12 +1390,12 @@ input[type=number] {
   background-color: #6ECCAF;
 }
 
-.fund__container {
+.fund--1__container {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
 }
-.fund__item {
+.fund--1__item {
   background-color: #fff;
   border-radius: 5rem;
   padding: 1rem;
@@ -1408,74 +1408,74 @@ input[type=number] {
   align-items: center;
   justify-content: space-between;
 }
-.fund__item__img {
+.fund--1__item__img {
   -o-object-fit: cover;
      object-fit: cover;
   height: 100%;
   width: 100%;
   border-radius: 3.5rem;
 }
-.fund__item__img__container {
+.fund--1__item__img__container {
   background-color: #ff936f;
   width: 100%;
   height: 15rem;
   border-radius: 3.5rem;
 }
-.fund__item__title {
+.fund--1__item__title {
   color: secondary-light;
   font-weight: 800;
   font-size: 2rem;
   margin: 1rem 0;
   text-align: center;
 }
-.fund__item__info {
+.fund--1__item__info {
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.fund__item__info__association {
+.fund--1__item__info__association {
   display: flex;
   align-items: center;
 }
-.fund__item__info__association__icon {
+.fund--1__item__info__association__icon {
   width: 2rem;
   margin-right: 1.4rem;
 }
-.fund__item__info__association__parag {
+.fund--1__item__info__association__parag {
   font-weight: 800;
   font-size: 1.2rem;
   margin: 1rem 0;
   text-align: center;
 }
-.fund__item__info__association__divider {
+.fund--1__item__info__association__divider {
   background-color: #6ECCAF;
   width: 0.7rem;
   height: 0.7rem;
   border-radius: 100rem;
   margin: 0 2rem;
 }
-.fund__item__info__date {
+.fund--1__item__info__date {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
-.fund__item__info__date__icon {
+.fund--1__item__info__date__icon {
   width: 1.8rem;
   margin-right: 1.4rem;
   color: #43882B;
 }
-.fund__item__info__date__parag {
+.fund--1__item__info__date__parag {
   font-weight: 800;
   font-size: 1.2rem;
   margin: 1rem 0;
   text-align: center;
 }
-.fund__item__info__donation {
+.fund--1__item__info__donation {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.fund__item__info__donation__more-info, .fund__item__info__donation__more-info:visited, .fund__item__info__donation__more-info:link {
+.fund--1__item__info__donation__more-info, .fund--1__item__info__donation__more-info:visited, .fund--1__item__info__donation__more-info:link {
   font-weight: 800;
   font-size: 1.2rem;
   color: #43882B;
@@ -1485,31 +1485,31 @@ input[type=number] {
   text-decoration: none;
   transition: 0.2s all;
 }
-.fund__item__info__donation__more-info:hover, .fund__item__info__donation__more-info:visited:hover, .fund__item__info__donation__more-info:link:hover {
+.fund--1__item__info__donation__more-info:hover, .fund--1__item__info__donation__more-info:visited:hover, .fund--1__item__info__donation__more-info:link:hover {
   background-color: #97D158;
   color: #DEFEE6;
 }
-.fund__item__info__donation__help {
+.fund--1__item__info__donation__help {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.fund__item__info__donation__help__peopel {
+.fund--1__item__info__donation__help__peopel {
   width: 6rem;
   margin-right: 1.2rem;
 }
-.fund__item__loader {
+.fund--1__item__loader {
   margin: 1.8rem 0;
 }
-.fund__item__loader__text {
+.fund--1__item__loader__text {
   font-weight: 700;
   font-size: 1.3rem;
   margin-bottom: 0.5rem;
 }
-.fund__item__loader__text span {
+.fund--1__item__loader__text span {
   font-weight: 900;
 }
-.fund__item__loader__container {
+.fund--1__item__loader__container {
   position: relative;
   z-index: 5;
   width: 25rem;
@@ -1518,7 +1518,7 @@ input[type=number] {
   background-color: #DEFEE6;
   margin-bottom: 0.5rem;
 }
-.fund__item__loader__container__current {
+.fund--1__item__loader__container__current {
   position: absolute;
   z-index: 10;
   top: 0;
@@ -1530,7 +1530,7 @@ input[type=number] {
 }
 
 .dash-user-fund {
-  margin-top: 5rem;
+  margin-top: 1rem;
 }
 .dash-user-fund__container {
   display: flex;
@@ -1546,14 +1546,13 @@ input[type=number] {
 }
 .dash-user-fund__container--right {
   flex: 5;
-  height: 10rem;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 2rem;
   overflow: hidden;
   overflow-y: scroll;
-  height: 45rem;
+  height: 52rem;
 }
 .dash-user-fund__container--right::-webkit-scrollbar {
   width: 1rem;
@@ -1566,4 +1565,39 @@ input[type=number] {
 .dash-user-fund__container--right::-webkit-scrollbar-track {
   background-color: #defee6;
   border-radius: 8rem;
+}
+.dash-user-fund__add-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 40rem;
+  margin: 3rem 0;
+  background-color: #fff;
+  border-radius: 100rem;
+  box-shadow: 0.5rem 0.5rem 3rem rgba(113, 98, 175, 0.1);
+  padding: 1rem 2rem;
+}
+.dash-user-fund__add__text {
+  font-size: 1.7rem;
+  color: #10036A;
+}
+.dash-user-fund__add__btn, .dash-user-fund__add__btn:visited, .dash-user-fund__add__btn:link {
+  display: flex;
+  align-items: center;
+  font-weight: 800;
+  font-size: 1.4rem;
+  color: #43882B;
+  background-color: #DEFEE6;
+  padding: 0.8rem 1.5rem;
+  border-radius: 100rem;
+  text-decoration: none;
+  transition: 0.2s all;
+}
+.dash-user-fund__add__btn:hover, .dash-user-fund__add__btn:visited:hover, .dash-user-fund__add__btn:link:hover {
+  background-color: #97D158;
+  color: #DEFEE6;
+}
+.dash-user-fund__add__btn__icon {
+  width: 2.5rem;
+  margin-right: 1rem;
 }/*# sourceMappingURL=nabilStyle.css.map */
