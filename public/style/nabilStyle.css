@@ -1401,7 +1401,7 @@ input[type=number] {
   padding: 1rem;
   width: 35rem;
   height: 40rem;
-  border: 0.8rem #CCFCCB solid;
+  border: 0.7rem #CCFCCB solid;
   color: #5BA890;
   display: flex;
   flex-direction: column;
@@ -1600,4 +1600,82 @@ input[type=number] {
 .dash-user-fund__add__btn__icon {
   width: 2.5rem;
   margin-right: 1rem;
+}
+
+.shop--2__item {
+  background-color: #fff;
+  border-radius: 5rem;
+  padding: 1rem;
+  width: 35rem;
+  height: 40rem;
+  border: 0.7rem #CCFCCB solid;
+  color: #5BA890;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+.shop--2__item__img {
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: 0% 35%;
+     object-position: 0% 35%;
+  height: 100%;
+  width: 100%;
+  border-radius: 3.5rem;
+}
+.shop--2__item__img__container {
+  background-color: #ff936f;
+  width: 100%;
+  height: 13rem;
+  border-radius: 3.5rem;
+}
+.shop--2__item__info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.shop--2__item__info__title {
+  color: secondary-light;
+  font-weight: 800;
+  font-size: 2.2rem;
+  margin: 1rem 0 0 0;
+}
+.shop--2__item__info__description {
+  color: secondary-light;
+  font-weight: 700;
+  font-size: 1.4rem;
+  margin: 1rem 0;
+}
+.shop--2__item__cart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2rem;
+}
+.shop--2__item__cart__price {
+  color: secondary-light;
+  font-weight: 800;
+  font-size: 2.2rem;
+  margin: 1rem 0 0 0;
+}
+.shop--2__item__cart__btn {
+  display: inline-block;
+  margin: 1.2rem 0;
+  align-self: center;
+}
+.shop--2__item__cart__btn, .shop--2__item__cart__btn:visited, .shop--2__item__cart__btn:link {
+  font-family: primaryFont;
+  font-weight: 700;
+  font-size: 1.6rem;
+  color: #DEFEE6;
+  background-color: #43882B;
+  padding: 1rem 2rem;
+  border-radius: 100rem;
+  text-decoration: none;
+  transition: 0.2s all;
+}
+.shop--2__item__cart__btn:hover, .shop--2__item__cart__btn:visited:hover, .shop--2__item__cart__btn:link:hover {
+  background-color: #97D158;
+  color: #DEFEE6;
 }/*# sourceMappingURL=nabilStyle.css.map */

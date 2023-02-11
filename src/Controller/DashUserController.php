@@ -43,4 +43,16 @@ class DashUserController extends AbstractController
             'userFullname' => $userFullname,
         ]);
     }
+
+    #[Route('/dash/user/shop', name: 'app_dash_user_shop')]
+    public function dashUserShop(Request $request): Response
+    {
+        $userFullname = "Nabil Mersni";
+
+
+        return $this->render('dash_user/dash-user-shop.html.twig', [
+            'title' => 'Zero Waste',
+            'userFullname' => $userFullname,
+        ]);
+    }
 }

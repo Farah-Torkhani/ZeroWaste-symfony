@@ -54,7 +54,7 @@
 						</li>
 
 						<li class="nav-links">
-							<a href="#" class="nav-links-item {% if app.request.attributes.get('_route') == 'app_dash_user_shop' %}active{% endif %}">
+							<a href="{{path('app_dash_user_shop')}}" class="nav-links-item {% if app.request.attributes.get('_route') == 'app_dash_user_shop' %}active{% endif %}">
 								<i class='bx bx-store icon'></i>
 								<span class="text nav-text">Shop</span>
 							</a>
