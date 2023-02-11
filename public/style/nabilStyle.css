@@ -1035,11 +1035,10 @@ input[type=number] {
 }
 .dash-user-home__container--left {
   flex: 2;
-  height: 10rem;
 }
 .dash-user-home__container--right {
   flex: 1;
-  height: 10rem;
+  margin: 0 2rem;
 }
 .dash-user-home__cards {
   display: flex;
@@ -1099,6 +1098,120 @@ input[type=number] {
 }
 .dash-user-home__funds {
   margin-top: 2rem;
+}
+.dash-user-home__profile {
+  padding: 1.5rem;
+  background-color: #fff;
+  border-radius: 3rem;
+  box-shadow: 0.5rem 0.5rem 3rem rgba(113, 98, 175, 0.15);
+}
+.dash-user-home__profile__details {
+  display: flex;
+  align-items: center;
+}
+.dash-user-home__profile__details__img {
+  border-radius: 100rem;
+  width: 6rem;
+  margin-right: 3rem;
+}
+.dash-user-home__profile__details__txt__name {
+  font-size: 1.9rem;
+  color: #10036A;
+}
+.dash-user-home__profile__details__txt__state {
+  position: relative;
+  font-size: 1.3rem;
+  color: #8980F5;
+  font-weight: 500;
+}
+.dash-user-home__profile__details__txt__state::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translate(0, -50%);
+  width: 0.8rem;
+  height: 0.8rem;
+  background-color: #03BF8A;
+  border-radius: 100rem;
+}
+.dash-user-home__profile__donation-history__title {
+  position: relative;
+  font-size: 2.1rem;
+  color: #7262AF;
+  margin: 5rem 0;
+}
+.dash-user-home__profile__donation-history__title::before {
+  content: "";
+  position: absolute;
+  top: -70%;
+  right: 0;
+  width: 100%;
+  height: 0.1rem;
+  background-color: rgba(214, 219, 253, 0.5);
+  border-radius: 100rem;
+}
+.dash-user-home__profile__donation-history__title::after {
+  content: "";
+  position: absolute;
+  bottom: -70%;
+  right: 0;
+  width: 100%;
+  height: 0.1rem;
+  background-color: rgba(214, 219, 253, 0.5);
+  border-radius: 100rem;
+}
+.dash-user-home__profile__donation-history__container {
+  height: 33rem;
+  overflow-y: scroll;
+}
+.dash-user-home__profile__donation-history__container::-webkit-scrollbar {
+  width: 1rem;
+  border-radius: 8rem;
+}
+.dash-user-home__profile__donation-history__container::-webkit-scrollbar-thumb {
+  background-color: #7262AF;
+  border-radius: 8rem;
+}
+.dash-user-home__profile__donation-history__container::-webkit-scrollbar-track {
+  background-color: #D6DBFD;
+  border-radius: 8rem;
+}
+.dash-user-home__profile__donation-history__item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: 4rem;
+}
+.dash-user-home__profile__donation-history__item__img {
+  width: 4.5rem;
+  margin-right: 1.5rem;
+}
+.dash-user-home__profile__donation-history__item__details__name {
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: #10036A;
+  margin-bottom: 0.3rem;
+}
+.dash-user-home__profile__donation-history__item__details__date {
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: #10036A;
+}
+.dash-user-home__profile__donation-history__item__amount {
+  margin: 0 2rem 0 auto;
+  color: #7262AF;
+}
+.dash-user-home__profile__donation-history__item::after {
+  content: "";
+  position: absolute;
+  bottom: -30%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  width: 30%;
+  height: 0.1rem;
+  background-color: rgba(214, 219, 253, 0.6);
+  border-radius: 100rem;
 }
 .dash-user-home::-webkit-scrollbar {
   width: 1rem;
@@ -1382,7 +1495,7 @@ input[type=number] {
   align-items: center;
 }
 .fund__item__info__donation__help__peopel {
-  width: 8rem;
+  width: 6rem;
   margin-right: 1.2rem;
 }
 .fund__item__loader {

@@ -23,15 +23,24 @@ class DashUserController extends AbstractController
     #[Route('/dash/user/home', name: 'app_dash_user_home')]
     public function dashUserHome(Request $request): Response
     {
-        $userFullname = "Mersni Nabil";
-        $currentRoute = $request->attributes->get('_route');
+        $userFullname = "Nabil Mersni";
 
 
         return $this->render('dash_user/dash-user-home.html.twig', [
-            'controller_name' => 'DashUserController',
             'title' => 'Zero Waste',
             'userFullname' => $userFullname,
+        ]);
+    }
 
+    #[Route('/dash/user/funds', name: 'app_dash_user_funds')]
+    public function dashUserFund(Request $request): Response
+    {
+        $userFullname = "Nabil Mersni";
+
+
+        return $this->render('dash_user/dash-user-funds.html.twig', [
+            'title' => 'Zero Waste',
+            'userFullname' => $userFullname,
         ]);
     }
 }
