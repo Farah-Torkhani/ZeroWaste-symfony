@@ -44,6 +44,19 @@ class DashUserController extends AbstractController
         ]);
     }
 
+    #[Route('/dash/user/fund/detail/{id}', name: 'app_dash_user_fund_detail')]
+    public function dashUserFundDetail(Request $request, $id): Response
+    {
+        $userFullname = "Nabil Mersni";
+        // dd($id);
+
+
+        return $this->render('dash_user/dash-user-fund-detail.html.twig', [
+            'title' => 'Zero Waste',
+            'userFullname' => $userFullname,
+        ]);
+    }
+
     #[Route('/dash/user/shop', name: 'app_dash_user_shop')]
     public function dashUserShop(Request $request): Response
     {
