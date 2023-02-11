@@ -1,0 +1,546 @@
+.dash__side-bar.close {
+  width: 8.8rem;
+}
+
+.dash__side-bar .image {
+  min-width: 7rem;
+  min-height: 20rem;
+  display: flex;
+  align-items: start;
+  justify-content: center;
+  position: relative;
+  bottom: -1.6rem;
+}
+
+.dash__side-bar .image-text img {
+  width: 10rem;
+  border-radius: 0.6rem;
+  display: flex;
+  transition: 0.4s;
+  margin: 0 auto;
+}
+
+.logo-toggled-width {
+  width: 8rem !important;
+  transition: 0.4s;
+}
+
+.image-text {
+  display: flex;
+  align-items: start;
+}
+
+.header-nav-logo {
+  position: relative;
+}
+
+.toggle {
+  position: absolute;
+  bottom: 50rem;
+  left: 50%;
+  transform: translate(50%, 0);
+}
+
+.dash__side-bar header .toggle {
+  position: absolute;
+  top: 10rem;
+  left: 20%;
+  transform: translateX(-50%) translateY(-50%) rotate(180deg);
+  height: 3rem;
+  width: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 2.2rem;
+  transition: all 0.2s ease;
+}
+
+.dash__top-bar__fullname {
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-right: 1.6rem;
+  margin-left: 1.6rem;
+}
+
+.dash__container-card {
+  background-color: #F7F7FC;
+  padding: 2rem 3rem;
+}
+
+.table__header {
+  width: 100%;
+  height: 5rem;
+  background-color: #D6DBFD;
+  border-top-right-radius: 3rem;
+  border-top-left-radius: 3rem;
+  border-bottom-right-radius: 0.9rem;
+  border-bottom-left-radius: 0.9rem;
+  display: flex;
+  align-items: center;
+  padding: 0 1.5rem;
+}
+.table__header__title {
+  font-size: 2rem;
+  color: #7262AF;
+}
+.table__body {
+  margin-top: 2rem;
+  padding: 1rem 0;
+  height: 20rem;
+  border-radius: 0.9rem;
+}
+
+.dash-user-home {
+  overflow: hidden;
+  overflow-y: scroll;
+  height: calc(100vh - 11rem);
+  border-radius: 3.2rem;
+  padding: 0 0rem;
+  padding-left: 1.6rem;
+}
+.dash-user-home__greeting {
+  margin-bottom: 4rem;
+}
+.dash-user-home__greeting--span-1 {
+  color: #8980F5;
+  color: #5BA890;
+  font-size: 2.4rem;
+  font-weight: 800;
+  display: inline-block;
+  margin-right: 1rem;
+}
+.dash-user-home__greeting--span-2 {
+  color: #10036A;
+  font-size: 1.4rem;
+  font-weight: 800;
+  display: inline-block;
+}
+.dash-user-home__container {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  width: 100%;
+  height: 10rem;
+}
+.dash-user-home__container--left {
+  flex: 2;
+  height: 10rem;
+}
+.dash-user-home__container--right {
+  flex: 1;
+  height: 10rem;
+}
+.dash-user-home__cards {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.dash-user-home__balance__card {
+  padding: 1rem 2rem;
+  width: 40rem;
+  height: 22rem;
+  border-radius: 3rem;
+  background-color: #FFFBEB;
+  background-color: #DEFEE6;
+  box-shadow: 0.5rem 0.5rem 3rem rgba(113, 98, 175, 0.15);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.dash-user-home__balance__card__title {
+  color: #7262AF;
+}
+.dash-user-home__balance__card__content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.dash-user-home__balance__card__animation {
+  width: 18rem;
+  height: 18rem;
+}
+.dash-user-home__balance__card__balance {
+  color: #7262AF;
+  font-size: 3.3rem;
+}
+.dash-user-home__DonationStat__card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #7262AF;
+  padding: 1rem 2rem;
+  width: 40rem;
+  height: 22rem;
+  border-radius: 3rem;
+  box-shadow: 0.5rem 0.5rem 3rem rgba(113, 98, 175, 0.15);
+}
+.dash-user-home__DonationStat__card__title {
+  color: #DEFEE6;
+  font-size: 2.2rem;
+}
+.dash-user-home__DonationStat__card__title--span {
+  color: #ff936f;
+}
+.dash-user-home__DonationStat__card__animation {
+  width: 15rem;
+  height: 15rem;
+}
+.dash-user-home__funds {
+  margin-top: 2rem;
+}
+.dash-user-home::-webkit-scrollbar {
+  width: 1rem;
+  border-radius: 8rem;
+}
+.dash-user-home::-webkit-scrollbar-thumb {
+  background-color: #43882b;
+  border-radius: 8rem;
+}
+.dash-user-home::-webkit-scrollbar-track {
+  background-color: #defee6;
+  border-radius: 8rem;
+}
+
+.fund-2__container {
+  display: flex;
+  justify-content: space-between;
+  padding-right: 2rem;
+  flex-direction: column;
+  overflow: hidden;
+  overflow-y: scroll;
+  height: 30rem;
+}
+.fund-2__container::-webkit-scrollbar {
+  width: 1rem;
+  border-radius: 8rem;
+}
+.fund-2__container::-webkit-scrollbar-thumb {
+  background-color: #7262AF;
+  border-radius: 8rem;
+}
+.fund-2__container::-webkit-scrollbar-track {
+  background-color: #D6DBFD;
+  border-radius: 8rem;
+}
+.fund-2__right {
+  width: 100%;
+}
+.fund-2__item {
+  background-color: #fff;
+  border-radius: 5rem;
+  padding: 1rem;
+  width: 100%;
+  height: 23rem;
+  color: #5BA890;
+  box-shadow: 0.5rem 0.5rem 3rem rgba(113, 98, 175, 0.15);
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+}
+.fund-2__item__img {
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: 100% 100%;
+     object-position: 100% 100%;
+  height: 100%;
+  width: 100%;
+  border-radius: 5rem;
+}
+.fund-2__item__img__container {
+  background-color: #ff936f;
+  width: 25rem;
+  height: 100%;
+  border-radius: 5rem;
+  margin-right: 5rem;
+}
+.fund-2__item__title {
+  color: secondary-light;
+  font-weight: 800;
+  font-size: 2.3rem;
+  margin: 1rem 0 0.5rem 0;
+  text-align: center;
+}
+.fund-2__item__info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.fund-2__item__info__association {
+  display: flex;
+  align-items: center;
+}
+.fund-2__item__info__association__icon {
+  width: 2.1rem;
+  margin-right: 1.5rem;
+}
+.fund-2__item__info__association__parag {
+  font-weight: 800;
+  font-size: 1.3rem;
+  margin: 1rem 0;
+  text-align: center;
+}
+.fund-2__item__info__association__divider {
+  background-color: #6ECCAF;
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 100rem;
+  margin: 0 2rem;
+}
+.fund-2__item__info__date {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.fund-2__item__info__date__icon {
+  width: 1.8rem;
+  margin-right: 1.3rem;
+  color: #43882B;
+}
+.fund-2__item__info__date__parag {
+  font-weight: 800;
+  font-size: 1.3rem;
+  margin: 1rem 0;
+  text-align: center;
+}
+.fund-2__item__info__donation {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.fund-2__item__info__donation__more-info, .fund-2__item__info__donation__more-info:visited, .fund-2__item__info__donation__more-info:link {
+  font-weight: 800;
+  font-size: 1.4rem;
+  color: #43882B;
+  background-color: #DEFEE6;
+  padding: 1rem 2rem;
+  border-radius: 100rem;
+  text-decoration: none;
+  transition: 0.2s all;
+}
+.fund-2__item__info__donation__more-info--2, .fund-2__item__info__donation__more-info:visited--2, .fund-2__item__info__donation__more-info:link--2 {
+  background-color: #7262AF !important;
+  color: #E5E0FF;
+}
+.fund-2__item__info__donation__more-info:hover, .fund-2__item__info__donation__more-info:visited:hover, .fund-2__item__info__donation__more-info:link:hover {
+  background-color: #97D158;
+  color: #DEFEE6;
+}
+.fund-2__item__info__donation__help {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.fund-2__item__info__donation__help__peopel {
+  width: 8rem;
+  margin-right: 1.5rem;
+}
+.fund-2__item__loader {
+  margin: 2rem 0;
+}
+.fund-2__item__loader__text {
+  font-weight: 700;
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+}
+.fund-2__item__loader__text span {
+  font-weight: 900;
+}
+.fund-2__item__loader__container {
+  position: relative;
+  z-index: 5;
+  width: 90%;
+  height: 0.8rem;
+  border-radius: 100rem;
+  background-color: #DEFEE6;
+  margin-bottom: 0.5rem;
+}
+.fund-2__item__loader__container__current {
+  position: absolute;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  width: 15rem;
+  height: 0.8rem;
+  border-radius: 100rem;
+  background-color: #6ECCAF;
+}
+
+.fund__container {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.fund__item {
+  background-color: #fff;
+  border-radius: 5rem;
+  padding: 1rem;
+  width: 35rem;
+  height: 40rem;
+  border: 0.8rem #CCFCCB solid;
+  color: #5BA890;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+.fund__item__img {
+  -o-object-fit: cover;
+     object-fit: cover;
+  height: 100%;
+  width: 100%;
+  border-radius: 3.5rem;
+}
+.fund__item__img__container {
+  background-color: #ff936f;
+  width: 100%;
+  height: 15rem;
+  border-radius: 3.5rem;
+}
+.fund__item__title {
+  color: secondary-light;
+  font-weight: 800;
+  font-size: 2rem;
+  margin: 1rem 0;
+  text-align: center;
+}
+.fund__item__info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.fund__item__info__association {
+  display: flex;
+  align-items: center;
+}
+.fund__item__info__association__icon {
+  width: 2rem;
+  margin-right: 1.4rem;
+}
+.fund__item__info__association__parag {
+  font-weight: 800;
+  font-size: 1.2rem;
+  margin: 1rem 0;
+  text-align: center;
+}
+.fund__item__info__association__divider {
+  background-color: #6ECCAF;
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 100rem;
+  margin: 0 2rem;
+}
+.fund__item__info__date {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.fund__item__info__date__icon {
+  width: 1.8rem;
+  margin-right: 1.4rem;
+  color: #43882B;
+}
+.fund__item__info__date__parag {
+  font-weight: 800;
+  font-size: 1.2rem;
+  margin: 1rem 0;
+  text-align: center;
+}
+.fund__item__info__donation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.fund__item__info__donation__more-info, .fund__item__info__donation__more-info:visited, .fund__item__info__donation__more-info:link {
+  font-weight: 800;
+  font-size: 1.2rem;
+  color: #43882B;
+  background-color: #DEFEE6;
+  padding: 1rem 2rem;
+  border-radius: 100rem;
+  text-decoration: none;
+  transition: 0.2s all;
+}
+.fund__item__info__donation__more-info:hover, .fund__item__info__donation__more-info:visited:hover, .fund__item__info__donation__more-info:link:hover {
+  background-color: #97D158;
+  color: #DEFEE6;
+}
+.fund__item__info__donation__help {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.fund__item__info__donation__help__peopel {
+  width: 8rem;
+  margin-right: 1.2rem;
+}
+.fund__item__loader {
+  margin: 1.8rem 0;
+}
+.fund__item__loader__text {
+  font-weight: 700;
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+}
+.fund__item__loader__text span {
+  font-weight: 900;
+}
+.fund__item__loader__container {
+  position: relative;
+  z-index: 5;
+  width: 25rem;
+  height: 0.7rem;
+  border-radius: 100rem;
+  background-color: #DEFEE6;
+  margin-bottom: 0.5rem;
+}
+.fund__item__loader__container__current {
+  position: absolute;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  width: 15rem;
+  height: 0.7rem;
+  border-radius: 100rem;
+  background-color: #6ECCAF;
+}
+
+.dash-user-fund {
+  margin-top: 5rem;
+}
+.dash-user-fund__container {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  width: 100%;
+  height: 10rem;
+  padding: 1rem;
+}
+.dash-user-fund__container--left {
+  flex: 1;
+  height: 10rem;
+}
+.dash-user-fund__container--right {
+  flex: 5;
+  height: 10rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2rem;
+  overflow: hidden;
+  overflow-y: scroll;
+  height: 45rem;
+}
+.dash-user-fund__container--right::-webkit-scrollbar {
+  width: 1rem;
+  border-radius: 8rem;
+}
+.dash-user-fund__container--right::-webkit-scrollbar-thumb {
+  background-color: #43882b;
+  border-radius: 8rem;
+}
+.dash-user-fund__container--right::-webkit-scrollbar-track {
+  background-color: #defee6;
+  border-radius: 8rem;
+}/*# sourceMappingURL=user-style.css.map */
