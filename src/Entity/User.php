@@ -76,11 +76,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
-    // #[Assert\NotBlank]
-    // #[Assert\Length(
-    //     min: 8,
-    //     minMessage: 'Your password must be at least {{ limit }} characters long',
-    // )]
+    #[Assert\NotBlank]
+    #[Assert\Length(
+        min: 8,
+        minMessage: 'Your password must be at least {{ limit }} characters long',
+    )]
     private ?string $password = null;
 
     #[ORM\OneToMany(mappedBy: 'user_id', targetEntity: Commande::class)]
