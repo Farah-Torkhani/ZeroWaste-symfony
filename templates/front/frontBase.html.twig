@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+  <link rel="stylesheet" href="{{asset('./contents/css/style.css')}}" />
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet"/>
+  <link rel="icon" href="{{asset('./contents/img/logo.png')}}" />
+
+  {% block bgColor %}
+  {% endblock %}
+
+{% endblock %}
+
+{% block title %}
+	{{title}}
+{% endblock %}
+
+
+{% block body %}
+   <nav class="front__navbar front__navbar-scrolled-up">
+    <div class="front__navbar-img-container">
+      <img
+        src="./contents/img/logo.png"
+        class="front__navbar-img-container"
+        alt=""
+      />
+    </div>
+
+    <ul class="front__navbar__link" style="position: relative; right: 0rem">
+      <li><a href="{{path('app_landing_page')}}" class="text-decoration">Home</a></li>
+      <li><a href="" class="text-decoration">Fundraising</a></li>
+      <li><a href="{{path('app_products')}}" class="text-decoration">shop</a></li>
+      <li><a href="" class="text-decoration">Collect</a></li>
+    </ul>
+
+    <div class="navbar__items">
+      <a href="{{path('app_commands')}}"
+        class="notification-icon cart-icon-link"
+        style="position: relative; top: 0.1rem; padding-right: 1rem"
+      >
+        <span class="cart-shop-icon__span">2</span>
+        <span class="navbar__item">
+          <i class="bx bx-cart item" style="font-size: 3rem"></i>
+        </span>
+      </a>
+
+      <div class="notification-icon" style="position: relative; top: 0.1rem">
+        <span class="cart-icon__span">3</span>
+        <span class="navbar__item">
+          <i class="bx bx-bell item"></i>
+        </span>
+      </div>
+
+      <span class="dash__top-bar__fullname"> Braiek Ali </span>
+
+      <div class="dash__top-bar__img-container">
+        <a href="#">
+          <img
+            src="./contents/img/ali.jpg"
+            class="dash__top-bar__img"
+            alt="profile"
+          />
+        </a>
+      </div>
+    </div>
+  </nav>
+  <!--end dash__navbar-->
+
+  {% block frontContent %}{% endblock %}
+
+{% endblock %}

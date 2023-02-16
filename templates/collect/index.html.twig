@@ -1,0 +1,105 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+  <link rel="stylesheet" href="{{asset('./contents/css/ST3.css')}}">
+	<link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"/>    
+	<link rel="icon" href="{{asset('./contents/img/logo1.png')}}">
+{% endblock %}
+
+
+
+{% block body %}
+<div class="dash">
+    <nav class="dash__side-bar">
+        <header>
+          <div class="image-text">
+            <span class="image">
+              <img class="logo" src="./contents/img/logo.png" alt="logo" /> 
+            </span>
+          </div>
+
+          <i class="bx bx-chevron-right toggle"></i>
+        </header>
+
+        <div class="menu-bar">
+          <div class="menu">
+            <ul class="menu-links">
+              <li class="nav-links">
+                <a href="./dash-admin-home.html" class="nav-links-item ">
+                  <i class="bx bx-home icon"></i>
+                  <span class="text nav-text">Dashboard</span>
+                </a>
+              </li>
+
+              <li class="nav-links">
+                <a href="#" class="nav-links-item">
+                  <i class="bx bx-user icon"></i>
+                  <span class="text nav-text">Users</span>
+                </a>
+              </li>
+
+              <li class="nav-links">
+                <a href="#" class="nav-links-item">
+                  <i class='bx bx-donate-heart icon'></i>
+                  <span class="text nav-text">Fundrising</span>
+                </a>
+              </li>
+
+              <li class="nav-links">
+                <a href="#" class="nav-links-item">
+                  <i class='bx bx-store icon'></i>
+                  <span class="text nav-text">Products</span>
+                </a>
+              </li>
+
+              <li class="nav-links">
+                <a href="./dash-admin-collect.html" class="nav-links-item active">
+                  <i class='bx bx-coin-stack icon'></i>
+                  <span class="text nav-text">Collect</span>
+                </a>
+              </li>
+
+              <li class="nav-links">
+                <a href="#" class="nav-links-item">
+                  <i class="bx bx-cart icon"></i>
+                  <span class="text nav-text">Commands</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="bottom-content">
+            <li class="nav-links">
+              <a href="#" class="nav-links-item">
+                <i class="bx bx-log-out icon"></i>
+                <span class="text nav-text">Logout</span>
+              </a>
+            </li>
+
+            <li class="nav-links mode">
+              <div class="moon-sun">
+                <i class="bx bx-moon icon moon"></i>
+                <i class="bx bx-sun icon sun"></i>
+              </div>
+              <span class="mode-text text">Dark Mode</span>
+
+              <div class="toggle-switch">
+                <span class="switch"></span>
+              </div>
+            </li>
+          </div>
+        </div>
+    </nav>
+
+      <!--******** div *****1-->
+    
+        {% block admin_collect %}      {% endblock %}
+    </div>
+
+</div>    
+{% block JsScript %} 
+<script src="{{asset('./contents/js/SC3.js')}}"> </script>  
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script> 
+<script src="{{asset('./contents/js/calendar.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.1/index.global.min.js"></script>   
+{% endblock %}
+{% endblock %}

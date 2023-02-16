@@ -1,0 +1,269 @@
+{% extends 'collect/collect_base.html.twig' %}
+{% block admin_collect %}      
+       <div class="dash__container">
+        <nav class="dash__navbar">
+          <div class="dash__navbar-text">Dashboard</div>
+          <div class="navbar__items">
+            <span class="navbar__item">
+              <i class="bx bx-log-out item"></i>
+            </span>
+
+            <div class="notification-icon">
+              <span class="cart-icon__span">3</span>
+              <span class="navbar__item">
+                <i class="bx bx-bell item"></i>
+              </span>
+            </div>
+
+            <span class="dash__top-bar__fullname"> Elghoul kaiss </span>
+
+            <div class="dash__top-bar__img-container">
+              <a href="#">
+                <img
+                  src="{{asset('./contents/img/avatar2.png')}}"
+                  class="dash__top-bar__img"
+                  alt="profile"
+                />
+              </a>
+            </div>
+          </div>
+        </nav>
+        <!--end dash__navbar-->
+
+        <div class="dash__container-card">          
+            <div class="dash__card-title">Participant List</div>
+            <div class="users">
+              <div class="users-list">
+                <div class="users-list__body">
+                  <table class="user-table">
+                    <thead>
+                      <tr>
+                        <th>Full name</th>
+                        <th>email</th>
+                        <th>phone</th>
+                        <th>quantite</th>
+                        <th>Point</th>
+                        <th>request</th>
+                        <th>#</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr class="one-user">
+                        <td class="fullname-td">
+                          <div class="fullname-td__container">
+                            <div class="fullname-td__img-container">
+                              <img src="{{asset('./contents/img/avatar2.png')}}" alt="" class="fullname-td__img-container__img">
+                            </div>
+                            <div class="fullname-td__fullname-username">
+                              <p class="fullname-td__fullname-username__fullname">Elghoul kaiss</p>
+                              <p class="fullname-td__fullname-username__username">kaiss</p>
+                            </div>
+                          </div>
+                        </td>
+                        <td>kaiss.ghoul@esprit.tn</td>
+                        <td>55516530</td>
+                        <td>20 kg</td>
+                        <td>100 pt</td>
+                        <td class="stet-td">
+                          <span class="state-td__active">accepts</span>
+                        </td>
+                        <td class="btn-td">
+                          <div >
+                            <a style="display:flex; justify-content:center;" href="" class="btn-td__btn">
+                              <img src="{{asset('./contents/img/lock-icon.png')}}" alt="" class="btn-td__btn__icon block-icon">
+                            </a>
+                          </div>
+                          <div >
+                            <button class="btn-td__bt" style="background-color: transparent;border: none;">
+                              <i class='bx bxs-edit btn-td__btn'></i>
+                              
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+
+                      <tr class="one-user">
+                        <td class="fullname-td">
+                          <div class="fullname-td__container">
+                            <div class="fullname-td__img-container">
+                              <img src="{{asset('./contents/img/avatar.png')}}" alt="" class="fullname-td__img-container__img">
+                            </div>
+                            <div class="fullname-td__fullname-username">
+                              <p class="fullname-td__fullname-username__fullname">Elghoul kaiss</p>
+                              <p class="fullname-td__fullname-username__username">kaiss</p>
+                            </div>
+                          </div>
+                        </td>
+                        <td>kaiss.ghoul@esprit.tn</td>
+                        <td>55516530</td>
+                        <td>20 kg</td>
+                        <td>100 pt</td>
+                        <td class="stet-td">
+                          <span class="state-td__unactive">reject</span>
+                        </td>
+                        <td class="btn-td">
+                          <div >
+                            <a style="display:flex; justify-content:center;" href="" class="btn-td__btn">
+                              <img src="{{asset('./contents/img/lock-icon.png')}}"  alt="" class="btn-td__btn__icon block-icon">
+                            </a>
+                          </div>
+                          <div >
+                            <button class="btn-td__bt" style="background-color: transparent;border: none;">
+                              <i class='bx bxs-edit btn-td__btn'></i>
+                              
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+
+                      <tr class="one-user">
+                        <td class="fullname-td">
+                          <div class="fullname-td__container">
+                            <div class="fullname-td__img-container">
+                              <img src="{{asset('./contents/img/avatar3.png')}}" alt="" class="fullname-td__img-container__img">
+                            </div>
+                            <div class="fullname-td__fullname-username">
+                              <p class="fullname-td__fullname-username__fullname">Elghoul kaiss</p>
+                              <p class="fullname-td__fullname-username__username">kaiss</p>
+                            </div>
+                          </div>
+                        </td>
+                        <td>kaiss.ghoul@esprit.tn</td>
+                        <td>55516530</td>
+                        <td>20 kg</td>
+                        <td>100 pt</td>
+                        <td class="stet-td">
+                          <span class="state-td__active">accepts</span>
+                        </td>
+                        <td class="btn-td">
+                          <div >
+                            <a style="display:flex; justify-content:center;" href="" class="btn-td__btn">
+                              <img src="{{asset('./contents/img/lock-icon.png')}}" alt="" class="btn-td__btn__icon block-icon">
+                            </a>
+                          </div>
+                          <div >
+                            <button class="btn-td__bt" style="background-color: transparent;border: none;">
+                              <i class='bx bxs-edit btn-td__btn'></i>
+                              
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+
+                      <tr class="one-user">
+                        <td class="fullname-td">
+                          <div class="fullname-td__container">
+                            <div class="fullname-td__img-container">
+                              <img src="{{asset('./contents/img/avatar2.png')}}" alt="" class="fullname-td__img-container__img">
+                            </div>
+                            <div class="fullname-td__fullname-username">
+                              <p class="fullname-td__fullname-username__fullname">Elghoul kaiss</p>
+                              <p class="fullname-td__fullname-username__username">kaiss</p>
+                            </div>
+                          </div>
+                        </td>
+                        <td>kaiss.ghoul@esprit.tn</td>
+                        <td>55516530</td>
+                        <td>20 kg</td>
+                        <td>100 pt</td>
+                        <td class="stet-td">
+                          <span class="state-td__unactive">reject</span>
+                        </td>
+                        <td class="btn-td">
+                          <div >
+                            <a style="display:flex; justify-content:center;" href="" class="btn-td__btn">
+                              <img src="{{asset('./contents/img/lock-icon.png')}}" alt="" class="btn-td__btn__icon block-icon">
+                            </a>
+                          </div>
+                          <div >
+                            <button class="btn-td__bt" style="background-color: transparent;border: none;">
+                              <i class='bx bxs-edit btn-td__btn'></i>
+                              
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+
+                      <tr class="one-user">
+                        <td class="fullname-td">
+                          <div class="fullname-td__container">
+                            <div class="fullname-td__img-container">
+                              <img src="{{asset('./contents/img/avatar.png')}}" alt="" class="fullname-td__img-container__img">
+                            </div>
+                            <div class="fullname-td__fullname-username">
+                              <p class="fullname-td__fullname-username__fullname">Elghoul kaiss</p>
+                              <p class="fullname-td__fullname-username__username">kaiss</p>
+                            </div>
+                          </div>
+                        </td>
+                        <td>kaiss.ghoul@esprit.tn</td>
+                        <td>55516530</td>
+                        <td>20 kg</td>
+                        <td>100 pt</td>
+                        <td class="stet-td">
+                          <span class="state-td__active">accepts</span>
+                        </td>
+                        <td class="btn-td">
+                          <div >
+                            <a style="display:flex; justify-content:center;" href="" class="btn-td__btn">
+                              <img src="{{asset('./contents/img/lock-icon.png')}}" alt="" class="btn-td__btn__icon block-icon">
+                            </a>
+                          </div>
+                          <div >
+                            <button class="btn-td__bt" style="background-color: transparent;border: none;">
+                              <i class='bx bxs-edit btn-td__btn'></i>
+                              
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+
+                      <tr class="one-user">
+                        <td class="fullname-td">
+                          <div class="fullname-td__container">
+                            <div class="fullname-td__img-container">
+                              <img src="{{asset('./contents/img/avatar.png')}}" alt="" class="fullname-td__img-container__img">
+                            </div>
+                            <div class="fullname-td__fullname-username">
+                              <p class="fullname-td__fullname-username__fullname">Elghoul kaiss</p>
+                              <p class="fullname-td__fullname-username__username">kaiss</p>
+                            </div>
+                          </div>
+                        </td>
+                        <td>kaiss.ghoul@esprit.tn</td>
+                        <td>55516530</td>
+                        <td>20 kg</td>
+                        <td>100 pt</td>
+                        <td class="stet-td">
+                          <span class="state-td__unactive">reject</span>
+                        </td>
+                        <td class="btn-td">
+                          <div >
+                            <a style="display:flex; justify-content:center;" href="" class="btn-td__btn">
+                              <img src="{{asset('./contents/img/lock-icon.png')}}" alt="" class="btn-td__btn__icon block-icon">
+                            </a>
+                          </div>
+                          <div >
+                            <button class="btn-td__bt" style="background-color: transparent;border: none;">
+                              <i class='bx bxs-edit btn-td__btn'></i>
+                              
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+
+      
+
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+
+
+      </div>
+{% endblock %}
+ 
+
+

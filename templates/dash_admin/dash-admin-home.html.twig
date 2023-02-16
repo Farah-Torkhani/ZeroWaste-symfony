@@ -1,0 +1,42 @@
+{% extends 'dash_admin/dashAdminBase.html.twig' %} 
+
+{% block dashboard_active %}active {% endblock %}
+
+{% block dashContent %}
+
+<div class="dash__container">
+  <nav class="dash__navbar">
+    <div class="dash__navbar-text">Dashboard</div>
+    <div class="navbar__items">
+      <span class="navbar__item">
+        <i class="bx bx-log-out item"></i>
+      </span>
+
+      <div class="notification-icon">
+        <span class="cart-icon__span">3</span>
+        <span class="navbar__item">
+          <i class="bx bx-bell item"></i>
+        </span>
+      </div>
+
+      <span class="dash__top-bar__fullname"> {{userFullname}} </span>
+
+      <div class="dash__top-bar__img-container">
+        <a href="#">
+          <img
+            src="{{asset('./contents/img/ali.jpg')}}"
+            class="dash__top-bar__img"
+            alt="profile"
+          />
+        </a>
+      </div>
+    </div>
+  </nav>
+  <!--end dash__navbar-->
+
+  <div class="dash__container-card">
+    <div class="dash__card">hello</div>
+  </div>
+</div>
+
+{% endblock %}

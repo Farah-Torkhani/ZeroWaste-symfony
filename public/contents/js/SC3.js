@@ -53,32 +53,8 @@ toggle.addEventListener("click", () => {
   }
 });
 
-//*************************************************** */
-/*
-function show(data) {
-  document.querySelector(".product-add-form__input-category").value = data;
-  option.classList.toggle("activee");
-  chevronDown.classList.toggle("rotate");
-}
-
-let dropdown = document.querySelector(".product-add-form__input-category");
-let option = document.querySelector(".product-category__option");
-let chevronDown = document.querySelector(".bx-chevron-down");
-
-dropdown.onclick = function () {
-  option.classList.toggle("activee");
-  chevronDown.classList.toggle("rotate");
-};
-
-/*
-$(document).ready(function () {
-  $(".product-add-form__input-category").click(function () {
-    $(".product-category__option").slideToggle(500);
-  });
-});
-*/
 //************************************************************ */
-/* $(document).ready(function () {
+$(document).ready(function () {
   $("#add-event-btn").click(function () {
     $(".event-forum").show(0);
     $(".event-forum-model").css("right", "0%");
@@ -91,8 +67,8 @@ $(document).ready(function () {
     $(".event-forum-model").css("right", "-50%");
   });
 });
-*/
-//*************************************************************** */
+
+
 $(function () {
   $("#prouct-add-form-image__file-btn").change(function (event) {
     var x = URL.createObjectURL(event.target.files[0]);
@@ -104,46 +80,36 @@ $(function () {
   });
 });
 
-//*******************************dash commands **************************************************/
 
-/*
-let command = document.querySelector(".product-card-commands-content");
-let commandInfo = document.querySelector(
-  ".product-card-commands-content__information-details"
-);
-let chevronDownC = document.querySelector(
-  ".product-card-commands-chevron-icon"
-);
 
-command.onclick = function () {
-  commandInfo.classList.toggle("showC");
-  chevronDownC.classList.toggle("rotate");
-};
-*/
+/*-----------------------------------------------------------------------*/
+/*-----------------------------------------------------------------------*/
 
-/*
-$(document).ready(function () {
-  $(".product-card-commands-content").click(function () {
-    $(".product-card-commands-content__information-details").slideToggle(700);
-    $(".up-cmd").toggle(0);
-    $(".down-cmd").toggle(0);
-  });
-});
-*/
 function toggle_commande_dash(x) {
   $("#product-card-commands-content__information-details" + x).slideToggle(700);
   $("#chevron-down" + x).toggle(0);
   $("#chevron-up" + x).toggle(0);
 }
 
+
+
 $(document).ready(function () {
-  $("#add-btn-rightSide").mouseenter(function () {
+  $("#add-event-btn").mouseenter(function () {
     $("#add-btn-hover-container").show(0);
   });
 
-  $("#add-btn-rightSide").mouseleave(function () {
+  $("#add-event-btn").mouseleave(function () {
     $("#add-btn-hover-container").hide(0);
   });
+
+  $("#add-participant").mouseenter(function () {
+    $("#add-btn-hover-container2").show(0);
+  });
+
+  $("#add-participant").mouseleave(function () {
+    $("#add-btn-hover-container2").hide(0);
+  });
+
 
   $("#category-btn-rightSide").mouseenter(function () {
     $("#category-btn-hover-container").show(0);
@@ -173,3 +139,6 @@ $(document).ready(function () {
     $("#add-category__form-id").slideToggle(300);
   });
 });
+
+/*-----------------------------------------------------------------------*/
+/*-----------------------------------------------------------------------*/

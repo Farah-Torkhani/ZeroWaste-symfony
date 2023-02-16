@@ -1,0 +1,1239 @@
+{% extends 'dash_admin/dashAdminBase.html.twig' %} 
+
+{% block command_active %}active {% endblock %}
+
+{% block dashContent %}
+
+<div class="dash__container">
+  <nav class="dash__navbar">
+    <div class="dash__navbar-text">Dashboard</div>
+    <div class="navbar__items">
+      <span class="navbar__item">
+        <i class="bx bx-log-out item"></i>
+      </span>
+
+      <div class="notification-icon">
+        <span class="cart-icon__span">3</span>
+        <span class="navbar__item">
+          <i class="bx bx-bell item"></i>
+        </span>
+      </div>
+
+      <span class="dash__top-bar__fullname"> {{userFullname}} </span>
+
+      <div class="dash__top-bar__img-container">
+        <a href="#">
+          <img
+            src="{{asset('./contents/img/ali.jpg')}}"
+            class="dash__top-bar__img"
+            alt="profile"
+          />
+        </a>
+      </div>
+    </div>
+  </nav>
+  <!--end dash__navbar-->
+
+  <div class="dash__container-card">
+    <div class="dash__card">
+      <div class="product product-card-commands">
+        <div class="product-card-commands-header">
+          <h1>Commands List</h1>
+        </div>
+        <div
+          class="product-card-commands-content"
+          onclick="toggle_commande_dash( x='-id1'  )"
+        >
+          <div class="product-card-commands-content__information">
+            <div class="product-card-commands-content__date">
+              28/11/2022 - 22:43:23 PM
+            </div>
+            <div class="product-card-commands-chevron-icon-container">
+              <i
+                class="bx bx-chevron-down product-card-commands-chevron-icon"
+                id="chevron-down-id1"
+              ></i>
+              <i
+                class="bx bx-chevron-up product-card-commands-chevron-icon"
+                id="chevron-up-id1"
+                style="display: none"
+              ></i>
+            </div>
+
+            <div
+              class="product-card-commands-content__information-details"
+              id="product-card-commands-content__information-details-id1"
+              style="display: none"
+            >
+              <h1 class="Order-details">Order details</h1>
+              <p class="Order-details-info"><b>Full name: </b>Braiek ALi</p>
+              <p class="Order-details-info">
+                <b>Address: </b>Ariana Soghra, Tunis
+              </p>
+              <p class="Order-details-info"><b>Order's ID: </b>15</p>
+
+              <div class="users-list__body" style="margin-top: 1rem">
+                <table class="user-table command-table">
+                  <thead>
+                    <tr>
+                      <th>Product</th>
+                      <th>Quantity</th>
+                      <th>Unit Price</th>
+
+                      <th>Total</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="one-user">
+                      <td class="fullname-td">
+                        <div class="fullname-td__container">
+                          <div class="fullname-td__img-container">
+                            <img
+                              src="{{asset('./contents/img/nikeair.png')}}"
+                              alt=""
+                              class="fullname-td__img-container__img"
+                            />
+                          </div>
+                          <div class="fullname-td__fullname-username">
+                            <p class="fullname-td__fullname-username__fullname">
+                              Nike Air
+                            </p>
+                            <p class="fullname-td__fullname-username__username">
+                              shoes
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td>5</td>
+                      <td>$120</td>
+
+                      <td class="btn-td">$120</td>
+                    </tr>
+
+                    <tr class="one-user">
+                      <td class="fullname-td">
+                        <div class="fullname-td__container">
+                          <div class="fullname-td__img-container">
+                            <img
+                              src="{{asset('./contents/img/nikeair.png')}}"
+                              alt=""
+                              class="fullname-td__img-container__img"
+                            />
+                          </div>
+                          <div class="fullname-td__fullname-username">
+                            <p class="fullname-td__fullname-username__fullname">
+                              Nike Air
+                            </p>
+                            <p class="fullname-td__fullname-username__username">
+                              shoes
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td>5</td>
+                      <td>$120</td>
+
+                      <td class="btn-td">$120</td>
+                    </tr>
+
+                    <tr class="one-user">
+                      <td class="fullname-td">
+                        <div class="fullname-td__container">
+                          <div class="fullname-td__img-container">
+                            <img
+                              src="{{asset('./contents/img/nikeair.png')}}"
+                              alt=""
+                              class="fullname-td__img-container__img"
+                            />
+                          </div>
+                          <div class="fullname-td__fullname-username">
+                            <p class="fullname-td__fullname-username__fullname">
+                              Nike Air
+                            </p>
+                            <p class="fullname-td__fullname-username__username">
+                              shoes
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td>5</td>
+                      <td>$120</td>
+
+                      <td class="btn-td">$120</td>
+                    </tr>
+
+                    <tr class="one-user">
+                      <td class="fullname-td">
+                        <div class="fullname-td__container">
+                          <div class="fullname-td__img-container">
+                            <img
+                              src="{{asset('./contents/img/nikeair.png')}}"
+                              alt=""
+                              class="fullname-td__img-container__img"
+                            />
+                          </div>
+                          <div class="fullname-td__fullname-username">
+                            <p class="fullname-td__fullname-username__fullname">
+                              Nike Air
+                            </p>
+                            <p class="fullname-td__fullname-username__username">
+                              shoes
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td>5</td>
+                      <td>$120</td>
+
+                      <td class="btn-td">$120</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!---end product command-->
+
+        <div
+          class="product-card-commands-content"
+          onclick="toggle_commande_dash( x='-id2'  )"
+        >
+          <div class="product-card-commands-content__information">
+            <div class="product-card-commands-content__date">
+              28/11/2022 - 22:43:23 PM
+            </div>
+            <div class="product-card-commands-chevron-icon-container">
+              <i
+                class="bx bx-chevron-down product-card-commands-chevron-icon"
+                id="chevron-down-id2"
+              ></i>
+              <i
+                class="bx bx-chevron-up product-card-commands-chevron-icon"
+                id="chevron-up-id2"
+                style="display: none"
+              ></i>
+            </div>
+
+            <div
+              class="product-card-commands-content__information-details"
+              id="product-card-commands-content__information-details-id2"
+              style="display: none"
+            >
+              <h1 class="Order-details">Order details</h1>
+              <p class="Order-details-info"><b>Full name: </b>Braiek ALi</p>
+              <p class="Order-details-info">
+                <b>Address: </b>Ariana Soghra, Tunis
+              </p>
+              <p class="Order-details-info"><b>Order's ID: </b>15</p>
+
+              <div class="users-list__body" style="margin-top: 1rem">
+                <table class="user-table command-table">
+                  <thead>
+                    <tr>
+                      <th>Product</th>
+                      <th>Quantity</th>
+                      <th>Unit Price</th>
+
+                      <th>Total</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="one-user">
+                      <td class="fullname-td">
+                        <div class="fullname-td__container">
+                          <div class="fullname-td__img-container">
+                            <img
+                              src="{{asset('./contents/img/nikeair.png')}}"
+                              alt=""
+                              class="fullname-td__img-container__img"
+                            />
+                          </div>
+                          <div class="fullname-td__fullname-username">
+                            <p class="fullname-td__fullname-username__fullname">
+                              Nike Air
+                            </p>
+                            <p class="fullname-td__fullname-username__username">
+                              shoes
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td>5</td>
+                      <td>$120</td>
+
+                      <td class="btn-td">$120</td>
+                    </tr>
+
+                    <tr class="one-user">
+                      <td class="fullname-td">
+                        <div class="fullname-td__container">
+                          <div class="fullname-td__img-container">
+                            <img
+                              src="{{asset('./contents/img/nikeair.png')}}"
+                              alt=""
+                              class="fullname-td__img-container__img"
+                            />
+                          </div>
+                          <div class="fullname-td__fullname-username">
+                            <p class="fullname-td__fullname-username__fullname">
+                              Nike Air
+                            </p>
+                            <p class="fullname-td__fullname-username__username">
+                              shoes
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td>5</td>
+                      <td>$120</td>
+
+                      <td class="btn-td">$120</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!---end product command 2-->
+
+        <div
+          class="product-card-commands-content"
+          onclick="toggle_commande_dash( x='-id3'  )"
+        >
+          <div class="product-card-commands-content__information">
+            <div class="product-card-commands-content__date">
+              28/11/2022 - 22:43:23 PM
+            </div>
+            <div class="product-card-commands-chevron-icon-container">
+              <i
+                class="bx bx-chevron-down product-card-commands-chevron-icon"
+                id="chevron-down-id3"
+              ></i>
+              <i
+                class="bx bx-chevron-up product-card-commands-chevron-icon"
+                id="chevron-up-id3"
+                style="display: none"
+              ></i>
+            </div>
+
+            <div
+              class="product-card-commands-content__information-details"
+              id="product-card-commands-content__information-details-id3"
+              style="display: none"
+            >
+              <h1 class="Order-details">Order details</h1>
+              <p class="Order-details-info"><b>Full name: </b>Braiek ALi</p>
+              <p class="Order-details-info">
+                <b>Address: </b>Ariana Soghra, Tunis
+              </p>
+              <p class="Order-details-info"><b>Order's ID: </b>15</p>
+
+              <div class="users-list__body" style="margin-top: 1rem">
+                <table class="user-table command-table">
+                  <thead>
+                    <tr>
+                      <th>Product</th>
+                      <th>Quantity</th>
+                      <th>Unit Price</th>
+
+                      <th>Total</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="one-user">
+                      <td class="fullname-td">
+                        <div class="fullname-td__container">
+                          <div class="fullname-td__img-container">
+                            <img
+                              src="{{asset('./contents/img/nikeair.png')}}"
+                              alt=""
+                              class="fullname-td__img-container__img"
+                            />
+                          </div>
+                          <div class="fullname-td__fullname-username">
+                            <p class="fullname-td__fullname-username__fullname">
+                              Nike Air
+                            </p>
+                            <p class="fullname-td__fullname-username__username">
+                              shoes
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td>5</td>
+                      <td>$120</td>
+
+                      <td class="btn-td">$120</td>
+                    </tr>
+
+                    <tr class="one-user">
+                      <td class="fullname-td">
+                        <div class="fullname-td__container">
+                          <div class="fullname-td__img-container">
+                            <img
+                              src="{{asset('./contents/img/nikeair.png')}}"
+                              alt=""
+                              class="fullname-td__img-container__img"
+                            />
+                          </div>
+                          <div class="fullname-td__fullname-username">
+                            <p class="fullname-td__fullname-username__fullname">
+                              Nike Air
+                            </p>
+                            <p class="fullname-td__fullname-username__username">
+                              shoes
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td>5</td>
+                      <td>$120</td>
+
+                      <td class="btn-td">$120</td>
+                    </tr>
+
+                    <tr class="one-user">
+                      <td class="fullname-td">
+                        <div class="fullname-td__container">
+                          <div class="fullname-td__img-container">
+                            <img
+                              src="{{asset('./contents/img/nikeair.png')}}"
+                              alt=""
+                              class="fullname-td__img-container__img"
+                            />
+                          </div>
+                          <div class="fullname-td__fullname-username">
+                            <p class="fullname-td__fullname-username__fullname">
+                              Nike Air
+                            </p>
+                            <p class="fullname-td__fullname-username__username">
+                              shoes
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td>5</td>
+                      <td>$120</td>
+
+                      <td class="btn-td">$120</td>
+                    </tr>
+
+                    <tr class="one-user">
+                      <td class="fullname-td">
+                        <div class="fullname-td__container">
+                          <div class="fullname-td__img-container">
+                            <img
+                              src="{{asset('./contents/img/nikeair.png')}}"
+                              alt=""
+                              class="fullname-td__img-container__img"
+                            />
+                          </div>
+                          <div class="fullname-td__fullname-username">
+                            <p class="fullname-td__fullname-username__fullname">
+                              Nike Air
+                            </p>
+                            <p class="fullname-td__fullname-username__username">
+                              shoes
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td>5</td>
+                      <td>$120</td>
+
+                      <td class="btn-td">$120</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!---end product command 3-->
+
+        <div
+          class="product-card-commands-content"
+          onclick="toggle_commande_dash( x='-id4'  )"
+        >
+          <div class="product-card-commands-content__information">
+            <div class="product-card-commands-content__date">
+              28/11/2022 - 22:43:23 PM
+            </div>
+            <div class="product-card-commands-chevron-icon-container">
+              <i
+                class="bx bx-chevron-down product-card-commands-chevron-icon"
+                id="chevron-down-id4"
+              ></i>
+              <i
+                class="bx bx-chevron-up product-card-commands-chevron-icon"
+                id="chevron-up-id4"
+                style="display: none"
+              ></i>
+            </div>
+
+            <div
+              class="product-card-commands-content__information-details"
+              id="product-card-commands-content__information-details-id4"
+              style="display: none"
+            >
+              <h1 class="Order-details">Order details</h1>
+              <p class="Order-details-info"><b>Full name: </b>Braiek ALi</p>
+              <p class="Order-details-info">
+                <b>Address: </b>Ariana Soghra, Tunis
+              </p>
+              <p class="Order-details-info"><b>Order's ID: </b>15</p>
+
+              <div class="users-list__body" style="margin-top: 1rem">
+                <table class="user-table command-table">
+                  <thead>
+                    <tr>
+                      <th>Product</th>
+                      <th>Quantity</th>
+                      <th>Unit Price</th>
+
+                      <th>Total</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="one-user">
+                      <td class="fullname-td">
+                        <div class="fullname-td__container">
+                          <div class="fullname-td__img-container">
+                            <img
+                              src="{{asset('./contents/img/nikeair.png')}}"
+                              alt=""
+                              class="fullname-td__img-container__img"
+                            />
+                          </div>
+                          <div class="fullname-td__fullname-username">
+                            <p class="fullname-td__fullname-username__fullname">
+                              Nike Air
+                            </p>
+                            <p class="fullname-td__fullname-username__username">
+                              shoes
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td>5</td>
+                      <td>$120</td>
+
+                      <td class="btn-td">$120</td>
+                    </tr>
+
+                    <tr class="one-user">
+                      <td class="fullname-td">
+                        <div class="fullname-td__container">
+                          <div class="fullname-td__img-container">
+                            <img
+                              src="{{asset('./contents/img/nikeair.png')}}"
+                              alt=""
+                              class="fullname-td__img-container__img"
+                            />
+                          </div>
+                          <div class="fullname-td__fullname-username">
+                            <p class="fullname-td__fullname-username__fullname">
+                              Nike Air
+                            </p>
+                            <p class="fullname-td__fullname-username__username">
+                              shoes
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td>5</td>
+                      <td>$120</td>
+
+                      <td class="btn-td">$120</td>
+                    </tr>
+
+                    <tr class="one-user">
+                      <td class="fullname-td">
+                        <div class="fullname-td__container">
+                          <div class="fullname-td__img-container">
+                            <img
+                              src="{{asset('./contents/img/nikeair.png')}}"
+                              alt=""
+                              class="fullname-td__img-container__img"
+                            />
+                          </div>
+                          <div class="fullname-td__fullname-username">
+                            <p class="fullname-td__fullname-username__fullname">
+                              Nike Air
+                            </p>
+                            <p class="fullname-td__fullname-username__username">
+                              shoes
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td>5</td>
+                      <td>$120</td>
+
+                      <td class="btn-td">$120</td>
+                    </tr>
+
+                    <tr class="one-user">
+                      <td class="fullname-td">
+                        <div class="fullname-td__container">
+                          <div class="fullname-td__img-container">
+                            <img
+                              src="{{asset('./contents/img/nikeair.png')}}"
+                              alt=""
+                              class="fullname-td__img-container__img"
+                            />
+                          </div>
+                          <div class="fullname-td__fullname-username">
+                            <p class="fullname-td__fullname-username__fullname">
+                              Nike Air
+                            </p>
+                            <p class="fullname-td__fullname-username__username">
+                              shoes
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td>5</td>
+                      <td>$120</td>
+
+                      <td class="btn-td">$120</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!---end product command 4-->
+
+        <div
+          class="product-card-commands-content"
+          onclick="toggle_commande_dash( x='-id5'  )"
+        >
+          <div class="product-card-commands-content__information">
+            <div class="product-card-commands-content__date">
+              28/11/2022 - 22:43:23 PM
+            </div>
+            <div class="product-card-commands-chevron-icon-container">
+              <i
+                class="bx bx-chevron-down product-card-commands-chevron-icon"
+                id="chevron-down-id5"
+              ></i>
+              <i
+                class="bx bx-chevron-up product-card-commands-chevron-icon"
+                id="chevron-up-id5"
+                style="display: none"
+              ></i>
+            </div>
+
+            <div
+              class="product-card-commands-content__information-details"
+              id="product-card-commands-content__information-details-id5"
+              style="display: none"
+            >
+              <h1 class="Order-details">Order details</h1>
+              <p class="Order-details-info"><b>Full name: </b>Braiek ALi</p>
+              <p class="Order-details-info">
+                <b>Address: </b>Ariana Soghra, Tunis
+              </p>
+              <p class="Order-details-info"><b>Order's ID: </b>15</p>
+
+              <div class="users-list__body" style="margin-top: 1rem">
+                <table class="user-table command-table">
+                  <thead>
+                    <tr>
+                      <th>Product</th>
+                      <th>Quantity</th>
+                      <th>Unit Price</th>
+
+                      <th>Total</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="one-user">
+                      <td class="fullname-td">
+                        <div class="fullname-td__container">
+                          <div class="fullname-td__img-container">
+                            <img
+                              src="{{asset('./contents/img/nikeair.png')}}"
+                              alt=""
+                              class="fullname-td__img-container__img"
+                            />
+                          </div>
+                          <div class="fullname-td__fullname-username">
+                            <p class="fullname-td__fullname-username__fullname">
+                              Nike Air
+                            </p>
+                            <p class="fullname-td__fullname-username__username">
+                              shoes
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td>5</td>
+                      <td>$120</td>
+
+                      <td class="btn-td">$120</td>
+                    </tr>
+
+                    <tr class="one-user">
+                      <td class="fullname-td">
+                        <div class="fullname-td__container">
+                          <div class="fullname-td__img-container">
+                            <img
+                              src="{{asset('./contents/img/nikeair.png')}}"
+                              alt=""
+                              class="fullname-td__img-container__img"
+                            />
+                          </div>
+                          <div class="fullname-td__fullname-username">
+                            <p class="fullname-td__fullname-username__fullname">
+                              Nike Air
+                            </p>
+                            <p class="fullname-td__fullname-username__username">
+                              shoes
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td>5</td>
+                      <td>$120</td>
+
+                      <td class="btn-td">$120</td>
+                    </tr>
+
+                    <tr class="one-user">
+                      <td class="fullname-td">
+                        <div class="fullname-td__container">
+                          <div class="fullname-td__img-container">
+                            <img
+                              src="{{asset('./contents/img/nikeair.png')}}"
+                              alt=""
+                              class="fullname-td__img-container__img"
+                            />
+                          </div>
+                          <div class="fullname-td__fullname-username">
+                            <p class="fullname-td__fullname-username__fullname">
+                              Nike Air
+                            </p>
+                            <p class="fullname-td__fullname-username__username">
+                              shoes
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td>5</td>
+                      <td>$120</td>
+
+                      <td class="btn-td">$120</td>
+                    </tr>
+
+                    <tr class="one-user">
+                      <td class="fullname-td">
+                        <div class="fullname-td__container">
+                          <div class="fullname-td__img-container">
+                            <img
+                              src="{{asset('./contents/img/nikeair.png')}}"
+                              alt=""
+                              class="fullname-td__img-container__img"
+                            />
+                          </div>
+                          <div class="fullname-td__fullname-username">
+                            <p class="fullname-td__fullname-username__fullname">
+                              Nike Air
+                            </p>
+                            <p class="fullname-td__fullname-username__username">
+                              shoes
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td>5</td>
+                      <td>$120</td>
+
+                      <td class="btn-td">$120</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!---end product command 5-->
+
+        <div
+          class="product-card-commands-content"
+          onclick="toggle_commande_dash( x='-id6'  )"
+        >
+          <div class="product-card-commands-content__information">
+            <div class="product-card-commands-content__date">
+              28/11/2022 - 22:43:23 PM
+            </div>
+            <div class="product-card-commands-chevron-icon-container">
+              <i
+                class="bx bx-chevron-down product-card-commands-chevron-icon"
+                id="chevron-down-id6"
+              ></i>
+              <i
+                class="bx bx-chevron-up product-card-commands-chevron-icon"
+                id="chevron-up-id6"
+                style="display: none"
+              ></i>
+            </div>
+
+            <div
+              class="product-card-commands-content__information-details"
+              id="product-card-commands-content__information-details-id6"
+              style="display: none"
+            >
+              <h1 class="Order-details">Order details</h1>
+              <p class="Order-details-info"><b>Full name: </b>Braiek ALi</p>
+              <p class="Order-details-info">
+                <b>Address: </b>Ariana Soghra, Tunis
+              </p>
+              <p class="Order-details-info"><b>Order's ID: </b>15</p>
+
+              <div class="users-list__body" style="margin-top: 1rem">
+                <table class="user-table command-table">
+                  <thead>
+                    <tr>
+                      <th>Product</th>
+                      <th>Quantity</th>
+                      <th>Unit Price</th>
+
+                      <th>Total</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="one-user">
+                      <td class="fullname-td">
+                        <div class="fullname-td__container">
+                          <div class="fullname-td__img-container">
+                            <img
+                              src="{{asset('./contents/img/nikeair.png')}}"
+                              alt=""
+                              class="fullname-td__img-container__img"
+                            />
+                          </div>
+                          <div class="fullname-td__fullname-username">
+                            <p class="fullname-td__fullname-username__fullname">
+                              Nike Air
+                            </p>
+                            <p class="fullname-td__fullname-username__username">
+                              shoes
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td>5</td>
+                      <td>$120</td>
+
+                      <td class="btn-td">$120</td>
+                    </tr>
+
+                    <tr class="one-user">
+                      <td class="fullname-td">
+                        <div class="fullname-td__container">
+                          <div class="fullname-td__img-container">
+                            <img
+                              src="{{asset('./contents/img/nikeair.png')}}"
+                              alt=""
+                              class="fullname-td__img-container__img"
+                            />
+                          </div>
+                          <div class="fullname-td__fullname-username">
+                            <p class="fullname-td__fullname-username__fullname">
+                              Nike Air
+                            </p>
+                            <p class="fullname-td__fullname-username__username">
+                              shoes
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td>5</td>
+                      <td>$120</td>
+
+                      <td class="btn-td">$120</td>
+                    </tr>
+
+                    <tr class="one-user">
+                      <td class="fullname-td">
+                        <div class="fullname-td__container">
+                          <div class="fullname-td__img-container">
+                            <img
+                              src="{{asset('./contents/img/nikeair.png')}}"
+                              alt=""
+                              class="fullname-td__img-container__img"
+                            />
+                          </div>
+                          <div class="fullname-td__fullname-username">
+                            <p class="fullname-td__fullname-username__fullname">
+                              Nike Air
+                            </p>
+                            <p class="fullname-td__fullname-username__username">
+                              shoes
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td>5</td>
+                      <td>$120</td>
+
+                      <td class="btn-td">$120</td>
+                    </tr>
+
+                    <tr class="one-user">
+                      <td class="fullname-td">
+                        <div class="fullname-td__container">
+                          <div class="fullname-td__img-container">
+                            <img
+                              src="{{asset('./contents/img/nikeair.png')}}"
+                              alt=""
+                              class="fullname-td__img-container__img"
+                            />
+                          </div>
+                          <div class="fullname-td__fullname-username">
+                            <p class="fullname-td__fullname-username__fullname">
+                              Nike Air
+                            </p>
+                            <p class="fullname-td__fullname-username__username">
+                              shoes
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td>5</td>
+                      <td>$120</td>
+
+                      <td class="btn-td">$120</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!---end product command 6-->
+
+        <div
+          class="product-card-commands-content"
+          onclick="toggle_commande_dash( x='-id7'  )"
+        >
+          <div class="product-card-commands-content__information">
+            <div class="product-card-commands-content__date">
+              28/11/2022 - 22:43:23 PM
+            </div>
+            <div class="product-card-commands-chevron-icon-container">
+              <i
+                class="bx bx-chevron-down product-card-commands-chevron-icon"
+                id="chevron-down-id7"
+              ></i>
+              <i
+                class="bx bx-chevron-up product-card-commands-chevron-icon"
+                id="chevron-up-id7"
+                style="display: none"
+              ></i>
+            </div>
+
+            <div
+              class="product-card-commands-content__information-details"
+              id="product-card-commands-content__information-details-id7"
+              style="display: none"
+            >
+              <h1 class="Order-details">Order details</h1>
+              <p class="Order-details-info"><b>Full name: </b>Braiek ALi</p>
+              <p class="Order-details-info">
+                <b>Address: </b>Ariana Soghra, Tunis
+              </p>
+              <p class="Order-details-info"><b>Order's ID: </b>15</p>
+
+              <div class="users-list__body" style="margin-top: 1rem">
+                <table class="user-table command-table">
+                  <thead>
+                    <tr>
+                      <th>Product</th>
+                      <th>Quantity</th>
+                      <th>Unit Price</th>
+
+                      <th>Total</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="one-user">
+                      <td class="fullname-td">
+                        <div class="fullname-td__container">
+                          <div class="fullname-td__img-container">
+                            <img
+                              src="{{asset('./contents/img/nikeair.png')}}"
+                              alt=""
+                              class="fullname-td__img-container__img"
+                            />
+                          </div>
+                          <div class="fullname-td__fullname-username">
+                            <p class="fullname-td__fullname-username__fullname">
+                              Nike Air
+                            </p>
+                            <p class="fullname-td__fullname-username__username">
+                              shoes
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td>5</td>
+                      <td>$120</td>
+
+                      <td class="btn-td">$120</td>
+                    </tr>
+
+                    <tr class="one-user">
+                      <td class="fullname-td">
+                        <div class="fullname-td__container">
+                          <div class="fullname-td__img-container">
+                            <img
+                              src="{{asset('./contents/img/nikeair.png')}}"
+                              alt=""
+                              class="fullname-td__img-container__img"
+                            />
+                          </div>
+                          <div class="fullname-td__fullname-username">
+                            <p class="fullname-td__fullname-username__fullname">
+                              Nike Air
+                            </p>
+                            <p class="fullname-td__fullname-username__username">
+                              shoes
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td>5</td>
+                      <td>$120</td>
+
+                      <td class="btn-td">$120</td>
+                    </tr>
+
+                    <tr class="one-user">
+                      <td class="fullname-td">
+                        <div class="fullname-td__container">
+                          <div class="fullname-td__img-container">
+                            <img
+                              src="{{asset('./contents/img/nikeair.png')}}"
+                              alt=""
+                              class="fullname-td__img-container__img"
+                            />
+                          </div>
+                          <div class="fullname-td__fullname-username">
+                            <p class="fullname-td__fullname-username__fullname">
+                              Nike Air
+                            </p>
+                            <p class="fullname-td__fullname-username__username">
+                              shoes
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td>5</td>
+                      <td>$120</td>
+
+                      <td class="btn-td">$120</td>
+                    </tr>
+
+                    <tr class="one-user">
+                      <td class="fullname-td">
+                        <div class="fullname-td__container">
+                          <div class="fullname-td__img-container">
+                            <img
+                              src="{{asset('./contents/img/nikeair.png')}}"
+                              alt=""
+                              class="fullname-td__img-container__img"
+                            />
+                          </div>
+                          <div class="fullname-td__fullname-username">
+                            <p class="fullname-td__fullname-username__fullname">
+                              Nike Air
+                            </p>
+                            <p class="fullname-td__fullname-username__username">
+                              shoes
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td>5</td>
+                      <td>$120</td>
+
+                      <td class="btn-td">$120</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!---end product command 7-->
+
+        <div
+          class="product-card-commands-content"
+          onclick="toggle_commande_dash( x='-id8'  )"
+        >
+          <div class="product-card-commands-content__information">
+            <div class="product-card-commands-content__date">
+              28/11/2022 - 22:43:23 PM
+            </div>
+            <div class="product-card-commands-chevron-icon-container">
+              <i
+                class="bx bx-chevron-down product-card-commands-chevron-icon"
+                id="chevron-down-id8"
+              ></i>
+              <i
+                class="bx bx-chevron-up product-card-commands-chevron-icon"
+                id="chevron-up-id8"
+                style="display: none"
+              ></i>
+            </div>
+
+            <div
+              class="product-card-commands-content__information-details"
+              id="product-card-commands-content__information-details-id8"
+              style="display: none"
+            >
+              <h1 class="Order-details">Order details</h1>
+              <p class="Order-details-info"><b>Full name: </b>Braiek ALi</p>
+              <p class="Order-details-info">
+                <b>Address: </b>Ariana Soghra, Tunis
+              </p>
+              <p class="Order-details-info"><b>Order's ID: </b>15</p>
+
+              <div class="users-list__body" style="margin-top: 1rem">
+                <table class="user-table command-table">
+                  <thead>
+                    <tr>
+                      <th>Product</th>
+                      <th>Quantity</th>
+                      <th>Unit Price</th>
+
+                      <th>Total</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="one-user">
+                      <td class="fullname-td">
+                        <div class="fullname-td__container">
+                          <div class="fullname-td__img-container">
+                            <img
+                              src="{{asset('./contents/img/nikeair.png')}}"
+                              alt=""
+                              class="fullname-td__img-container__img"
+                            />
+                          </div>
+                          <div class="fullname-td__fullname-username">
+                            <p class="fullname-td__fullname-username__fullname">
+                              Nike Air
+                            </p>
+                            <p class="fullname-td__fullname-username__username">
+                              shoes
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td>5</td>
+                      <td>$120</td>
+
+                      <td class="btn-td">$120</td>
+                    </tr>
+
+                    <tr class="one-user">
+                      <td class="fullname-td">
+                        <div class="fullname-td__container">
+                          <div class="fullname-td__img-container">
+                            <img
+                              src="{{asset('./contents/img/nikeair.png')}}"
+                              alt=""
+                              class="fullname-td__img-container__img"
+                            />
+                          </div>
+                          <div class="fullname-td__fullname-username">
+                            <p class="fullname-td__fullname-username__fullname">
+                              Nike Air
+                            </p>
+                            <p class="fullname-td__fullname-username__username">
+                              shoes
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td>5</td>
+                      <td>$120</td>
+
+                      <td class="btn-td">$120</td>
+                    </tr>
+
+                    <tr class="one-user">
+                      <td class="fullname-td">
+                        <div class="fullname-td__container">
+                          <div class="fullname-td__img-container">
+                            <img
+                              src="{{asset('./contents/img/nikeair.png')}}"
+                              alt=""
+                              class="fullname-td__img-container__img"
+                            />
+                          </div>
+                          <div class="fullname-td__fullname-username">
+                            <p class="fullname-td__fullname-username__fullname">
+                              Nike Air
+                            </p>
+                            <p class="fullname-td__fullname-username__username">
+                              shoes
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td>5</td>
+                      <td>$120</td>
+
+                      <td class="btn-td">$120</td>
+                    </tr>
+
+                    <tr class="one-user">
+                      <td class="fullname-td">
+                        <div class="fullname-td__container">
+                          <div class="fullname-td__img-container">
+                            <img
+                              src="{{asset('./contents/img/nikeair.png')}}"
+                              alt=""
+                              class="fullname-td__img-container__img"
+                            />
+                          </div>
+                          <div class="fullname-td__fullname-username">
+                            <p class="fullname-td__fullname-username__fullname">
+                              Nike Air
+                            </p>
+                            <p class="fullname-td__fullname-username__username">
+                              shoes
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td>5</td>
+                      <td>$120</td>
+
+                      <td class="btn-td">$120</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!---end product command 8-->
+
+        <!--endproduct-card-commands-->
+      </div>
+    </div>
+    <!--juste pour faire un test pour eviter un erreur de javascript-->
+    <div class="product-add-form__input-category"></div>
+  </div>
+</div>
+
+{% endblock %}
