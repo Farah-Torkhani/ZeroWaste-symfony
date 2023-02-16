@@ -1,5 +1,10 @@
 .dash__side-bar.close {
     width: 8.8rem;
+    box-shadow: none !important;
+}
+
+.dash__side-bar{
+    box-shadow: none !important;
 }
 
 .dash__side-bar .image {
@@ -11,6 +16,7 @@
     // margin: 0 auto;
     position: relative;
     bottom: -1.6rem;
+    left: 1rem;
   }
 
 .dash__side-bar .image-text img {

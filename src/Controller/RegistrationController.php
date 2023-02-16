@@ -63,8 +63,8 @@ class RegistrationController extends AbstractController
 
                 $mailer->send($email);
                 $this->addFlash('success', 'Please confirm your email');
-                // return $this->redirectToRoute("app_login");
-                return $this->redirectToRoute("app_registration");
+                return $this->redirectToRoute("app_login");
+                // return $this->redirectToRoute("app_registration");
             } catch (\Exception $exception) {
                 $this->addFlash('warning', 'une erreur est survenue : email already in use');
                 return $this->redirectToRoute("app_registration");
@@ -98,7 +98,6 @@ class RegistrationController extends AbstractController
         $em->flush();
 
         $this->addFlash('success', 'email verified successfully');
-        // return $this->redirectToRoute("app_login");
-        return $this->redirectToRoute("app_registration");
+        return $this->redirectToRoute("app_login");
     }
 }

@@ -2,143 +2,153 @@
 
 
 {% block stylesheets %}
-	<link rel="stylesheet" href="{{asset('./contents/css/style.css')}}">
-	<link rel="stylesheet" href="{{asset('./style/nabilStyle.css')}}">
-	<link rel="shortcut icon" href="{{asset('./assets/img/logo.svg')}}" type="image/x-icon">
-	<link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet"/>
+<link rel="stylesheet" href="{{asset('./contents/css/style.css')}}">
+<link rel="stylesheet" href="{{asset('./style/nabilStyle.css')}}">
+<link rel="shortcut icon" href="{{asset('./assets/img/logo.svg')}}" type="image/x-icon">
+<link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
 {% endblock %}
 
 {% block title %}
-	{{title}}
+{{title}}
 {% endblock %}
 
 {% block javascripts %}
-	<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 {% endblock %}
+
+{% block nav %}{% endblock %}
 
 {% block body %}
 
-	<div class="dash">
-		<nav class="dash__side-bar close">
-			<header class="header-nav-logo">
-				<div class="image-text">
-					<span class="image">
-						<img class="logo logo-toggled-width" src="{{asset('./contents/img/logo4.png')}}" alt="logo"/>
-					</span>
-				</div>
-				<i class="bx bx-chevron-right toggle"></i>
-			</header>
+<div class="dash">
+	<nav class="dash__side-bar close">
+		<header class="header-nav-logo">
+			<div class="image-text">
+				<span class="image">
+					<img class="logo logo-toggled-width" src="{{asset('./contents/img/logo4.png')}}" alt="logo" />
+				</span>
+			</div>
+			<i class="bx bx-chevron-right toggle"></i>
+		</header>
 
-			<div class="menu-bar">
-				<div class="menu">
-					<ul class="menu-links">
-						<li class="nav-links">
-							<a href="{{path('app_dash_user_home')}}" class="nav-links-item {% if app.request.attributes.get('_route') == 'app_dash_user_home' %}active{% endif %}">
-								<i class="bx bx-home icon"></i>
-								<span class="text nav-text">Home</span>
-							</a>
-						</li>
-
-						<li class="nav-links">
-							<a href="#" class="nav-links-item {% if app.request.attributes.get('_route') == 'app_dash_user_profile' %}active{% endif %}">
-								<i class="bx bx-user icon"></i>
-								<span class="text nav-text">Profile</span>
-							</a>
-						</li>
-
-						<li class="nav-links">
-							<a href="{{path('app_dash_user_funds')}}" class="nav-links-item {% if (app.request.attributes.get('_route') == 'app_dash_user_funds') or (app.request.attributes.get('_route') == 'app_dash_user_fund_detail') %}active{% endif %}">
-								<i class='bx bx-donate-heart icon'></i>
-								<span class="text nav-text">Funds</span>
-							</a>
-						</li>
-
-						<li class="nav-links">
-							<a href="{{path('app_dash_user_shop')}}" class="nav-links-item {% if app.request.attributes.get('_route') == 'app_dash_user_shop' %}active{% endif %}">
-								<i class='bx bx-store icon'></i>
-								<span class="text nav-text">Shop</span>
-							</a>
-						</li>
-
-						<li class="nav-links">
-							<a href="#" class="nav-links-item {% if app.request.attributes.get('_route') == 'app_dash_user_collect' %}active{% endif %}">
-								<i class='bx bx-coin-stack icon'></i>
-								<span class="text nav-text">Collect</span>
-							</a>
-						</li>
-
-						<li class="nav-links">
-							<a href="#" class="nav-links-item {% if app.request.attributes.get('_route') == 'app_dash_user_commands' %}active{% endif %}">
-								<i class="bx bx-cart icon"></i>
-								<span class="text nav-text">Commands</span>
-							</a>
-						</li>
-					</ul>
-				</div>
-
-				<div class="bottom-content">
+		<div class="menu-bar">
+			<div class="menu">
+				<ul class="menu-links">
 					<li class="nav-links">
-						<a href="#" class="nav-links-item">
-							<i class="bx bx-log-out icon"></i>
-							<span class="text nav-text">Logout</span>
+						<a href="{{path('app_dash_user_home')}}"
+							class="nav-links-item {% if app.request.attributes.get('_route') == 'app_dash_user_home' %}active{% endif %}">
+							<i class="bx bx-home icon"></i>
+							<span class="text nav-text">Home</span>
 						</a>
 					</li>
 
-					<li class="nav-links mode">
-						<div class="moon-sun">
-							<i class="bx bx-moon icon moon"></i>
-							<i class="bx bx-sun icon sun"></i>
-						</div>
-						<span class="mode-text text">Dark Mode</span>
-
-						<div class="toggle-switch">
-							<span class="switch"></span>
-						</div>
+					<li class="nav-links">
+						<a href="#"
+							class="nav-links-item {% if app.request.attributes.get('_route') == 'app_dash_user_profile' %}active{% endif %}">
+							<i class="bx bx-user icon"></i>
+							<span class="text nav-text">Profile</span>
+						</a>
 					</li>
+
+					<li class="nav-links">
+						<a href="{{path('app_dash_user_funds')}}"
+							class="nav-links-item {% if (app.request.attributes.get('_route') == 'app_dash_user_funds') or (app.request.attributes.get('_route') == 'app_dash_user_fund_detail') %}active{% endif %}">
+							<i class='bx bx-donate-heart icon'></i>
+							<span class="text nav-text">Funds</span>
+						</a>
+					</li>
+
+					<li class="nav-links">
+						<a href="{{path('app_dash_user_shop')}}"
+							class="nav-links-item {% if app.request.attributes.get('_route') == 'app_dash_user_shop' %}active{% endif %}">
+							<i class='bx bx-store icon'></i>
+							<span class="text nav-text">Shop</span>
+						</a>
+					</li>
+
+					<li class="nav-links">
+						<a href="#"
+							class="nav-links-item {% if app.request.attributes.get('_route') == 'app_dash_user_collect' %}active{% endif %}">
+							<i class='bx bx-coin-stack icon'></i>
+							<span class="text nav-text">Collect</span>
+						</a>
+					</li>
+
+					<li class="nav-links">
+						<a href="#"
+							class="nav-links-item {% if app.request.attributes.get('_route') == 'app_dash_user_commands' %}active{% endif %}">
+							<i class="bx bx-cart icon"></i>
+							<span class="text nav-text">Commands</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+
+			<div class="bottom-content">
+				<li class="nav-links">
+					<a href="{{path('app_logout')}}" class="nav-links-item">
+						<i class="bx bx-log-out icon"></i>
+						<span class="text nav-text">Logout</span>
+					</a>
+				</li>
+
+				<li class="nav-links mode">
+					<div class="moon-sun">
+						<i class="bx bx-moon icon moon"></i>
+						<i class="bx bx-sun icon sun"></i>
+					</div>
+					<span class="mode-text text">Dark Mode</span>
+
+					<div class="toggle-switch">
+						<span class="switch"></span>
+					</div>
+				</li>
+			</div>
+		</div>
+	</nav>
+
+	<div class="dash__container">
+		<nav class="dash__navbar">
+			<div class="dash__navbar-text"></div>
+
+			<div class="navbar__items">
+				<a style="text-decoration: none;" href="{{path('app_logout')}}" class="navbar__item">
+					<i class="bx bx-log-out item"></i>
+				</a>
+
+				<div class="notification-icon">
+					<span class="cart-icon__span">3</span>
+					<span class="navbar__item">
+						<i class="bx bx-bell item"></i>
+					</span>
+				</div>
+
+				<span class="dash__top-bar__fullname">
+					{{userFullname}}
+				</span>
+
+				<div class="dash__top-bar__img-container">
+					<a href="#">
+						<img src="{{asset('./contents/img/me.jpg')}}" class="dash__top-bar__img" alt="profile" />
+					</a>
 				</div>
 			</div>
 		</nav>
+		<!--end dash__navbar-->
 
-		<div class="dash__container">
-			<nav class="dash__navbar">
-				<div class="dash__navbar-text"></div>
+		<div class="dash__container-card">
+			<div class="dash__card">
 
-				<div class="navbar__items">
-					<span class="navbar__item">
-						<i class="bx bx-log-out item"></i>
-					</span>
+				{% block dashContent %}{% endblock %}
 
-					<div class="notification-icon">
-						<span class="cart-icon__span">3</span>
-						<span class="navbar__item">
-							<i class="bx bx-bell item"></i>
-						</span>
-					</div>
-
-					<span class="dash__top-bar__fullname">
-						{{userFullname}}
-					</span>
-
-					<div class="dash__top-bar__img-container">
-						<a href="#">
-							<img src="{{asset('./contents/img/me.jpg')}}" class="dash__top-bar__img" alt="profile"/>
-						</a>
-					</div>
-				</div>
-			</nav>
-			<!--end dash__navbar-->
-
-			<div class="dash__container-card">
-				<div class="dash__card">
-
-					{% block dashContent %}{% endblock %}
-
-				</div>
 			</div>
 		</div>
 	</div>
+</div>
 
-	{% block JsScript %}
-		<script src="{{asset('./contents/js/script.js')}}"></script>
-	{% endblock %}
+{% block JsScript %}
+{#
+<script src="{{asset('./contents/js/script.js')}}"></script> #}
+<script src="{{asset('./assets/js/refactorScript.js')}}"></script>
+{% endblock %}
 {% endblock %}
