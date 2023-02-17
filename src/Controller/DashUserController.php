@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,14 +25,13 @@ class DashUserController extends AbstractController
 
 
     #[Route('/dash/user/home', name: 'app_dash_user_home')]
-    public function dashUserHome(Request $request): Response
+    public function dashUserHome(Request $request, ManagerRegistry $doct): Response
     {
-        $userFullname = "Nabil Mersni";
-
+        $user = $doct->getRepository(User::class)->findOneBy(['email' => $this->getUser()->getUserIdentifier()]);
 
         return $this->render('dash_user/dash-user-home.html.twig', [
             'title' => 'Zero Waste',
-            'userFullname' => $userFullname,
+            'user' => $user,
         ]);
     }
 

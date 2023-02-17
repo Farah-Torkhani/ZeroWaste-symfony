@@ -43,8 +43,8 @@
 					</li>
 
 					<li class="nav-links">
-						<a href="#"
-							class="nav-links-item {% if app.request.attributes.get('_route') == 'app_dash_user_profile' %}active{% endif %}">
+						<a href="{{path('app_dash_user_profile')}}"
+							class="nav-links-item {% if (app.request.attributes.get('_route') == 'app_dash_user_profile') or (app.request.attributes.get('_route') == 'app_dash_user_profile_update') %}active{% endif %}">
 							<i class="bx bx-user icon"></i>
 							<span class="text nav-text">Profile</span>
 						</a>
@@ -124,12 +124,13 @@
 				</div>
 
 				<span class="dash__top-bar__fullname">
-					{{userFullname}}
+					{{user.fullname}}
 				</span>
 
 				<div class="dash__top-bar__img-container">
 					<a href="#">
-						<img src="{{asset('./contents/img/me.jpg')}}" class="dash__top-bar__img" alt="profile" />
+						<img src="{{asset('./assets/uploads/img/' ~ user.imgUrl)}}" class="dash__top-bar__img"
+							alt="profile" />
 					</a>
 				</div>
 			</div>
