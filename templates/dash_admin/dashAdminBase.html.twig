@@ -2,117 +2,127 @@
 
 
 {% block stylesheets %}
-  <link rel="stylesheet" href="{{asset('./contents/css/style.css')}}" />
-  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet"/>
-  <link rel="icon" href="{{asset('./contents/img/logo.png')}}" />
+<link rel="stylesheet" href="{{asset('./contents/css/style.css')}}" />
+<link rel="stylesheet" href="{{asset('./style/nabilStyle.css')}}">
+<link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+<link rel="icon" href="{{asset('./contents/img/logo.png')}}" />
 {% endblock %}
 
 
 {% block title %}
-	{{title}}
+{{title}}
 {% endblock %}
+
+{% block nav %}{% endblock %}
 
 {% block body %}
 
-  <div class="dash">
-      <nav class="dash__side-bar">
-        <header>
-          <div class="image-text">
-            <span class="image">
-              <img class="logo" src="{{asset('./contents/img/logo.png')}}" alt="logo" />
-            </span>
+<div class="dash">
+  <nav class="dash__side-bar close">
+    <header>
+      <div class="image-text">
+        <span class="image">
+          <img class="logo logo-toggled-width" src="{{asset('./contents/img/logo.png')}}" alt="logo" />
+        </span>
+      </div>
+
+      <i class="bx bx-chevron-right toggle"></i>
+    </header>
+
+    <div class="menu-bar">
+      <div class="menu">
+        <ul class="menu-links">
+          <li class="nav-links">
+            <a href="{{path('app_dash_admin_home')}}" class="nav-links-item {% block dashboard_active %}{% endblock %}">
+              <i class="bx bx-home icon"></i>
+              <span class="text nav-text">Dashboard</span>
+            </a>
+          </li>
+
+          <li class="nav-links">
+            <a href="{{path('app_dash_admin_users')}}" class="nav-links-item {% block users_active %}{% endblock %}">
+              <i class="bx bx-user icon"></i>
+              <span class="text nav-text">Users</span>
+            </a>
+          </li>
+
+          <li class="nav-links">
+            <a href="#" class="nav-links-item {% block fundrising_active %}{% endblock %}">
+              <i class="bx bx-donate-heart icon"></i>
+              <span class="text nav-text">Fundrising</span>
+            </a>
+          </li>
+
+          <li class="nav-links">
+            <a href="{{path('app_dash_admin_products')}}"
+              class="nav-links-item {% block product_active %}{% endblock %}">
+              <i class="bx bx-store icon"></i>
+              <span class="text nav-text">Products</span>
+            </a>
+          </li>
+
+          <li class="nav-links">
+            <a href="#" class="nav-links-item {% block collect_active %}{% endblock %}">
+              <i class="bx bx-coin-stack icon"></i>
+              <span class="text nav-text">Collect</span>
+            </a>
+          </li>
+
+          <li class="nav-links">
+            <a href="{{path('app_dash_admin_commands')}}"
+              class="nav-links-item {% block command_active %}{% endblock %}">
+              <i class="bx bx-cart icon"></i>
+              <span class="text nav-text">Commands</span>
+            </a>
+          </li>
+
+          {# <li class="nav-links">
+            <a href="{{path('app_dash_admin_commands')}}">
+              class="nav-links-item" {% block command_active %}{% endblock %}
+              <i class="bx bx-cart icon"></i>
+              <span class="text nav-text">Commands</span>
+            </a>
+          </li> #}
+        </ul>
+      </div>
+
+      <div class="bottom-content">
+        <li class="nav-links">
+          <a href="#" class="nav-links-item">
+            <i class="bx bx-log-out icon"></i>
+            <span class="text nav-text">Logout</span>
+          </a>
+        </li>
+
+        <li class="nav-links mode">
+          <div class="moon-sun">
+            <i class="bx bx-moon icon moon"></i>
+            <i class="bx bx-sun icon sun"></i>
           </div>
+          <span class="mode-text text">Dark Mode</span>
 
-          <i class="bx bx-chevron-right toggle"></i>
-        </header>
-
-        <div class="menu-bar">
-          <div class="menu">
-            <ul class="menu-links">
-              <li class="nav-links">
-                <a href="{{path('app_dash_admin_home')}}" class="nav-links-item {% block dashboard_active %}{% endblock %}">
-                  <i class="bx bx-home icon"></i>
-                  <span class="text nav-text">Dashboard</span>
-                </a>
-              </li>
-
-              <li class="nav-links">
-                <a href="{{path('app_dash_admin_users')}}" class="nav-links-item {% block users_active %}{% endblock %}">
-                  <i class="bx bx-user icon"></i>
-                  <span class="text nav-text">Users</span>
-                </a>
-              </li>
-
-              <li class="nav-links">
-                <a href="./dash-admin-events.html" class="nav-links-item {% block fundrising_active %}{% endblock %}">
-                  <i class="bx bx-donate-heart icon"></i>
-                  <span class="text nav-text">Fundrising</span>
-                </a>
-              </li>
-
-              <li class="nav-links">
-                <a
-                  href="{{path('app_dash_admin_products')}}"
-                  class="nav-links-item {% block product_active %}{% endblock %}"
-                >
-                  <i class="bx bx-store icon"></i>
-                  <span class="text nav-text">Products</span>
-                </a>
-              </li>
-
-              <li class="nav-links">
-                <a href="#" class="nav-links-item {% block collect_active %}{% endblock %}">
-                  <i class="bx bx-coin-stack icon"></i>
-                  <span class="text nav-text">Collect</span>
-                </a>
-              </li>
-
-              <li class="nav-links">
-                <a href="{{path('app_dash_admin_commands')}}" class="nav-links-item {% block command_active %}{% endblock %}">
-                  <i class="bx bx-cart icon"></i>
-                  <span class="text nav-text">Commands</span>
-                </a>
-              </li>
-            </ul>
+          <div class="toggle-switch">
+            <span class="switch"></span>
           </div>
+        </li>
+      </div>
+    </div>
+  </nav>
 
-          <div class="bottom-content">
-            <li class="nav-links">
-              <a href="#" class="nav-links-item">
-                <i class="bx bx-log-out icon"></i>
-                <span class="text nav-text">Logout</span>
-              </a>
-            </li>
+  {% block dashContent %}{% endblock %}
 
-            <li class="nav-links mode">
-              <div class="moon-sun">
-                <i class="bx bx-moon icon moon"></i>
-                <i class="bx bx-sun icon sun"></i>
-              </div>
-              <span class="mode-text text">Dark Mode</span>
 
-              <div class="toggle-switch">
-                <span class="switch"></span>
-              </div>
-            </li>
-          </div>
-        </div>
-      </nav>
+</div>
 
-      {% block dashContent %}{% endblock %}
-      
+{% block JsScript %}
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
-  </div>
+{#
+<script src="{{asset('./contents/js/script.js')}}"></script> #}
+<script src="{{asset('./assets/js/refactorScript.js')}}"></script>
 
-  {% block JsScript %}
-  <script
-      src="https://code.jquery.com/jquery-3.3.1.min.js"
-      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-      crossorigin="anonymous"
-    ></script>
-    
-		<script src="{{asset('./contents/js/script.js')}}"></script>
-	{% endblock %}
+{% endblock %}
 
 
 {% endblock %}

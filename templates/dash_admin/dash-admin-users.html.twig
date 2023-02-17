@@ -1,4 +1,4 @@
-{% extends 'dash_admin/dashAdminBase.html.twig' %} 
+{% extends 'dash_admin/dashAdminBase.html.twig' %}
 
 {% block users_active%}active{% endblock %}
 
@@ -6,7 +6,7 @@
 
 <div class="dash__container">
   <nav class="dash__navbar">
-    <div class="dash__navbar-text">Dashboard</div>
+    <div class="dash__navbar-text"></div>
     <div class="navbar__items">
       <span class="navbar__item">
         <i class="bx bx-log-out item"></i>
@@ -19,15 +19,11 @@
         </span>
       </div>
 
-      <span class="dash__top-bar__fullname"> Braiek Ali </span>
+      <span class="dash__top-bar__fullname">{{user.fullname}}</span>
 
       <div class="dash__top-bar__img-container">
         <a href="#">
-          <img
-            src="{{asset('./contents/img/avatar2.png')}}"
-            class="dash__top-bar__img"
-            alt="profile"
-          />
+          <img src="{{asset('./assets/uploads/img/' ~ user.imgUrl)}}" class="dash__top-bar__img" alt="profile" />
         </a>
       </div>
     </div>
@@ -36,6 +32,11 @@
 
   <div class="dash__container-card">
     <div class="dash__card-title">Users List</div>
+    {% for message in app.flashes('success') %}
+    <div style="top: 10rem; left: 21rem" class="flash flash__success">
+      {{ message }}
+    </div>
+    {% endfor %}
     <div class="users">
       <div class="users-list">
         <div class="users-list__body">
@@ -45,310 +46,67 @@
                 <th>Full name</th>
                 <th>email</th>
                 <th>phone</th>
+                <th>role</th>
                 <th>account state</th>
                 <th>#</th>
               </tr>
             </thead>
             <tbody>
-              <tr class="one-user">
-                <td class="fullname-td">
-                  <div class="fullname-td__container">
-                    <div class="fullname-td__img-container">
-                      <img
-                        src="{{asset('./contents/img/avatar2.png')}}"
-                        alt=""
-                        class="fullname-td__img-container__img"
-                      />
-                    </div>
-                    <div class="fullname-td__fullname-username">
-                      <p class="fullname-td__fullname-username__fullname">
-                        Braiek ALi
-                      </p>
-                      <p class="fullname-td__fullname-username__username">
-                        ali
-                      </p>
-                    </div>
-                  </div>
-                </td>
-                <td>ali.braiek@esprit.tn</td>
-                <td>55516530</td>
-                <td class="stet-td">
-                  <span class="state-td__active">active</span>
-                </td>
-                <td class="btn-td">
-                  <div>
-                    <a
-                      style="display: flex; justify-content: center"
-                      href=""
-                      class="btn-td__btn"
-                    >
-                      <img
-                        src="{{asset('./contents/img/lock-icon.png')}}"
-                        alt=""
-                        class="btn-td__btn__icon block-icon"
-                      />
-                    </a>
-                  </div>
-                  <div>
-                    <button
-                      class="btn-td__bt"
-                      style="background-color: transparent; border: none"
-                    >
-                      <i class="bx bxs-edit btn-td__btn"></i>
-                    </button>
-                  </div>
-                </td>
-              </tr>
+              {% for oneUser in usersList %}
+              {% if oneUser.getRoles()[0] != "ROLE_ADMIN" %}
+
 
               <tr class="one-user">
                 <td class="fullname-td">
                   <div class="fullname-td__container">
                     <div class="fullname-td__img-container">
-                      <img
-                        src="{{asset('./contents/img/avatar.png')}}"
-                        alt=""
-                        class="fullname-td__img-container__img"
-                      />
+                      <img src="{{asset('./assets/uploads/img/' ~ oneUser.imgUrl)}}" alt=""
+                        class="fullname-td__img-container__img" />
                     </div>
                     <div class="fullname-td__fullname-username">
                       <p class="fullname-td__fullname-username__fullname">
-                        Braiek ALi
+                        {{oneUser.fullname}}
                       </p>
                       <p class="fullname-td__fullname-username__username">
-                        ali
+
                       </p>
                     </div>
                   </div>
                 </td>
-                <td>ali.braiek@esprit.tn</td>
-                <td>55516530</td>
+                <td> {{oneUser.email}}</td>
+                <td> {{oneUser.tel}}</td>
+                <td> {% if oneUser.getRoles()[0] == "ROLE_USER" %}
+                  individual
+                  {% else %}
+                  association
+                  {% endif %}</td>
                 <td class="stet-td">
-                  <span class="state-td__unactive">unactive</span>
+                  <span class="state-td__active">
+                    {% if oneUser.state == true %}
+                    <span class="state-td__active">active</span>
+                    {% else %}
+                    <span class="state-td__unactive">unactive</span>
+                    {% endif %}</span>
+                  {# <span class="state-td__unactive">unactive</span> #}
                 </td>
                 <td class="btn-td">
                   <div>
-                    <a
-                      style="display: flex; justify-content: center"
-                      href=""
-                      class="btn-td__btn"
-                    >
-                      <img
-                        src="{{asset('./contents/img/lock-icon.png')}}"
-                        alt=""
-                        class="btn-td__btn__icon block-icon"
-                      />
+                    <a style="display: flex; justify-content: center" href="" class="btn-td__btn">
+                      <img src="{{asset('./contents/img/lock-icon.png')}}" alt=""
+                        class="btn-td__btn__icon block-icon" />
                     </a>
                   </div>
                   <div>
-                    <button
-                      class="btn-td__bt"
-                      style="background-color: transparent; border: none"
-                    >
+                    <a href="{{path('app_dash_admin_users_update',{id: oneUser.id})}}" class="btn-td__bt"
+                      style="background-color: transparent; border: none">
                       <i class="bx bxs-edit btn-td__btn"></i>
-                    </button>
+                    </a>
                   </div>
                 </td>
               </tr>
 
-              <tr class="one-user">
-                <td class="fullname-td">
-                  <div class="fullname-td__container">
-                    <div class="fullname-td__img-container">
-                      <img
-                        src="{{asset('./contents/img/avatar3.png')}}"
-                        alt=""
-                        class="fullname-td__img-container__img"
-                      />
-                    </div>
-                    <div class="fullname-td__fullname-username">
-                      <p class="fullname-td__fullname-username__fullname">
-                        Braiek ALi
-                      </p>
-                      <p class="fullname-td__fullname-username__username">
-                        ali
-                      </p>
-                    </div>
-                  </div>
-                </td>
-                <td>ali.braiek@esprit.tn</td>
-                <td>55516530</td>
-                <td class="stet-td">
-                  <span class="state-td__active">active</span>
-                </td>
-                <td class="btn-td">
-                  <div>
-                    <a
-                      style="display: flex; justify-content: center"
-                      href=""
-                      class="btn-td__btn"
-                    >
-                      <img
-                        src="{{asset('./contents/img/lock-icon.png')}}"
-                        alt=""
-                        class="btn-td__btn__icon block-icon"
-                      />
-                    </a>
-                  </div>
-                  <div>
-                    <button
-                      class="btn-td__bt"
-                      style="background-color: transparent; border: none"
-                    >
-                      <i class="bx bxs-edit btn-td__btn"></i>
-                    </button>
-                  </div>
-                </td>
-              </tr>
-
-              <tr class="one-user">
-                <td class="fullname-td">
-                  <div class="fullname-td__container">
-                    <div class="fullname-td__img-container">
-                      <img
-                        src="{{asset('./contents/img/avatar2.png')}}"
-                        alt=""
-                        class="fullname-td__img-container__img"
-                      />
-                    </div>
-                    <div class="fullname-td__fullname-username">
-                      <p class="fullname-td__fullname-username__fullname">
-                        Braiek ALi
-                      </p>
-                      <p class="fullname-td__fullname-username__username">
-                        ali
-                      </p>
-                    </div>
-                  </div>
-                </td>
-                <td>ali.braiek@esprit.tn</td>
-                <td>55516530</td>
-                <td class="stet-td">
-                  <span class="state-td__unactive">unactive</span>
-                </td>
-                <td class="btn-td">
-                  <div>
-                    <a
-                      style="display: flex; justify-content: center"
-                      href=""
-                      class="btn-td__btn"
-                    >
-                      <img
-                        src="{{asset('./contents/img/lock-icon.png')}}"
-                        alt=""
-                        class="btn-td__btn__icon block-icon"
-                      />
-                    </a>
-                  </div>
-                  <div>
-                    <button
-                      class="btn-td__bt"
-                      style="background-color: transparent; border: none"
-                    >
-                      <i class="bx bxs-edit btn-td__btn"></i>
-                    </button>
-                  </div>
-                </td>
-              </tr>
-
-              <tr class="one-user">
-                <td class="fullname-td">
-                  <div class="fullname-td__container">
-                    <div class="fullname-td__img-container">
-                      <img
-                        src="{{asset('./contents/img/avatar.png')}}"
-                        alt=""
-                        class="fullname-td__img-container__img"
-                      />
-                    </div>
-                    <div class="fullname-td__fullname-username">
-                      <p class="fullname-td__fullname-username__fullname">
-                        Braiek ALi
-                      </p>
-                      <p class="fullname-td__fullname-username__username">
-                        ali
-                      </p>
-                    </div>
-                  </div>
-                </td>
-                <td>ali.braiek@esprit.tn</td>
-                <td>55516530</td>
-                <td class="stet-td">
-                  <span class="state-td__active">active</span>
-                </td>
-                <td class="btn-td">
-                  <div>
-                    <a
-                      style="display: flex; justify-content: center"
-                      href=""
-                      class="btn-td__btn"
-                    >
-                      <img
-                        src="{{asset('./contents/img/lock-icon.png')}}"
-                        alt=""
-                        class="btn-td__btn__icon block-icon"
-                      />
-                    </a>
-                  </div>
-                  <div>
-                    <button
-                      class="btn-td__bt"
-                      style="background-color: transparent; border: none"
-                    >
-                      <i class="bx bxs-edit btn-td__btn"></i>
-                    </button>
-                  </div>
-                </td>
-              </tr>
-
-              <tr class="one-user">
-                <td class="fullname-td">
-                  <div class="fullname-td__container">
-                    <div class="fullname-td__img-container">
-                      <img
-                        src="{{asset('./contents/img/avatar.png')}}"
-                        alt=""
-                        class="fullname-td__img-container__img"
-                      />
-                    </div>
-                    <div class="fullname-td__fullname-username">
-                      <p class="fullname-td__fullname-username__fullname">
-                        Braiek ALi
-                      </p>
-                      <p class="fullname-td__fullname-username__username">
-                        ali
-                      </p>
-                    </div>
-                  </div>
-                </td>
-                <td>ali.braiek@esprit.tn</td>
-                <td>55516530</td>
-                <td class="stet-td">
-                  <span class="state-td__unactive">unactive</span>
-                </td>
-                <td class="btn-td">
-                  <div>
-                    <a
-                      style="display: flex; justify-content: center"
-                      href=""
-                      class="btn-td__btn"
-                    >
-                      <img
-                        src="{{asset('./contents/img/lock-icon.png')}}"
-                        alt=""
-                        class="btn-td__btn__icon block-icon"
-                      />
-                    </a>
-                  </div>
-                  <div>
-                    <button
-                      class="btn-td__bt"
-                      style="background-color: transparent; border: none"
-                    >
-                      <i class="bx bxs-edit btn-td__btn"></i>
-                    </button>
-                  </div>
-                </td>
-              </tr>
+              {% endif %}
+              {% endfor %}
             </tbody>
           </table>
         </div>

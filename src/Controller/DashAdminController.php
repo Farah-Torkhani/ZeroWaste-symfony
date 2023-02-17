@@ -61,16 +61,16 @@ class DashAdminController extends AbstractController
         ]);
     }
 
-    #[Route('/dash/admin/users', name: 'app_dash_admin_users')]
-    public function dashAdminUsers(): Response
-    {
-        $userFullname = "Braiek Ali";
+    // #[Route('/dash/admin/users', name: 'app_dash_admin_users')]
+    // public function dashAdminUsers(): Response
+    // {
+    //     $userFullname = "Braiek Ali";
 
-        return $this->render('dash_admin/dash-admin-users.html.twig', [
-            'title' => 'Zero Waste',
-            'userFullname' => $userFullname,
-        ]);
-    }
+    //     return $this->render('dash_admin/dash-admin-users.html.twig', [
+    //         'title' => 'Zero Waste',
+    //         'userFullname' => $userFullname,
+    //     ]);
+    // }
 
 
 }

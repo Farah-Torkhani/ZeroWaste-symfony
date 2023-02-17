@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UpdateUserType;
+use App\Repository\UserRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -93,6 +94,88 @@ class UserController extends AbstractController
             'userFullname' => $email,
             'user' => $user,
             'registreForm' => $updateForm->createView(),
+        ]);
+    }
+
+
+
+    //**************admin side ******************************/
+    #[Route('/dash/admin/users', name: 'app_dash_admin_users')]
+    public function dashAdminUsers(Request $request, ManagerRegistry $doct, UserRepository $userRepo): Response
+    {
+        $user = $doct->getRepository(User::class)->findOneBy(['email' => $this->getUser()->getUserIdentifier()]);
+        $users = $doct->getRepository(User::class)->findAll();
+        // $indivList = $userRepo->findByRole("ROLE_USER");
+        // $associationList = $userRepo->findByRole("ROLE_ASSOCIATION");
+
+
+        return $this->render('dash_admin/dash-admin-users.html.twig', [
+            'title' => 'Zero Waste',
+            'user' => $user,
+            'usersList' => $users,
+        ]);
+    }
+
+
+    #[Route('/dash/admin/users/update/{id}', name: 'app_dash_admin_users_update')]
+    public function dashAdminUsersUpdate(Request $request, ManagerRegistry $doct, UserRepository $userRepo, SluggerInterface $slugger, $id): Response
+    {
+        $user = $doct->getRepository(User::class)->findOneBy(['email' => $this->getUser()->getUserIdentifier()]);
+        $updatedUser = $doct->getRepository(User::class)->find($id);
+        // $indivList = $userRepo->findByRole("ROLE_USER");
+        // $associationList = $userRepo->findByRole("ROLE_ASSOCIATION");
+
+        $updateForm = $this->createForm(UpdateUserType::class, $updatedUser);
+        $updateForm->handleRequest($request);
+
+        if ($updateForm->isSubmitted() && $updateForm->isValid()) {
+
+
+            $userPic = $updateForm->get('ProfilePic')->getData();
+
+            // this condition is needed because the 'brochure' field is not required
+            // so the PDF file must be processed only when a file is uploaded
+            if ($userPic) {
+                $originalFilename = pathinfo($userPic->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $userPic->guessExtension();
+
+                // Move the file to the directory where brochures are stored
+                try {
+                    $userPic->move(
+                        $this->getParameter('brochures_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+
+                // updates the 'brochureFilename' property to store the PDF file name
+                // instead of its contents
+                $user->setImgUrl($newFilename);
+            }
+
+
+
+
+
+            $em = $doct->getManager();
+            $em->flush();
+
+
+            $this->addFlash('success', 'Data Updated');
+            return $this->redirectToRoute("app_dash_admin_users");
+        }
+
+
+
+        return $this->render('dash_admin/dash-admin-users-update.html.twig', [
+            'title' => 'Zero Waste',
+            'user' => $user,
+            'updatedUser' => $updatedUser,
+            'registreForm' => $updateForm->createView(),
+
         ]);
     }
 }
