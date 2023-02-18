@@ -83,7 +83,7 @@ class RegistrationController extends AbstractController
 
 
     #[Route('/emailVerif/{token}', name: 'app_emailVerif')]
-    public function emailVerif(ManagerRegistry $doct, $token): Response
+    public function emailVerif(ManagerRegistry $doct, TokenGeneratorInterface  $tokenGenerator, $token): Response
     {
         $user = $doct->getRepository(User::class)->findOneBy(['token' => $token]);
 
@@ -94,6 +94,8 @@ class RegistrationController extends AbstractController
         }
 
         $user->setIsVerified(true);
+        $token = $tokenGenerator->generateToken();
+        $user->setToken($token);
         $em = $doct->getManager();
         $em->flush();
 

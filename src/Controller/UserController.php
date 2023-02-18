@@ -4,16 +4,22 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\ChangePasswordType;
+use App\Form\ForgotPassType;
+use App\Form\ForgotPassword2Type;
 use App\Form\UpdateUserType;
 use App\Repository\UserRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class UserController extends AbstractController
 {
@@ -114,6 +120,95 @@ class UserController extends AbstractController
             'userFullname' => $email,
             'user' => $user,
             'registreForm' => $updateForm->createView(),
+        ]);
+    }
+
+
+    #[Route('/forgotPassword', name: 'app_user_forgot_password')]
+    public function forgotPassword(Request $request, ManagerRegistry $doct, MailerInterface $mailer, TokenGeneratorInterface  $tokenGenerator): Response
+    {
+        $changePassForm = $this->createForm(ForgotPassType::class);
+
+        $changePassForm->handleRequest($request);
+        if ($changePassForm->isSubmitted() && $changePassForm->isValid()) {
+            $email = $changePassForm->get('email')->getData();
+            $user = $doct->getRepository(User::class)->findOneBy(['email' => $email]);
+            if (!$user) {
+                $this->addFlash('warning', 'email not associated with zeroWaste account');
+                return $this->redirectToRoute("app_login");
+            }
+            if (!$user->getIsVerified()) {
+                $this->addFlash('warning', 'Please verify your email first');
+                return $this->redirectToRoute("app_login");
+            }
+            if (!$user->getState()) {
+                $this->addFlash('warning', 'Your account is blocked');
+                return $this->redirectToRoute("app_login");
+            }
+
+            $token = $tokenGenerator->generateToken();
+            $user->setToken($token);
+
+            $em = $doct->getManager();
+            $em->flush();
+
+            $url = $this->generateUrl('app_user_forgotPasswordVerif', array('token' => $token), UrlGeneratorInterface::ABSOLUTE_URL);
+            $email = (new TemplatedEmail())
+                ->from('Contact@zerowaste.com')
+                ->to($user->getEmail())
+                ->subject('Reset password request')
+                ->htmlTemplate('registration/mailTemplate.html.twig')
+
+                // pass variables (name => value) to the template
+                ->context([
+                    'url' => $url
+                ]);
+
+            $mailer->send($email);
+            $this->addFlash('success', 'A reset password request was sent to you');
+            return $this->redirectToRoute("app_login");
+        }
+
+        return $this->render('security/forgotPass.html.twig', [
+            'title' => 'Zero Waste',
+            'changePassForm' => $changePassForm->createView(),
+        ]);
+    }
+
+
+    #[Route('/forgotPasswordVerif/{token}', name: 'app_user_forgotPasswordVerif')]
+    public function forgotPasswordVerif(Request $request, ManagerRegistry $doct, TokenGeneratorInterface  $tokenGenerator, UserPasswordHasherInterface $passwordHasher, $token): Response
+    {
+        $user = $doct->getRepository(User::class)->findOneBy(['token' => $token]);
+
+        if (!$user) {
+            $this->addFlash('warning', 'error:token expired');
+            return $this->redirectToRoute("app_login");
+        }
+
+        $changePassForm = $this->createForm(ForgotPassword2Type::class);
+
+        $changePassForm->handleRequest($request);
+        if ($changePassForm->isSubmitted() && $changePassForm->isValid()) {
+            $token = $tokenGenerator->generateToken();
+            $user->setToken($token);
+            $hashedPassword = $passwordHasher->hashPassword($user, $changePassForm->get('password')->getData());
+            $user->setPassword($hashedPassword);
+
+
+            $em = $doct->getManager();
+            $em->flush();
+
+            $this->addFlash('success', 'password changed successfully');
+            return $this->redirectToRoute("app_login");
+        }
+
+
+
+
+        return $this->render('security/forgotPassUpdate.html.twig', [
+            'title' => 'Zero Waste',
+            'changePassForm' => $changePassForm->createView(),
         ]);
     }
 
