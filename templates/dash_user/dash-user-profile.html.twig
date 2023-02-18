@@ -4,7 +4,13 @@
 {% block dashContent %}
 <div class="t"></div>
 {% for message in app.flashes('success') %}
-<div style="top: 15rem" class="flash flash__success">
+<div style="margin-top: 6rem; margin-left:2rem;" class="flash flash__success">
+    {{ message }}
+</div>
+{% endfor %}
+
+{% for message in app.flashes('warning') %}
+<div style="margin-top: 6rem; margin-left:2rem;" class="flash flash__error">
     {{ message }}
 </div>
 {% endfor %}
@@ -15,13 +21,12 @@
         </h1>
     </div>
 
-    <div class="dash-user-profile">
+    <div style="height: 50rem;" class="dash-user-profile">
 
-        {# dash-user-profile #}
         <a style="cursor: pointer;" class="dash-user-profile__update-btn"
             href="{{path('app_dash_user_profile_update')}}">
             <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink"
-                xmlns:svgjs="http://svgjs.com/svgjs" x="0" y="0" viewBox="0 0 348.882 348.882" xml:space="preserve"
+                xmlns:svgjs="http://svgjs.com/svgjs" x="0" y="0" viewbox="0 0 348.882 348.882" xml:space="preserve"
                 class="dash-user-profile__update-btn__icon">
                 <g>
                     <path
@@ -33,8 +38,8 @@
                 </g>
             </svg>
         </a>
-        {# <div class="dash-user-profile__update__card">
-            <div class="dash-user-profile__update__card__container">
+        <div class="dash-user-profile__update__card">
+            <div style="height:fit-content" class="dash-user-profile__update__card__container">
 
                 <div class="dash-user-profile__update__card__btn-close">
                     <svg class="dash-user-profile__update__card__btn-close__icon" xmlns="http://www.w3.org/2000/svg"
@@ -51,165 +56,66 @@
                     </svg>
                 </div>
 
-                <div class="form-2">
+                <div style="min-height: fit-content;" class="form-2">
                     <h1 class="form-2__heading">Update Account</h1>
 
-                    {{ form_start(registreForm,{'attr': {'novalidate': 'novalidate','autocomplete': 'off'}}) }}
+                    {{ form_start(changePassForm,{'attr': {'novalidate': 'novalidate','autocomplete': 'off'}}) }}
 
 
-                    <div class="product-add-form__input__group">
-                        <label for="productImage" class="product-add-form__input__label">Profile Image
-                            <span>*</span></label>
-                        <div class="product-add-form-image">
-                            <div class="prouct-add-form-image__container">
-                                <i class="bx bx-cloud-upload"></i>
-                                <img class="prouct-add-form-image__img" src="" alt="" id="prouct-add-form-image__img"
-                                    accept="image/*" style="display: none" />
-                            </div>
-                            <div class="prouct-add-form-image__description">
-                                <p>
-                                    Resolution : 1920x1080 px <br />
-                                    Supported file types : jpg, <br />
-                                    .jpeg ,. gif ou .png No text<br />
-                                    on the image.
-                                </p>
-                                <div class="prouct-add-form-image__add">
-                                    <label for="update_user_ProfilePic" class="prouct-add-form-image__addBtn">
-                                        <i class="bx bx-upload"></i>
-                                        Choose a photo
-                                    </label>
-
-                                    {{form_widget(registreForm.ProfilePic)}}
-
-                                    <div class="form_alert form_alert_error">
-                                        {{ form_errors(registreForm.ProfilePic)}}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-
-
-
-
-
-
-
-                    <div class="form-2__input__group">
-                        <label for="fullname" class="form-2__input__label">Fullname<span>*</span>
+                    <div class="form-2__input__group" style="margin-right: 10px;">
+                        <label for="password" class="form-2__input__label">Old Password<span>*</span>
                         </label>
-
-                        {{form_widget(registreForm.fullName, {'attr': {'class':
-                        'form-2__input','placeholder':"Fullname"}})}}
-                        <div class="form_alert form_alert_error">
-                            {{ form_errors(registreForm.fullName)}}
-                        </div>
+                        {{form_widget(changePassForm.oldPassword, {'attr': {'class':
+                        'form-2__input','placeholder':"Password"}})}}
 
                         <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke-width="2"
                             stroke-linecap="round" stroke-linejoin="round" class="form-2__input__icon">
-                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                            <circle cx="12" cy="7" r="4"></circle>
-                        </svg>
-                    </div>
-
-
-                    <div class="form-2__input__group">
-                        <label for="fullname" class="form-2__input__label">Description<span>*</span>
-                        </label>
-
-                        {{form_widget(registreForm.description, {'attr': {'class':
-                        'form-2__input','placeholder':"Description"}})}}
-
-                    </div>
-
-
-
-
-
-
-                    <div class="form-2__input__group">
-                        <label for="phone" class="form-2__input__label">Phone Number<span>*</span>
-                        </label>
-
-                        {{form_widget(registreForm.tel, {'attr': {'class': 'form-2__input','placeholder':"Phone
-                        Number"}})}}
-                        <div class="form_alert form_alert_error">
-                            {{ form_errors(registreForm.tel)}}
-                        </div>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="form-2__input__icon">
                             <path
-                                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
+                                d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4">
                             </path>
                         </svg>
                     </div>
 
 
-
-
-                    <div class="form-2__input__group">
-                        <label for="email" class="form-2__input__label">Facebook profile<span>*</span>
-                        </label>
-
-                        {{form_widget(registreForm.fbLink, {'attr': {'class':
-                        'form-2__input','placeholder':"Profile URL"}})}}
-                        <svg class="form-2__input__icon" xmlns="http://www.w3.org/2000/svg" version="1.1"
-                            xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" x="0" y="0"
-                            viewBox="0 0 48 48" xml:space="preserve">
-                            <g>
+                    <div class="form-2__input__group-password">
+                        <div class="form-2__input__group" style="margin-right: 10px;">
+                            <label for="password" class="form-2__input__label">New Password<span>*</span>
+                            </label>
+                            {{form_widget(changePassForm.password.first, {'attr': {'class':
+                            'form-2__input','placeholder':"Password"}})}}
+                            <div class="form_alert form_alert_error">
+                                {{ form_errors(changePassForm.password.first)}}
+                            </div>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" class="form-2__input__icon">
                                 <path
-                                    d="M13.02 18.71s-2.05 2.055-4.35 4.356a11.297 11.297 0 0 0-3.32 8.006c0 3.002 1.19 5.882 3.32 8.005.08.084.16.168.25.252 2.12 2.123 5 3.316 8 3.316 3.01 0 5.89-1.193 8.01-3.316 2.3-2.3 4.36-4.356 4.36-4.356a2.51 2.51 0 0 0 0-3.535 2.506 2.506 0 0 0-3.54 0s-2.06 2.055-4.36 4.356a6.308 6.308 0 0 1-4.47 1.851c-1.67 0-3.28-.666-4.47-1.851l-.25-.252a6.345 6.345 0 0 1-1.85-4.47c0-1.677.67-3.285 1.85-4.471 2.3-2.3 4.36-4.356 4.36-4.356a2.51 2.51 0 0 0 0-3.535 2.506 2.506 0 0 0-3.54 0zm14.88-2.148-11.34 11.34c-.98.976-.98 2.56 0 3.536.97.975 2.56.975 3.53 0l11.34-11.341c.98-.976.98-2.56 0-3.535a2.494 2.494 0 0 0-3.53 0zm7.04 12.753 4.38-4.38a11.297 11.297 0 0 0 3.32-8.006c0-3.002-1.19-5.882-3.32-8.005-.08-.084-.16-.168-.25-.252-2.12-2.124-5-3.316-8-3.316a11.31 11.31 0 0 0-8.01 3.316c-2.3 2.299-4.35 4.354-4.35 4.354-.98.976-.98 2.56 0 3.536.97.975 2.56.975 3.53 0 0 0 2.06-2.055 4.36-4.355a6.308 6.308 0 0 1 4.47-1.851c1.67 0 3.28.666 4.47 1.851l.25.252a6.345 6.345 0 0 1 1.85 4.47c0 1.677-.67 3.285-1.85 4.471-2.31 2.311-4.38 4.379-4.38 4.379-.98.976-.98 2.56 0 3.536.97.975 2.56.975 3.53 0z"
-                                    fill="currentColor" data-original="#000000"></path>
-                            </g>
-                        </svg>
+                                    d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4">
+                                </path>
+                            </svg>
+                        </div>
 
-                    </div>
-
-                    <div class="form-2__input__group">
-                        <label for="email" class="form-2__input__label">Twitter profile<span>*</span>
-                        </label>
-
-                        {{form_widget(registreForm.twitterLink, {'attr': {'class':
-                        'form-2__input','placeholder':"Profile URL"}})}}
-                        <svg class="form-2__input__icon" xmlns="http://www.w3.org/2000/svg" version="1.1"
-                            xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" x="0" y="0"
-                            viewBox="0 0 48 48" xml:space="preserve">
-                            <g>
+                        <div class="form-2__input__group">
+                            <label for="repassword" class="form-2__input__label">Confirm Password<span>*</span>
+                            </label>
+                            {{form_widget(changePassForm.password.second, {'attr': {'class':
+                            'form-2__input','placeholder':"Confirm Password"}})}}
+                            <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" class="form-2__input__icon">
                                 <path
-                                    d="M13.02 18.71s-2.05 2.055-4.35 4.356a11.297 11.297 0 0 0-3.32 8.006c0 3.002 1.19 5.882 3.32 8.005.08.084.16.168.25.252 2.12 2.123 5 3.316 8 3.316 3.01 0 5.89-1.193 8.01-3.316 2.3-2.3 4.36-4.356 4.36-4.356a2.51 2.51 0 0 0 0-3.535 2.506 2.506 0 0 0-3.54 0s-2.06 2.055-4.36 4.356a6.308 6.308 0 0 1-4.47 1.851c-1.67 0-3.28-.666-4.47-1.851l-.25-.252a6.345 6.345 0 0 1-1.85-4.47c0-1.677.67-3.285 1.85-4.471 2.3-2.3 4.36-4.356 4.36-4.356a2.51 2.51 0 0 0 0-3.535 2.506 2.506 0 0 0-3.54 0zm14.88-2.148-11.34 11.34c-.98.976-.98 2.56 0 3.536.97.975 2.56.975 3.53 0l11.34-11.341c.98-.976.98-2.56 0-3.535a2.494 2.494 0 0 0-3.53 0zm7.04 12.753 4.38-4.38a11.297 11.297 0 0 0 3.32-8.006c0-3.002-1.19-5.882-3.32-8.005-.08-.084-.16-.168-.25-.252-2.12-2.124-5-3.316-8-3.316a11.31 11.31 0 0 0-8.01 3.316c-2.3 2.299-4.35 4.354-4.35 4.354-.98.976-.98 2.56 0 3.536.97.975 2.56.975 3.53 0 0 0 2.06-2.055 4.36-4.355a6.308 6.308 0 0 1 4.47-1.851c1.67 0 3.28.666 4.47 1.851l.25.252a6.345 6.345 0 0 1 1.85 4.47c0 1.677-.67 3.285-1.85 4.471-2.31 2.311-4.38 4.379-4.38 4.379-.98.976-.98 2.56 0 3.536.97.975 2.56.975 3.53 0z"
-                                    fill="currentColor" data-original="#000000"></path>
-                            </g>
-                        </svg>
+                                    d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4">
+                                </path>
+                            </svg>
 
-                    </div>
-
-
-                    <div class="form-2__input__group">
-                        <label for="email" class="form-2__input__label">Instagram profile<span>*</span>
-                        </label>
-
-                        {{form_widget(registreForm.instaLink, {'attr': {'class':
-                        'form-2__input','placeholder':"Profile URL"}})}}
-                        <svg class="form-2__input__icon" xmlns="http://www.w3.org/2000/svg" version="1.1"
-                            xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" x="0" y="0"
-                            viewBox="0 0 48 48" xml:space="preserve">
-                            <g>
-                                <path
-                                    d="M13.02 18.71s-2.05 2.055-4.35 4.356a11.297 11.297 0 0 0-3.32 8.006c0 3.002 1.19 5.882 3.32 8.005.08.084.16.168.25.252 2.12 2.123 5 3.316 8 3.316 3.01 0 5.89-1.193 8.01-3.316 2.3-2.3 4.36-4.356 4.36-4.356a2.51 2.51 0 0 0 0-3.535 2.506 2.506 0 0 0-3.54 0s-2.06 2.055-4.36 4.356a6.308 6.308 0 0 1-4.47 1.851c-1.67 0-3.28-.666-4.47-1.851l-.25-.252a6.345 6.345 0 0 1-1.85-4.47c0-1.677.67-3.285 1.85-4.471 2.3-2.3 4.36-4.356 4.36-4.356a2.51 2.51 0 0 0 0-3.535 2.506 2.506 0 0 0-3.54 0zm14.88-2.148-11.34 11.34c-.98.976-.98 2.56 0 3.536.97.975 2.56.975 3.53 0l11.34-11.341c.98-.976.98-2.56 0-3.535a2.494 2.494 0 0 0-3.53 0zm7.04 12.753 4.38-4.38a11.297 11.297 0 0 0 3.32-8.006c0-3.002-1.19-5.882-3.32-8.005-.08-.084-.16-.168-.25-.252-2.12-2.124-5-3.316-8-3.316a11.31 11.31 0 0 0-8.01 3.316c-2.3 2.299-4.35 4.354-4.35 4.354-.98.976-.98 2.56 0 3.536.97.975 2.56.975 3.53 0 0 0 2.06-2.055 4.36-4.355a6.308 6.308 0 0 1 4.47-1.851c1.67 0 3.28.666 4.47 1.851l.25.252a6.345 6.345 0 0 1 1.85 4.47c0 1.677-.67 3.285-1.85 4.471-2.31 2.311-4.38 4.379-4.38 4.379-.98.976-.98 2.56 0 3.536.97.975 2.56.975 3.53 0z"
-                                    fill="currentColor" data-original="#000000"></path>
-                            </g>
-                        </svg>
+                        </div>
 
                     </div>
 
 
 
-                    {{form_end(registreForm)}}
+                    {{form_end(changePassForm)}}
                 </div>
             </div>
-        </div> #}
+        </div>
 
 
         <img src="{{asset('./assets/uploads/img/' ~ user.imgUrl)}}" alt="" class="dash-user-profile__img">
@@ -226,10 +132,13 @@
                     <p class="dash-user-profile__data-group__parag">{{user.fullname}}</p>
                 </div>
 
-                <div class="dash-user-profile__data-group">
+                <div style="margin-bottom: 3rem;" class="dash-user-profile__data-group">
                     <h1 class="dash-user-profile__data-group__title">Email</h1>
                     <p class="dash-user-profile__data-group__parag">{{user.email}}</p>
                 </div>
+
+                <a style="display: block; margin-left: -2rem"
+                    class="navigation__primary-btn form__btn changePassBtn">change password</a>
             </div>
 
             <div class="dash-user-profile__info__right">
@@ -240,6 +149,8 @@
 
             </div>
         </div>
+
+
         <div class="footer__content__social-media footer__content__social-media-2" style="margin: 0 auto;">
             <a target="_blank" href="{{user.fblink}}"><img src="{{asset('./assets/img/fb.svg')}}" alt=""
                     class="social-media__logo social-media__logo-2"></a>
@@ -253,11 +164,18 @@
 
     </div>
 </div>
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="{{asset('./assets/js/script.js')}}"></script>
 {% endblock %}
 
 {% block JsScript %}
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"
-    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous">
-    </script>
-<script src="{{asset('./assets/js/refactorScript.js')}}"></script>
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+{#
+<script src="{{asset('./assets/js/refactorScript.js')}}"></script> #}
+{#
+<script src="{{asset('./assets/js/script.js')}}"></script> #}
 {% endblock %}

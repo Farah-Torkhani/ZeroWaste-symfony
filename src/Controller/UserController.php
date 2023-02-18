@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\ChangePasswordType;
 use App\Form\UpdateUserType;
 use App\Repository\UserRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -10,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
@@ -25,14 +27,32 @@ class UserController extends AbstractController
 
 
     #[Route('/dash/user/profile', name: 'app_dash_user_profile')]
-    public function dashUserProfile(Request $request, ManagerRegistry $doct): Response
+    public function dashUserProfile(Request $request, ManagerRegistry $doct, UserPasswordHasherInterface $passwordHasher): Response
     {
         $user = $doct->getRepository(User::class)->findOneBy(['email' => $this->getUser()->getUserIdentifier()]);
+        $changePassForm = $this->createForm(ChangePasswordType::class);
 
+        $changePassForm->handleRequest($request);
+        if ($changePassForm->isSubmitted() && $changePassForm->isValid()) {
+            $oldPass = $changePassForm->get('oldPassword')->getData();
+            if ($passwordHasher->isPasswordValid($user, $oldPass)) {
+                $hashedPassword = $passwordHasher->hashPassword($user, $changePassForm->get('password')->getData());
+                $user->setPassword($hashedPassword);
+                $em = $doct->getManager();
+                $em->flush();
+
+                $this->addFlash('success', 'password changed successfully');
+                return $this->redirectToRoute("app_dash_user_profile");
+            } else {
+                $this->addFlash('warning', 'Please verify your password');
+                return $this->redirectToRoute("app_dash_user_profile");
+            }
+        }
 
         return $this->render('dash_user/dash-user-profile.html.twig', [
             'title' => 'Zero Waste',
             'user' => $user,
+            'changePassForm' => $changePassForm->createView(),
         ]);
     }
 

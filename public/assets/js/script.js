@@ -11,7 +11,7 @@ $(function () {
 });
 //*************************************************************** */
 
-const updateModalBtn = document.querySelector(".dash-user-profile__update-btn");
+const updateModalBtn = document.querySelector(".changePassBtn");
 const closeModalBtn = document.querySelector(
   ".dash-user-profile__update__card__btn-close"
 );
@@ -21,6 +21,7 @@ const bg = document.querySelector(".t");
 updateModalBtn.addEventListener("click", function () {
   modal.classList.add("dash-user-profile__update__card__open");
   bg.classList.add("t__open");
+  console.log("object");
 });
 
 closeModalBtn.addEventListener("click", function () {
