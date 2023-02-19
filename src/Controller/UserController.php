@@ -239,7 +239,7 @@ class UserController extends AbstractController
 
     //**************admin side ******************************/
     #[Route('/dash/admin/users', name: 'app_dash_admin_users')]
-    public function dashAdminUsers(Request $request, ManagerRegistry $doct, UserRepository $userRepo): Response
+    public function dashAdminUsers(Request $request, ManagerRegistry $doct): Response
     {
         $user = $doct->getRepository(User::class)->findOneBy(['email' => $this->getUser()->getUserIdentifier()]);
         $users = $doct->getRepository(User::class)->findAll();
@@ -252,6 +252,40 @@ class UserController extends AbstractController
             'user' => $user,
             'usersList' => $users,
         ]);
+    }
+
+    #[Route('/dash/admin/users/block/{id}', name: 'app_dash_admin_users_block')]
+    public function dashAdminUserBlock(Request $request, ManagerRegistry $doct, $id): Response
+    {
+        $user = $doct->getRepository(User::class)->findOneBy(['id' => $id]);
+        if ($user) {
+            $user->setState(false);
+            $em = $doct->getManager();
+            $em->flush();
+            $this->addFlash('success', 'user blocked');
+
+            return $this->redirectToRoute('app_dash_admin_users');
+        } else {
+            $this->addFlash('warning', 'user not found');
+            return $this->redirectToRoute('app_dash_admin_users');
+        }
+    }
+
+    #[Route('/dash/admin/users/unblock/{id}', name: 'app_dash_admin_users_unblock')]
+    public function dashAdminUserUnblock(Request $request, ManagerRegistry $doct, $id): Response
+    {
+        $user = $doct->getRepository(User::class)->findOneBy(['id' => $id]);
+        if ($user) {
+            $user->setState(true);
+            $em = $doct->getManager();
+            $em->flush();
+            $this->addFlash('success', 'user unblocked');
+
+            return $this->redirectToRoute('app_dash_admin_users');
+        } else {
+            $this->addFlash('warning', 'user not found');
+            return $this->redirectToRoute('app_dash_admin_users');
+        }
     }
 
 

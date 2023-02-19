@@ -988,6 +988,10 @@ input[type=number] {
   height: 55rem;
 }
 
+.one-user {
+  font-size: 1.45rem !important;
+}
+
 .table__header {
   width: 100%;
   height: 5rem;

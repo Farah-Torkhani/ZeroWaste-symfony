@@ -1,6 +1,7 @@
 {% extends 'dash_admin/dashAdminBase.html.twig' %}
 
-{% block users_active%}active{% endblock %}
+{% block users_active%}active
+{% endblock %}
 
 {% block dashContent %}
 
@@ -67,35 +68,48 @@
                       <p class="fullname-td__fullname-username__fullname">
                         {{oneUser.fullname}}
                       </p>
-                      <p class="fullname-td__fullname-username__username">
-
-                      </p>
+                      <p class="fullname-td__fullname-username__username"></p>
                     </div>
                   </div>
                 </td>
-                <td> {{oneUser.email}}</td>
-                <td> {{oneUser.tel}}</td>
-                <td> {% if oneUser.getRoles()[0] == "ROLE_USER" %}
+                <td>
+                  {{oneUser.email}}</td>
+                <td>
+                  {{oneUser.tel}}</td>
+                <td>
+                  {% if oneUser.getRoles()[0] == "ROLE_USER" %}
                   individual
                   {% else %}
                   association
-                  {% endif %}</td>
+                  {% endif %}
+                </td>
                 <td class="stet-td">
-                  <span class="state-td__active">
-                    {% if oneUser.state == true %}
-                    <span class="state-td__active">active</span>
-                    {% else %}
-                    <span class="state-td__unactive">unactive</span>
-                    {% endif %}</span>
+                  {% if oneUser.state == true %}
+                  <span class="state-td__active">active</span>
+                  {% else %}
+                  <span class="state-td__unactive">unactive</span>
+                  {% endif %}
                   {# <span class="state-td__unactive">unactive</span> #}
                 </td>
                 <td class="btn-td">
+                  {% if oneUser.state == true %}
                   <div>
-                    <a style="display: flex; justify-content: center" href="" class="btn-td__btn">
+                    <a style="display: flex; justify-content: center"
+                      href="{{path('app_dash_admin_users_block',{id:oneUser.id})}}" class="btn-td__btn">
                       <img src="{{asset('./contents/img/lock-icon.png')}}" alt=""
                         class="btn-td__btn__icon block-icon" />
                     </a>
                   </div>
+                  {% else %}
+                  <div>
+                    <a style="display: flex; justify-content: center"
+                      href="{{path('app_dash_admin_users_unblock',{id:oneUser.id})}}" class="btn-td__btn">
+                      <img src="{{asset('./assets/img/unlock-icon.png')}}" alt=""
+                        class="btn-td__btn__icon block-icon" />
+                    </a>
+                  </div>
+                  {% endif %}
+
                   <div>
                     <a href="{{path('app_dash_admin_users_update',{id: oneUser.id})}}" class="btn-td__bt"
                       style="background-color: transparent; border: none">
