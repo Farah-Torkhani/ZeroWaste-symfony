@@ -16,7 +16,7 @@
 
 
     &__container{
-        padding: 20rem 2rem 2rem 2rem;
+        padding: 15rem 2rem 2rem 2rem;
         display: flex;
         justify-content: space-around;
 
@@ -583,3 +583,31 @@ input[type="number"] {
     align-items: center;
     margin-bottom: 2rem;
   }
+
+.google-btn{
+    display: flex;
+    align-items: center;
+    font-family: primaryFont;
+    font-weight:800;
+    font-size: 1.6rem;
+    color: $primary;
+    background-color: $primary-extra-light;
+    padding: 1rem 2rem;
+    border-radius: 100rem;
+    text-decoration: none;
+    transition: 0.2s all;
+    width: fit-content;
+    margin: 2rem auto;
+    cursor: pointer;
+
+    &__icon{
+        width: 3rem;
+        margin-right: 1rem;
+    }
+
+    &:hover{
+        background-color: $primary-light;
+        color: $primary-extra-light;
+    }
+    
+}

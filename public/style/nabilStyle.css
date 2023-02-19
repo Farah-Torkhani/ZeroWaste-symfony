@@ -2101,7 +2101,7 @@ input[type=number] {
   background-color: rgba(110, 204, 174, 0.421);
 }
 .form__container {
-  padding: 20rem 2rem 2rem 2rem;
+  padding: 15rem 2rem 2rem 2rem;
   display: flex;
   justify-content: space-around;
   position: relative;
@@ -2585,6 +2585,32 @@ input[type=number] {
   display: flex;
   align-items: center;
   margin-bottom: 2rem;
+}
+
+.google-btn {
+  display: flex;
+  align-items: center;
+  font-family: primaryFont;
+  font-weight: 800;
+  font-size: 1.6rem;
+  color: #43882B;
+  background-color: #DEFEE6;
+  padding: 1rem 2rem;
+  border-radius: 100rem;
+  text-decoration: none;
+  transition: 0.2s all;
+  width: -moz-fit-content;
+  width: fit-content;
+  margin: 2rem auto;
+  cursor: pointer;
+}
+.google-btn__icon {
+  width: 3rem;
+  margin-right: 1rem;
+}
+.google-btn:hover {
+  background-color: #97D158;
+  color: #DEFEE6;
 }
 
 .flash {

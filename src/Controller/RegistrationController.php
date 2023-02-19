@@ -58,7 +58,10 @@ class RegistrationController extends AbstractController
 
                     // pass variables (name => value) to the template
                     ->context([
-                        'url' => $url
+                        'url' => $url,
+                        'emailTitle' => 'Confirm Your Email Address',
+                        'emailDesc' => 'Please confirm your email address by clicking the button below:',
+                        'btnTitle' => 'Confirm Email',
                     ]);
 
                 $mailer->send($email);

@@ -161,7 +161,10 @@ class UserController extends AbstractController
 
                 // pass variables (name => value) to the template
                 ->context([
-                    'url' => $url
+                    'url' => $url,
+                    'emailTitle' => 'Reset password request',
+                    'emailDesc' => 'It seems like you forgot your password. If this is true, click the button below to reset your password:',
+                    'btnTitle' => 'Reset my password',
                 ]);
 
             $mailer->send($email);
