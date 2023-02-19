@@ -21,6 +21,14 @@ class RegistrationController extends AbstractController
     #[Route('/registration', name: 'app_registration')]
     public function registre(ManagerRegistry $doct, Request $request, MailerInterface $mailer, TokenGeneratorInterface  $tokenGenerator, UserPasswordHasherInterface $passwordHasher): Response
     {
+        $userr = $this->getUser();
+        if ($userr) {
+            if (in_array('ROLE_ADMIN', $userr->getRoles(), true)) {
+                return $this->redirectToRoute('app_dash_admin_users');
+            } else {
+                return $this->redirectToRoute('app_dash_user_home');
+            }
+        }
 
         $user = new User();
         $registreForm = $this->createForm(UserType::class, $user);
@@ -88,6 +96,16 @@ class RegistrationController extends AbstractController
     #[Route('/emailVerif/{token}', name: 'app_emailVerif')]
     public function emailVerif(ManagerRegistry $doct, TokenGeneratorInterface  $tokenGenerator, $token): Response
     {
+        $userr = $this->getUser();
+        if ($userr) {
+            if (in_array('ROLE_ADMIN', $userr->getRoles(), true)) {
+                return $this->redirectToRoute('app_dash_admin_users');
+            } else {
+                return $this->redirectToRoute('app_dash_user_home');
+            }
+        }
+
+
         $user = $doct->getRepository(User::class)->findOneBy(['token' => $token]);
 
         if (!$user) {

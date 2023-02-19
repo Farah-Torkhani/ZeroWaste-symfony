@@ -60,6 +60,9 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
 
     protected function getLoginUrl(Request $request): string
     {
+        $request->getSession()->getFlashBag()->add('warning', 'You are not authorized');
+
+
         return $this->urlGenerator->generate(self::LOGIN_ROUTE);
     }
 }

@@ -127,6 +127,16 @@ class UserController extends AbstractController
     #[Route('/forgotPassword', name: 'app_user_forgot_password')]
     public function forgotPassword(Request $request, ManagerRegistry $doct, MailerInterface $mailer, TokenGeneratorInterface  $tokenGenerator): Response
     {
+        $userr = $this->getUser();
+        if ($userr) {
+            if (in_array('ROLE_ADMIN', $userr->getRoles(), true)) {
+                return $this->redirectToRoute('app_dash_admin_users');
+            } else {
+                return $this->redirectToRoute('app_dash_user_home');
+            }
+        }
+
+
         $changePassForm = $this->createForm(ForgotPassType::class);
 
         $changePassForm->handleRequest($request);
@@ -182,6 +192,16 @@ class UserController extends AbstractController
     #[Route('/forgotPasswordVerif/{token}', name: 'app_user_forgotPasswordVerif')]
     public function forgotPasswordVerif(Request $request, ManagerRegistry $doct, TokenGeneratorInterface  $tokenGenerator, UserPasswordHasherInterface $passwordHasher, $token): Response
     {
+        $userr = $this->getUser();
+        if ($userr) {
+            if (in_array('ROLE_ADMIN', $userr->getRoles(), true)) {
+                return $this->redirectToRoute('app_dash_admin_users');
+            } else {
+                return $this->redirectToRoute('app_dash_user_home');
+            }
+        }
+
+
         $user = $doct->getRepository(User::class)->findOneBy(['token' => $token]);
 
         if (!$user) {
