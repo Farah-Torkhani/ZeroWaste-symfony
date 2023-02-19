@@ -61,7 +61,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     //  */
     // public function findByRole(string $role): array
     // {
-    //     $role = mb_strtoupper($role);
+    //     // $role = mb_strtoupper($role);
 
     //     return $this->createQueryBuilder('u')
     //         ->andWhere('JSON_CONTAINS(u.roles, :role) = 1')
@@ -69,6 +69,13 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     //         ->getQuery()
     //         ->getResult();
     // }
+    public function findByRole(string $roles)
+    {
+        $query = $this->createQueryBuilder('u')
+            ->where('u.roles LIKE :val')
+            ->setParameter('val', $roles);
+        return $query->getQuery()->getResult();
+    }
 
     //    /**
     //     * @return User[] Returns an array of User objects

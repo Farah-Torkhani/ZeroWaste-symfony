@@ -1,3 +1,4 @@
+@charset "UTF-8";
 *,
 *::before,
 *::after {
@@ -2615,6 +2616,64 @@ input[type=number] {
 .google-btn:hover {
   background-color: #97D158;
   color: #DEFEE6;
+}
+
+.filter__group {
+  display: flex;
+  align-items: center;
+}
+.filter__group__container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.filter__group__title {
+  font-weight: 600;
+  font-size: 1.5rem;
+  margin-right: 2rem;
+}
+
+.select-wrapper {
+  position: relative;
+  width: 20rem;
+  border-radius: 1rem;
+  margin-right: 25rem;
+  box-shadow: 0.5rem 0.5rem 3rem rgba(113, 98, 175, 0.15);
+}
+.select-wrapper::after {
+  color: black;
+  content: "▾";
+  margin-right: 10px;
+  pointer-events: none;
+  position: absolute;
+  right: 1rem;
+  top: 1.2rem;
+  font-size: 2rem;
+}
+
+.select {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  background: white;
+  border: 0.2rem solid #DEFEE6;
+  border-radius: 1rem;
+  cursor: pointer;
+  padding: 1.2rem 1.8rem;
+  width: 100%;
+  font-size: 1.6rem;
+  margin-right: 4rem;
+}
+.select:focus {
+  color: black;
+  border-radius: 1rem;
+}
+.select::-ms-expand {
+  display: none;
+}
+
+.filterForm {
+  display: flex;
+  align-items: center;
 }
 
 .flash {

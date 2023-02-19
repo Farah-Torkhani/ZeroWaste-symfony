@@ -354,7 +354,7 @@ input[type="number"] {
     // font-family: primaryFont;
     padding: 5rem 2rem;
     // box-shadow: 0 0rem 0.2rem rgba(0, 0, 0, 0.2);
-    border: 0.2rem solid $primary-extra-light;;
+    border: 0.2rem solid $primary-extra-light;
 
     border-radius: 5rem;
     // width: 50rem;
@@ -610,4 +610,67 @@ input[type="number"] {
         color: $primary-extra-light;
     }
     
+}
+.filter__group{
+    &__container{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    display: flex;
+    align-items: center;
+    &__title{
+        font-weight: 600;
+        font-size: 1.5rem;
+        margin-right: 2rem;
+    }
+
+}
+.select-wrapper {
+    position: relative;
+    width: 20rem;
+    border-radius: 1rem;
+    margin-right: 25rem;
+    box-shadow: 0.5rem 0.5rem 3rem rgba(113, 98, 175, 0.15);
+    
+
+      
+    // Dropdown icon
+    &::after {
+      color: black;
+      content: '▾';
+      margin-right: 10px;
+      pointer-events: none;
+      position: absolute;
+      right: 1rem;
+      top: 1.2rem;
+      font-size: 2rem; 
+    }
+  }
+  
+  // Default state
+  .select {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    background: white;
+    border: 0.2rem solid $primary-extra-light;
+    border-radius: 1rem;
+    cursor: pointer;
+    padding: 1.2rem 1.8rem;
+    width: 100%;
+    font-size: 1.6rem;
+    margin-right: 4rem;
+    &:focus {
+      color: black;
+          border-radius: 1rem;
+    }
+    // Hack for IE 11+
+    &::-ms-expand {
+      display: none;
+    }
+  }
+
+.filterForm{
+    display: flex;
+    align-items: center;
 }

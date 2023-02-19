@@ -32,7 +32,24 @@
   <!--end dash__navbar-->
 
   <div class="dash__container-card">
-    <div class="dash__card-title">Users List</div>
+    <div class="filter__group__container">
+      <div class="dash__card-title">Users List</div>
+      <div class="filter__group">
+        <p class="filter__group__title">Filter by Role: </p>
+        <div class="select-wrapper">
+          {{ form_start(filterForm, {'attr': {'class': 'filterForm'}}) }}
+          {# <select class="select">
+            <option value="value1">All</option>
+            <option value="value1">Individual</option>
+            <option value="value2">Association</option>
+          </select> #}
+          {{form_widget(filterForm.role, {'attr': {'class': 'select'}})}}
+          <input style="margin-right: -19rem;" class="navigation__primary-btn form__btn" type="submit" value="Apply">
+          </input>
+          {{form_end(filterForm)}}
+        </div>
+      </div>
+    </div>
     {% for message in app.flashes('success') %}
     <div style="top: 10rem; left: 21rem" class="flash flash__success">
       {{ message }}

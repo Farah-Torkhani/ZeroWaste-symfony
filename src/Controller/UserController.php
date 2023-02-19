@@ -7,6 +7,7 @@ use App\Form\ChangePasswordType;
 use App\Form\ForgotPassType;
 use App\Form\ForgotPassword2Type;
 use App\Form\UpdateUserType;
+use App\Form\UsersFilterType;
 use App\Repository\UserRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -239,18 +240,33 @@ class UserController extends AbstractController
 
     //**************admin side ******************************/
     #[Route('/dash/admin/users', name: 'app_dash_admin_users')]
-    public function dashAdminUsers(Request $request, ManagerRegistry $doct): Response
+    public function dashAdminUsers(Request $request, ManagerRegistry $doct, UserRepository $userRepo): Response
     {
         $user = $doct->getRepository(User::class)->findOneBy(['email' => $this->getUser()->getUserIdentifier()]);
         $users = $doct->getRepository(User::class)->findAll();
-        // $indivList = $userRepo->findByRole("ROLE_USER");
+        // $users = $userRepo->findByRole('["ROLE_USER"]');
         // $associationList = $userRepo->findByRole("ROLE_ASSOCIATION");
+
+        $filterForm = $this->createForm(UsersFilterType::class);
+        $filterForm->handleRequest($request);
+
+        if ($filterForm->isSubmitted() && $filterForm->isValid()) {
+            $type = $filterForm->get('role')->getData();
+            if ($type == 'all') {
+                $users = $doct->getRepository(User::class)->findAll();
+            } elseif ($type == '["ROLE_USER"]') {
+                $users = $userRepo->findByRole('["ROLE_USER"]');
+            } else {
+                $users = $userRepo->findByRole('["ROLE_ASSOCIATION"]');
+            }
+        }
 
 
         return $this->render('dash_admin/dash-admin-users.html.twig', [
             'title' => 'Zero Waste',
             'user' => $user,
             'usersList' => $users,
+            'filterForm' => $filterForm->createView(),
         ]);
     }
 
