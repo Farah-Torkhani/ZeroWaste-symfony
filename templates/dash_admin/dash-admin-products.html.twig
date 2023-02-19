@@ -64,10 +64,11 @@
             <div class="product">
               <div class="product-title">Products List</div>
 
+              {% for p in products %}
               <div class="product-card">
                 <div class="product-card__image-container">
                   <img
-                    src="{{asset('./contents/img/nikeair.png')}}"
+                    src="{{asset('./contents/uploads/products/') ~ p.image}}"
                     alt="product"
                     class="product-card__image"
                   />
@@ -75,15 +76,15 @@
                 <div class="product-card__content">
                   <div>
                     <h1 class="product-card__title">
-                      Nike Air Deldon "Deldon Designs"
+                      {{p.nomProduit}}
                     </h1>
                   </div>
                   <div class="product-card__row-2">
                     <div class="product-card__stock">In Stock</div>
-                    <div class="product-card__price">$120</div>
+                    <div class="product-card__price">{{p.prixProduit}}</div>
                   </div>
                   <div class="product-card__actions">
-                    <div class="product-card__actions-category">Shoes</div>
+                    <div class="product-card__actions-category">{{p.categorieProduit}} </div>
                     <div class="product-card__actions-btn">
                       <a
                         href=""
@@ -98,13 +99,13 @@
                         <i class="bx bxs-gift product-card__icon"></i>
                       </a>
                       <a
-                        href=""
+                        href="{{path('editProduit',{'id': p.id})}}"
                         class="product-card__btn product-card__actions-btn-edit"
                       >
                         <i class="bx bx-edit product-card__icon"></i>
                       </a>
                       <a
-                        href=""
+                        href="{{path('deleteProduit',{'id': p.id})}}"
                         class="product-card__btn product-card__actions-btn-delete"
                       >
                         <i class="bx bx-trash product-card__icon"></i>
@@ -113,7 +114,10 @@
                   </div>
                 </div>
               </div>
+              {% endfor %}
+              {#----------------end product card---------------------------#}
 
+              {#}
               <div class="product-card">
                 <div class="product-card__image-container">
                   <img
@@ -170,226 +174,14 @@
                   </div>
                 </div>
               </div>
+              {#}
 
-              <div class="product-card">
-                <div class="product-card__image-container">
-                  <img
-                    src="{{asset('./contents/img/nikeair.png')}}"
-                    alt="product"
-                    class="product-card__image"
-                  />
-                </div>
-                <div class="product-card__content">
-                  <div>
-                    <h1 class="product-card__title">
-                      Nike Air Deldon "Deldon Designs"
-                    </h1>
-                  </div>
-                  <div class="product-card__row-2">
-                    <div class="product-card__stock">In Stock</div>
-                    <div class="product-card__price">$120</div>
-                  </div>
-                  <div class="product-card__actions">
-                    <div class="product-card__actions-category">Shoes</div>
-                    <div class="product-card__actions-btn">
-                      <a
-                        href=""
-                        class="product-card__btn product-card__actions-btn-view"
-                      >
-                        <i class="bx bxs-show product-card__icon"></i>
-                      </a>
-                      <a
-                        href=""
-                        class="product-card__btn product-card__actions-btn-gift"
-                      >
-                        <i class="bx bxs-gift product-card__icon"></i>
-                      </a>
-                      <a
-                        href=""
-                        class="product-card__btn product-card__actions-btn-edit"
-                      >
-                        <i class="bx bx-edit product-card__icon"></i>
-                      </a>
-                      <a
-                        href=""
-                        class="product-card__btn product-card__actions-btn-delete"
-                      >
-                        <i class="bx bx-trash product-card__icon"></i>
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="product-card">
-                <div class="product-card__image-container">
-                  <img
-                    src="{{asset('./contents/img/sac-isotherme-ecologique.jpg')}}"
-                    alt="product"
-                    class="product-card__image"
-                  />
-                </div>
-                <div class="product-card__content">
-                  <div>
-                    <h1 class="product-card__title">
-                      Sac isotherme écologique - Bandoulière"
-                    </h1>
-                  </div>
-                  <div class="product-card__row-2">
-                    <div class="product-card__stock">In Stock</div>
-                    <div class="product-card__price">
-                      <span class="product-card__price-after-offre"
-                        >$59.99</span
-                      >
-                      <span class="product-card__price-before-offre"
-                        >$29.99</span
-                      >
-                    </div>
-                  </div>
-                  <div class="product-card__actions">
-                    <div class="product-card__actions-category">Shoes</div>
-                    <div class="product-card__actions-btn">
-                      <a
-                        href=""
-                        class="product-card__btn product-card__actions-btn-view"
-                      >
-                        <i class="bx bxs-show product-card__icon"></i>
-                      </a>
-                      <a
-                        href=""
-                        class="product-card__btn product-card__actions-btn-gift"
-                      >
-                        <i class="bx bxs-gift product-card__icon"></i>
-                      </a>
-                      <a
-                        href=""
-                        class="product-card__btn product-card__actions-btn-edit"
-                      >
-                        <i class="bx bx-edit product-card__icon"></i>
-                      </a>
-                      <a
-                        href=""
-                        class="product-card__btn product-card__actions-btn-delete"
-                      >
-                        <i class="bx bx-trash product-card__icon"></i>
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="product-card">
-                <div class="product-card__image-container">
-                  <img
-                    src="{{asset('./contents/img/nikeair.png')}}"
-                    alt="product"
-                    class="product-card__image"
-                  />
-                </div>
-                <div class="product-card__content">
-                  <div>
-                    <h1 class="product-card__title">
-                      Nike Air Deldon "Deldon Designs"
-                    </h1>
-                  </div>
-                  <div class="product-card__row-2">
-                    <div class="product-card__stock">In Stock</div>
-                    <div class="product-card__price">$120</div>
-                  </div>
-                  <div class="product-card__actions">
-                    <div class="product-card__actions-category">Shoes</div>
-                    <div class="product-card__actions-btn">
-                      <a
-                        href=""
-                        class="product-card__btn product-card__actions-btn-view"
-                      >
-                        <i class="bx bxs-show product-card__icon"></i>
-                      </a>
-                      <a
-                        href=""
-                        class="product-card__btn product-card__actions-btn-gift"
-                      >
-                        <i class="bx bxs-gift product-card__icon"></i>
-                      </a>
-                      <a
-                        href=""
-                        class="product-card__btn product-card__actions-btn-edit"
-                      >
-                        <i class="bx bx-edit product-card__icon"></i>
-                      </a>
-                      <a
-                        href=""
-                        class="product-card__btn product-card__actions-btn-delete"
-                      >
-                        <i class="bx bx-trash product-card__icon"></i>
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="product-card">
-                <div class="product-card__image-container">
-                  <img
-                    src="{{asset('./contents/img/sac-isotherme-ecologique.jpg')}}"
-                    alt="product"
-                    class="product-card__image"
-                  />
-                </div>
-                <div class="product-card__content">
-                  <div>
-                    <h1 class="product-card__title">
-                      Sac isotherme écologique - Bandoulière"
-                    </h1>
-                  </div>
-                  <div class="product-card__row-2">
-                    <div class="product-card__stock">In Stock</div>
-                    <div class="product-card__price">
-                      <span class="product-card__price-after-offre"
-                        >$59.99</span
-                      >
-                      <span class="product-card__price-before-offre"
-                        >$29.99</span
-                      >
-                    </div>
-                  </div>
-                  <div class="product-card__actions">
-                    <div class="product-card__actions-category">Shoes</div>
-                    <div class="product-card__actions-btn">
-                      <a
-                        href=""
-                        class="product-card__btn product-card__actions-btn-view"
-                      >
-                        <i class="bx bxs-show product-card__icon"></i>
-                      </a>
-                      <a
-                        href=""
-                        class="product-card__btn product-card__actions-btn-gift"
-                      >
-                        <i class="bx bxs-gift product-card__icon"></i>
-                      </a>
-                      <a
-                        href=""
-                        class="product-card__btn product-card__actions-btn-edit"
-                      >
-                        <i class="bx bx-edit product-card__icon"></i>
-                      </a>
-                      <a
-                        href=""
-                        class="product-card__btn product-card__actions-btn-delete"
-                      >
-                        <i class="bx bx-trash product-card__icon"></i>
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-----Product Categories Model------>
+      {#}-----Product Categories Model------{#}
       <div class="product-categories-model" id="product-categories-model">
         <div class="product-categories-model__card">
           <div class="product-categories-model__card-header">
@@ -408,20 +200,16 @@
               </p>
             </div>
 
-            <form action="" id="add-category__form-id" style="display: none">
+            {{form_start(formCategorie,{'attr':{'novalidate':'novalidate'}})}}
+            <div  id="add-category__form-id" style="display: none">
               <div
                 class="product-add-form__input__group product-add-form__input__group-category"
               >
                 <label for="productName" class="product-add-form__input__label"
                   >Name <span>*</span></label
                 >
-                <input
-                  id="productName"
-                  name="productName"
-                  type="text"
-                  class="product-add-form__input category-input"
-                  placeholder="Name"
-                />
+
+                {{form_widget(formCategorie.nomCategorie,{'attr':{'class':'product-add-form__input category-input'}})}}
               </div>
 
               <div
@@ -461,9 +249,15 @@
                   </div>
                 </div>
               </div>
-            </form>
+            <button class="add-btnCateg">{{button_label | default('Add')}}</button>
+            
+            </div>
+            {{form_end(formCategorie)}}
+            {#end form#}
 
             <h2 class="categories-list__title">Categories List</h2>
+            
+            {% for c in categories %}
             <div class="categories-list-one">
               <div class="categories-list-one-img">
                 <img
@@ -473,105 +267,20 @@
                 />
               </div>
               <div class="categories-list-one-content">
-                <div class="categories-list-one-name">ecologique</div>
+                <div class="categories-list-one-name">{{c.nomCategorie}}</div>
                 <div class="categories-list-one-btns">
                   <div class="categories-list-one-btn">
                     <i class="bx bx-edit" id="edit-btn__category"></i>
                   </div>
-                  <div class="categories-list-one-btn">
-                    <i class="bx bx-trash"></i>
-                  </div>
+                  <a href="{{path('deleteCategorie',{'id': c.id})}}" class="categories-list-one-btn">
+                    <i class="bx bx-trash"> </i>
+                  </a>
                 </div>
               </div>
             </div>
+            {% endfor %}
+            {#---------------------end category list one -----------------------#}
 
-            <div class="categories-list-one">
-              <div class="categories-list-one-img">
-                <img
-                  src="{{asset('./contents/img/sac-isotherme-ecologique.jpg')}}"
-                  alt=""
-                  class="categories-list-one-image"
-                />
-              </div>
-
-              <div class="categories-list-one-content">
-                <div class="categories-list-one-name">ecologique</div>
-                <div class="categories-list-one-btns">
-                  <div class="categories-list-one-btn">
-                    <i class="bx bx-edit" id="edit-btn__category"></i>
-                  </div>
-                  <div class="categories-list-one-btn">
-                    <i class="bx bx-trash"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="categories-list-one">
-              <div class="categories-list-one-img">
-                <img
-                  src="{{asset('./contents/img/sac-isotherme-ecologique.jpg')}}"
-                  alt=""
-                  class="categories-list-one-image"
-                />
-              </div>
-
-              <div class="categories-list-one-content">
-                <div class="categories-list-one-name">ecologique</div>
-                <div class="categories-list-one-btns">
-                  <div class="categories-list-one-btn">
-                    <i class="bx bx-edit" id="edit-btn__category"></i>
-                  </div>
-                  <div class="categories-list-one-btn">
-                    <i class="bx bx-trash"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="categories-list-one">
-              <div class="categories-list-one-img">
-                <img
-                  src="{{asset('./contents/img/sac-isotherme-ecologique.jpg')}}"
-                  alt=""
-                  class="categories-list-one-image"
-                />
-              </div>
-
-              <div class="categories-list-one-content">
-                <div class="categories-list-one-name">ecologique</div>
-                <div class="categories-list-one-btns">
-                  <div class="categories-list-one-btn">
-                    <i class="bx bx-edit" id="edit-btn__category"></i>
-                  </div>
-                  <div class="categories-list-one-btn">
-                    <i class="bx bx-trash"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="categories-list-one">
-              <div class="categories-list-one-img">
-                <img
-                  src="{{asset('./contents/img/sac-isotherme-ecologique.jpg')}}"
-                  alt=""
-                  class="categories-list-one-image"
-                />
-              </div>
-
-              <div class="categories-list-one-content">
-                <div class="categories-list-one-name">ecologique</div>
-                <div class="categories-list-one-btns">
-                  <div class="categories-list-one-btn">
-                    <i class="bx bx-edit" id="edit-btn__category"></i>
-                  </div>
-                  <div class="categories-list-one-btn">
-                    <i class="bx bx-trash"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
 

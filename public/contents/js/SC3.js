@@ -68,7 +68,7 @@ $(document).ready(function () {
   });
 });
 
-
+/*
 $(function () {
   $("#prouct-add-form-image__file-btn").change(function (event) {
     var x = URL.createObjectURL(event.target.files[0]);
@@ -79,8 +79,7 @@ $(function () {
     console.log(event);
   });
 });
-
-
+*/
 
 /*-----------------------------------------------------------------------*/
 /*-----------------------------------------------------------------------*/
@@ -90,8 +89,6 @@ function toggle_commande_dash(x) {
   $("#chevron-down" + x).toggle(0);
   $("#chevron-up" + x).toggle(0);
 }
-
-
 
 $(document).ready(function () {
   $("#add-event-btn").mouseenter(function () {
@@ -109,7 +106,6 @@ $(document).ready(function () {
   $("#add-participant").mouseleave(function () {
     $("#add-btn-hover-container2").hide(0);
   });
-
 
   $("#category-btn-rightSide").mouseenter(function () {
     $("#category-btn-hover-container").show(0);

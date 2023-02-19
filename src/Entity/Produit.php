@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ProduitRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ProduitRepository::class)]
 class Produit
@@ -14,21 +15,25 @@ class Produit
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "le champ est vide")]
     private ?string $nomProduit = null;
 
+
     #[ORM\Column]
+    #[Assert\NotBlank(message: "le champ est vide")]
+    #[Assert\Positive]
     private ?int $quantite = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $type = null;
-
     #[ORM\Column]
+    #[Assert\NotBlank(message: "le champ est vide")]
+    #[Assert\Positive]
     private ?float $prixProduit = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $Image = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "le champ est vide")]
     private ?string $description = null;
 
     #[ORM\ManyToOne(inversedBy: 'produit_id')]
@@ -36,6 +41,11 @@ class Produit
 
     #[ORM\ManyToOne(inversedBy: 'produit_id')]
     private ?CategorieProduit $categorieProduit = null;
+
+    #[ORM\Column(nullable: true)]
+    #[Assert\Positive]
+    #[Assert\NotBlank(message: "le champ est vide")]
+    private ?int $prix_point_produit = null;
 
     public function getId(): ?int
     {
@@ -62,18 +72,6 @@ class Produit
     public function setQuantite(int $quantite): self
     {
         $this->quantite = $quantite;
-
-        return $this;
-    }
-
-    public function getType(): ?string
-    {
-        return $this->type;
-    }
-
-    public function setType(string $type): self
-    {
-        $this->type = $type;
 
         return $this;
     }
@@ -134,6 +132,18 @@ class Produit
     public function setCategorieProduit(?CategorieProduit $categorieProduit): self
     {
         $this->categorieProduit = $categorieProduit;
+
+        return $this;
+    }
+
+    public function getPrixPointProduit(): ?int
+    {
+        return $this->prix_point_produit;
+    }
+
+    public function setPrixPointProduit(?int $prix_point_produit): self
+    {
+        $this->prix_point_produit = $prix_point_produit;
 
         return $this;
     }

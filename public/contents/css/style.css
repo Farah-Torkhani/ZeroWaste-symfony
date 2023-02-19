@@ -1888,6 +1888,7 @@ td {
   background-color: #fff;
   padding: 0.7rem 0.4rem;
   border-radius: 50%;
+  text-decoration: none;
 }
 
 .categories-list-one-btn:last-child {
@@ -2674,6 +2675,7 @@ td {
   font-weight: 800;
   font-size: 2.5rem;
   margin: 1rem 0 0 0;
+  text-align: center;
 }
 
 .shop-items__info__description {
@@ -2726,4 +2728,34 @@ td {
 .text-decoration {
   text-decoration: none;
   color: white;
+}
+
+.add-btnCateg {
+  background-color: #43882b;
+  width: 80%;
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.8rem;
+  margin-bottom: 3.7rem;
+  margin-left: 3rem;
+  cursor: pointer;
+  transition: 0.3s;
+  color: #fff;
+  border: none;
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
+.add-btnCateg:hover {
+  background-color: #397425;
+  box-shadow: 0 0.2rem 2rem rgb(0 0 0 / 10%);
+}
+
+.error_widget {
+  margin-left: 3rem;
+  color: #dc284c;
+  font-size: 1.4rem;
+  font-weight: 600;
 }

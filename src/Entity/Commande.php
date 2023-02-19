@@ -26,9 +26,9 @@ class Commande
     private ?Achat $achat = null;
 
     #[ORM\ManyToOne(inversedBy: 'commandes')]
-    private ?user $user_id = null;
+    private ?User $user_id = null;
 
-    #[ORM\OneToMany(mappedBy: 'commande', targetEntity: produit::class)]
+    #[ORM\OneToMany(mappedBy: 'commande', targetEntity: Produit::class)]
     private Collection $produit_id;
 
     public function __construct()

@@ -37,7 +37,7 @@
   <div class="dash__container-card">
     <div class="dash__card">
       <div class="product">
-        {{form_start(formProduct,{'attr':{'novalidate':'novalidate'}})}}
+        {{form_start(formProduct)}}
         <div class="product-add-card">
           <div class="product-add-card__header">
             <h1 class="product-add-card__header-h1">Product details</h1>
@@ -188,14 +188,15 @@
             >
             <div class="product-add-form-image">
               <div class="prouct-add-form-image__container">
-                <i class="bx bx-cloud-upload"></i>
+                <i class="bx bx-cloud-upload" style="display:none"></i>
+
                 <img
                   class="prouct-add-form-image__img"
-                  src=""
+                  src="{{asset('./contents/uploads/products/') ~ product.image}}"
                   alt=""
                   id="prouct-add-form-image__img"
                   accept="image/*"
-                  style="display: none"
+                  
                 />
               </div>
               <div class="prouct-add-form-image__description">
@@ -214,7 +215,7 @@
                     Choose a photo
                   </label>{#}
 
-                  {{ form_label(formProduct.Image, 'Choose a photo:', {'label_attr': {'class': 'prouct-add-form-image__addBtn','for': 'prouct-add-form-image__file-btn'}}) }}
+                  {{ form_label(formProduct.Image, 'Change the photo:', {'label_attr': {'class': 'prouct-add-form-image__addBtn','for': 'prouct-add-form-image__file-btn'}}) }}
                   
                   {#<input
                     name="prouct-add-form-image__file-btn"
@@ -232,7 +233,7 @@
           <hr class="hr-border hr-border-2" />
           <!--end add product card-->
           <button type="submit" class="add-new-product__submit-btn">
-            {{button_label | default('Add New Product')}}
+            {{button_label | default('Update Product')}}
           </button>
         </div>
         {{form_end(formProduct)}}
