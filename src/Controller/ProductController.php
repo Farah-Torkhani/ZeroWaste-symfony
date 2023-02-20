@@ -42,20 +42,19 @@ class ProductController extends AbstractController
 
     }
 
-    /*
     #[Route('/dash/admin/products', name: 'app_dash_admin_products')]
-    public function dashProducts(ProduitRepository $produitRepository, CategorieProduitRepository $categorieProduitRepository): Response
+    public function productsList(ProduitRepository $produitRepository)
     {
         $userFullname = "Braiek Ali";
         $products = $produitRepository->findAll();
-        $categories = $categorieProduitRepository->findAll();
-        return $this->render('dash_admin/dash-admin-products.html.twig', [
-            'title' => 'Zero Waste',
+        
+        return $this->renderForm('dash_admin/dash-admin-products.html.twig', array(
             'userFullname' => $userFullname,
+            'title' => 'Zero Waste',
             'products' => $products,
-            'categories' => $categories,
-        ]);
-    }*/
+    ));
+
+    }
 
     #[Route('/dash/admin/products/{id}', name: 'deleteProduit')]
     public function deleteProduit(ManagerRegistry $repo, $id): Response
@@ -78,13 +77,13 @@ class ProductController extends AbstractController
         $em->remove($categorie);
         $em->flush();
 
-        return $this->redirectToRoute('app_dash_admin_products');
+        return $this->redirectToRoute('app_dash_admin_categories');
     }
 
 
    
-    #[Route('/dash/admin/products', name: 'app_dash_admin_products')]
-    public function addproducts(Request $request, ManagerRegistry $doctrine,ProduitRepository $produitRepository, CategorieProduitRepository $categorieProduitRepository)
+    #[Route('/dash/admin/product/categories', name: 'app_dash_admin_categories')]
+    public function addcategory(Request $request, ManagerRegistry $doctrine,ProduitRepository $produitRepository, CategorieProduitRepository $categorieProduitRepository, SluggerInterface $slugger)
     {
         $userFullname = "Braiek Ali";
         $products = $produitRepository->findAll();
@@ -97,11 +96,8 @@ class ProductController extends AbstractController
             $em = $doctrine->getManager();
 
             //******************************* */
-        /*    $cat = new CategorieProduit();
             $image = $form->get('imageCategorie')->getData();
 
-            // this condition is needed because the 'brochure' field is not required
-            // so the PDF file must be processed only when a file is uploaded
             if ($image) {
                 $originalFilename = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
                 // this is needed to safely include the file name as part of the URL
@@ -118,25 +114,23 @@ class ProductController extends AbstractController
                     // ... handle exception if something happens during file upload
                 }
 
-                // updates the 'brochureFilename' property to store the PDF file name
-                // instead of its contents
-                $cat->setImageCategorie($newFilename) ;
-            }*/
+                $categorieProduit->setImageCategorie($newFilename) ;
+            }
             //***************************** */
             
 
             $em->persist($categorieProduit);
             $em->flush();
-            return $this->redirectToRoute("app_dash_admin_products");
+            return $this->redirectToRoute("app_dash_admin_categories");
         }
-        return $this->renderForm('dash_admin/dash-admin-products.html.twig', array(
+        return $this->renderForm('dash_admin/dash-admin-products-categories.html.twig', array(
             'userFullname' => $userFullname,
             'title' => 'Zero Waste',
             "formCategorie" => $form,
             'categories' => $categories,
             'products' => $products,
     ));
-        //return $this->render('classroom/add.html.twig', array("formstudent" => $form->createView()));
+
     }
 
     #[Route('/dash/admin/products-add/', name: 'app_dash_admin_products_add')]
@@ -235,6 +229,59 @@ class ProductController extends AbstractController
             'userFullname' => $userFullname,
             "formProduct" => $form,
             "product" =>$doctrine->getRepository(Produit::class)->find($id),
+
+        ]);
+    }
+
+
+
+    //************************************************************************** */
+    #
+
+    /************************************************************************ */
+    #[Route('/dash/admin/product/category/update/{id}', name: 'editCategory')]
+    public function dashCategoryUpdate(Request $request,$id, ManagerRegistry $doctrine,ProduitRepository $produitRepository, CategorieProduitRepository $categorieProduitRepository, SluggerInterface $slugger): Response
+    {
+        $userFullname = "Braiek Ali";
+        $products = $produitRepository->findAll();
+
+        $category = $doctrine->getRepository(CategorieProduit::class)->find($id);
+
+        $form = $this->createForm(CategorieProduitType::class, $category);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $doctrine->getManager();
+
+            //******************************* */
+            $image = $form->get('imageCategorie')->getData();
+            if ($image) {
+                $originalFilename = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$image->guessExtension();
+
+                // Move the file to the directory where brochures are stored
+                try {
+                    $image->move(
+                        $this->getParameter('product_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+                $category->setImageCategorie($newFilename);
+            }
+            //***************************** */
+            $em->flush();
+            return $this->redirectToRoute("app_dash_admin_categories");
+        }
+        return $this->renderForm('dash_admin/dash-admin-product-category-update.html.twig', [
+            'title' => 'Zero Waste',
+            'userFullname' => $userFullname,
+            "formCategorie" => $form,
+            "category" => $category,
+            'products' => $products,
+            
 
         ]);
     }

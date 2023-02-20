@@ -21,7 +21,7 @@ class CategorieProduit
     #[Assert\NotBlank(message: "le champ est vide")]
     private ?string $nomCategorie = null;
 
-    #[ORM\Column(length: 255,options: ['default' => 'sac-isotherme-ecologique.jpg'])]
+    #[ORM\Column(length: 255)]
     private ?string $imageCategorie = null;
 
     #[ORM\OneToMany(mappedBy: 'categorieProduit', targetEntity: Produit::class)]

@@ -78,15 +78,12 @@
             <label for="productName" class="product-add-form__input__label"
               >Name <span>*</span></label
             >
-           {#} <input
-              id="productName"
-              name="productName"
-              type="text"
-              class="product-add-form__input"
-              placeholder="Name"
-            />{#}
             {{form_widget(formProduct.nomProduit,{'attr':{'class':'product-add-form__input','placeholder':"Name"}})}}
-            {{form_errors(formProduct.nomProduit)}}
+            {% if form_errors(formProduct.nomProduit) is not empty %}
+              <div class="form_errors-product">
+                {{form_errors(formProduct.nomProduit)}}
+              </div>
+            {% endif %}
           </div>
 
           <div class="product-add-form__input__group">
@@ -95,20 +92,15 @@
               class="product-add-form__input__label"
               >Description <span>*</span></label
             >
-           {#} <textarea
-              name="productDescription"
-              id="productDescription"
-              class="product-add-form__input textarea"
-              placeholder="Description"
-            ></textarea>
-            {#}
             {{form_widget(formProduct.description,{'attr':{'class':'product-add-form__input textarea','placeholder':"Description"}})}}
-            {{form_errors(formProduct.description)}}
+            {% if form_errors(formProduct.description) is not empty %}
+              <div class="form_errors-product">
+                {{form_errors(formProduct.description)}}
+              </div>
+            {% endif %}
           </div>
 
-          {#}
          
-          {#}
           <!--end div category-->
 
           <div class="product-add-form__input__group-row">
@@ -116,32 +108,24 @@
               <label for="productPrice" class="product-add-form__input__label"
                 >Category <span>*</span></label
               >
-             {#} <input
-                id="productPrice"
-                name="productPrice"
-                type="text"
-                class="product-add-form__input product-add-form__input__label-Price"
-                placeholder="Category"
-              />
-              {#}
               {{form_widget(formProduct.categorieProduit,{'attr':{'class':'product-add-form__input product-add-form__input__label-Price','placeholder':"Category"}})}}
-              {{form_errors(formProduct.categorieProduit)}}
+              {% if form_errors(formProduct.categorieProduit) is not empty %}
+                <div class="form_errors-product">
+                  {{form_errors(formProduct.categorieProduit)}}
+                </div>
+              {% endif %}
             </div>
 
             <div class="product-add-form__input__group">
               <label for="productNumber" class="product-add-form__input__label"
                 >Number <span>*</span></label
               >
-             {#} <input
-                id="productNumber"
-                name="productNumber"
-                type="number"
-                class="product-add-form__input"
-                placeholder="Number"
-              />
-              {#}
               {{form_widget(formProduct.quantite,{'attr':{'class':'product-add-form__input','placeholder':"Number"}})}}
-              {{form_errors(formProduct.quantite)}}
+              {% if form_errors(formProduct.quantite) is not empty %}
+                <div class="form_errors-product">
+                  {{form_errors(formProduct.quantite)}}
+                </div>
+              {% endif %}
             </div>
           </div>
 
@@ -150,34 +134,24 @@
               <label for="productPrice" class="product-add-form__input__label"
                 >Price <span>*</span></label
               >
-              {#}
-              <input
-                id="productPrice"
-                name="productPrice"
-                type="number"
-                class="product-add-form__input product-add-form__input__label-Price"
-                placeholder="Price"
-              />
-              {#}
               {{form_widget(formProduct.prixProduit,{'attr':{'class':'product-add-form__input product-add-form__input__label-Price','placeholder':"Price"}})}}
-              {{form_errors(formProduct.prixProduit,{'attr':{'class':'error_widget'}})}}
+              {% if form_errors(formProduct.prixProduit) is not empty %}
+                <div class="form_errors-product">
+                  {{form_errors(formProduct.prixProduit)}}
+                </div>
+              {% endif %}
             </div>
 
             <div class="product-add-form__input__group">
               <label for="productNumber" class="product-add-form__input__label"
                 >Points <span>*</span></label
               >
-              {#}
-              <input
-                id="productNumber"
-                name="productNumber"
-                type="number"
-                class="product-add-form__input"
-                placeholder="Points"
-              />
-              {#}
               {{form_widget(formProduct.prix_point_produit,{'attr':{'class':'product-add-form__input','placeholder':"Points"}})}}
-              {{form_errors(formProduct.prix_point_produit)}}
+              {% if form_errors(formProduct.prix_point_produit) is not empty %}
+                <div class="form_errors-product">
+                  {{form_errors(formProduct.prix_point_produit)}}
+                </div>
+              {% endif %}
             </div>
           </div>
 
@@ -206,25 +180,13 @@
                   on the image.
                 </p>
                 <div class="prouct-add-form-image__add">
-                 {#} <label
-                    for="prouct-add-form-image__file-btn"
-                    class="prouct-add-form-image__addBtn"
-                  >
-                    <i class="bx bx-upload"></i>
-                    Choose a photo
-                  </label>{#}
-
                   {{ form_label(formProduct.Image, 'Choose a photo:', {'label_attr': {'class': 'prouct-add-form-image__addBtn','for': 'prouct-add-form-image__file-btn'}}) }}
-                  
-                  {#<input
-                    name="prouct-add-form-image__file-btn"
-                    type="file"
-                    id="prouct-add-form-image__file-btn"
-                    value="Choose a photo"
-                    class="prouct-add-form-image__file-btn"
-                    style="display: none"
-                  />#}
-                  {{form_widget(formProduct.Image,{'attr':{'class':'prouct-add-form-image__file-btn','name':'prouct-add-form-image__file-btn','id':'prouct-add-form-image__file-btn', 'style': 'display: none;'}})}}
+                  {{form_widget(formProduct.Image,{'attr':{'class':'prouct-add-form-image__file-btn','name':'prouct-add-form-image__file-btn','id':'prouct-add-form-image__file-btn','style':'display:none'}})}}
+                  {% if form_errors(formProduct.Image) is not empty %}
+                    <div class="form_errors-product">
+                      {{form_errors(formProduct.Image)}}
+                    </div>
+                  {% endif %}
                 </div>
               </div>
             </div>
@@ -249,17 +211,18 @@
   {% block JsScript %}
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>console.log("Hello world!");
+    <script>
+    console.log("Hello world!");
     $(function () {
-  $("#prouct-add-form-image__file-btn").change(function (event) {
-    console.log(URL.createObjectURL(event.target.files[0]));
+  $("#product_Image").change(function (event) {
+    console.log("test");
     var x = URL.createObjectURL(event.target.files[0]);
     $("#prouct-add-form-image__img").attr("src", x);
     $("#prouct-add-form-image__img").show(0);
     $(".bx-cloud-upload").hide(0);
 
-    console.log(x);
   });
 });
+
     </script>
 {% endblock %}
