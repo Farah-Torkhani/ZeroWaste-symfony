@@ -69,6 +69,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 180, nullable: true, options: ['default' => 'defaultPic.jpg'])]
     private ?string $imgUrl = null;
 
+    #[ORM\Column(nullable: true, options: ['default' => 0])]
+    private ?int $point = 0;
+
     #[ORM\Column]
     private array $roles = [];
 
@@ -94,6 +97,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getPoint(): ?int
+    {
+        return $this->point;
+    }
+
+    public function setPoint(int $point): self
+    {
+        $this->point = $point;
+
+        return $this;
     }
 
     public function getFullName(): ?string
