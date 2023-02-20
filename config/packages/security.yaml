@@ -42,13 +42,13 @@ security:
   # Easy way to control access for large sections of your site
   # Note: Only the *first* access control that matches will be used
   access_control:
-    # - { path: ^/dash/admin/home, roles: ROLE_ADMIN }
-    # - { path: ^/dash/admin/users, roles: ROLE_ADMIN }
-    # - { path: ^/dash/admin/users/update/$, roles: ROLE_ADMIN }
+    - { path: ^/dash/admin/home, roles: ROLE_ADMIN }
+    - { path: ^/dash/admin/users, roles: ROLE_ADMIN }
+    - { path: ^/dash/admin/users/update/$, roles: ROLE_ADMIN }
 
-    # - { path: ^/dash/user/home, roles: [ROLE_USER, ROLE_ASSOCIATION] }
-    # - { path: ^/dash/user/profile, roles: [ROLE_USER, ROLE_ASSOCIATION] }
-    # - { path: ^/dash/user/profileUpdate, roles: [ROLE_USER, ROLE_ASSOCIATION] }
+    - { path: ^/dash/user/home, roles: [ROLE_USER, ROLE_ASSOCIATION] }
+    - { path: ^/dash/user/profile, roles: [ROLE_USER, ROLE_ASSOCIATION] }
+    - { path: ^/dash/user/profileUpdate, roles: [ROLE_USER, ROLE_ASSOCIATION] }
 
 when@test:
   security:
