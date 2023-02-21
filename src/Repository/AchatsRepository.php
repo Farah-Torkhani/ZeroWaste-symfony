@@ -2,26 +2,26 @@
 
 namespace App\Repository;
 
-use App\Entity\Achat;
+use App\Entity\Achats;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Achat>
+ * @extends ServiceEntityRepository<Achats>
  *
- * @method Achat|null find($id, $lockMode = null, $lockVersion = null)
- * @method Achat|null findOneBy(array $criteria, array $orderBy = null)
- * @method Achat[]    findAll()
- * @method Achat[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Achats|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Achats|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Achats[]    findAll()
+ * @method Achats[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class AchatRepository extends ServiceEntityRepository
+class AchatsRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Achat::class);
+        parent::__construct($registry, Achats::class);
     }
 
-    public function save(Achat $entity, bool $flush = false): void
+    public function add(Achats $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class AchatRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Achat $entity, bool $flush = false): void
+    public function remove(Achats $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -40,7 +40,7 @@ class AchatRepository extends ServiceEntityRepository
     }
 
 //    /**
-//     * @return Achat[] Returns an array of Achat objects
+//     * @return Achats[] Returns an array of Achats objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -54,7 +54,7 @@ class AchatRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Achat
+//    public function findOneBySomeField($value): ?Achats
 //    {
 //        return $this->createQueryBuilder('a')
 //            ->andWhere('a.exampleField = :val')

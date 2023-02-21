@@ -38,7 +38,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column]
     #[Assert\Regex(
-        pattern: '/^[1-9]{8}\d*$/',
+        pattern: '/^[0-9]{8}\d*$/',
         match: true,
         message: 'not a valid phone number',
     )]
@@ -86,13 +86,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     )]
     private ?string $password = null;
 
-    #[ORM\OneToMany(mappedBy: 'user_id', targetEntity: Commande::class)]
-    private Collection $commandes;
-
-    public function __construct()
-    {
-        $this->commandes = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -320,33 +313,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
-    /**
-     * @return Collection<int, Commande>
-     */
-    public function getCommandes(): Collection
-    {
-        return $this->commandes;
-    }
+    
 
-    public function addCommande(Commande $commande): self
-    {
-        if (!$this->commandes->contains($commande)) {
-            $this->commandes->add($commande);
-            $commande->setUserId($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCommande(Commande $commande): self
-    {
-        if ($this->commandes->removeElement($commande)) {
-            // set the owning side to null (unless already changed)
-            if ($commande->getUserId() === $this) {
-                $commande->setUserId(null);
-            }
-        }
-
-        return $this;
-    }
+    
 }

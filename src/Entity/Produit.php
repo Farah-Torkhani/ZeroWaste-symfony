@@ -37,9 +37,6 @@ class Produit
     private ?string $description = null;
 
     #[ORM\ManyToOne(inversedBy: 'produit_id')]
-    private ?Commande $commande = null;
-
-    #[ORM\ManyToOne(inversedBy: 'produit_id')]
     private ?CategorieProduit $categorieProduit = null;
 
     #[ORM\Column(nullable: true)]
@@ -108,18 +105,6 @@ class Produit
     public function setDescription(string $description): self
     {
         $this->description = $description;
-
-        return $this;
-    }
-
-    public function getCommande(): ?Commande
-    {
-        return $this->commande;
-    }
-
-    public function setCommande(?Commande $commande): self
-    {
-        $this->commande = $commande;
 
         return $this;
     }
