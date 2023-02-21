@@ -2,6 +2,12 @@
 
 {% block command_active %}active {% endblock %}
 
+{% block stylesheets %}
+  <link rel="stylesheet" href="{{asset('./contents/css/style.css')}}" />
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet"/>
+  <link rel="icon" href="{{asset('./contents/img/logo.png')}}" />
+{% endblock %}
+
 {% block dashContent %}
 
 <div class="dash__container">

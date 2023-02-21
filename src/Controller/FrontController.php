@@ -26,12 +26,6 @@ class FrontController extends AbstractController
         ]);
     }
 
-    #[Route('/products', name: 'app_products')]
-    public function products(): Response
-    {
-        return $this->render('front/user-products-list.html.twig', [
-            'controller_name' => 'FrontController',
-            'title' => 'Zero Waste',
-        ]);
-    }
+
+
 }

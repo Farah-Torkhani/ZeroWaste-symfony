@@ -7,6 +7,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 #[ORM\Entity(repositoryClass: CategorieProduitRepository::class)]
 class CategorieProduit
 {
@@ -16,12 +18,13 @@ class CategorieProduit
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "le champ est vide")]
     private ?string $nomCategorie = null;
 
     #[ORM\Column(length: 255)]
     private ?string $imageCategorie = null;
 
-    #[ORM\OneToMany(mappedBy: 'categorieProduit', targetEntity: produit::class)]
+    #[ORM\OneToMany(mappedBy: 'categorieProduit', targetEntity: Produit::class)]
     private Collection $produit_id;
 
     public function __construct()
@@ -86,5 +89,10 @@ class CategorieProduit
         }
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return (string)$this->getNomCategorie();
     }
 }

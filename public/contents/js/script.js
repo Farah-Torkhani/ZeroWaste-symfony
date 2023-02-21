@@ -1,3 +1,15 @@
+/*$(function () {
+  $("#prouct-add-form-image__file-btn").change(function (event) {
+    console.log("event");
+    var x = URL.createObjectURL(event.target.files[0]);
+    $("#prouct-add-form-image__img").attr("src", x);
+    $("#prouct-add-form-image__img").show(0);
+    $(".bx-cloud-upload").hide(0);
+
+    console.log(event);
+  });
+});*/
+
 const dash = document.querySelector(".dash");
 const sidebar = document.querySelector(".dash__side-bar");
 const toggle = document.querySelector(".toggle");
@@ -93,16 +105,25 @@ $(document).ready(function () {
 });
 */
 //*************************************************************** */
-$(function () {
-  $("#prouct-add-form-image__file-btn").change(function (event) {
-    var x = URL.createObjectURL(event.target.files[0]);
-    $("#prouct-add-form-image__img").attr("src", x);
-    $("#prouct-add-form-image__img").show(0);
-    $(".bx-cloud-upload").hide(0);
 
-    console.log(event);
-  });
-});
+/*
+let input = document.getElementById("prouct-add-form-image__file-btn");
+let image = document.getElementById("prouct-add-form-image__img");
+
+input.addEventListener("change", function () {
+  console.log("rrrrrrrr");
+  if (this.files && this.files[0]) {
+    let reader = new FileReader();
+
+    reader.onload = function (e) {
+      image.src = e.target.result;
+      image.style.display = "block";
+    };
+    console.log("rrrrrrrr");
+
+    reader.readAsDataURL(this.files[0]);
+  }
+});*/
 
 //*******************************dash commands **************************************************/
 
@@ -136,6 +157,15 @@ function toggle_commande_dash(x) {
   $("#chevron-up" + x).toggle(0);
 }
 
+$(function () {
+  $("#categorie_produit_imageCategorie").change(function (event) {
+    var x = URL.createObjectURL(event.target.files[0]);
+    $("#category-image-add-container__img").attr("src", x);
+    $("#category-image-add-container__img").show(0);
+    $(".bx-image-add").hide(0);
+  });
+});
+
 $(document).ready(function () {
   $("#add-btn-rightSide").mouseenter(function () {
     $("#add-btn-hover-container").show(0);
@@ -167,9 +197,32 @@ $(document).ready(function () {
 });
 
 //
-
+/*
 $(document).ready(function () {
   $("#add-new-category__id").click(function () {
-    $("#add-category__form-id").slideToggle(300);
+    $("#add-category__form-id").slideToggle(300); 
   });
+});
+*/
+
+// Get the button and the div
+const button = document.getElementById("add-new-category__id");
+const div = document.getElementById("add-category__form-id");
+
+// Initialize the visibility state from localStorage, if it exists
+const visibilityState = localStorage.getItem("divVisibility");
+if (visibilityState === "hidden") {
+  div.style.display = "none";
+}
+
+// Add a click event listener to the button
+button.addEventListener("click", function () {
+  // Toggle the visibility of the div
+  if (div.style.display === "none") {
+    div.style.display = "block";
+    localStorage.setItem("divVisibility", "visible");
+  } else {
+    div.style.display = "none";
+    localStorage.setItem("divVisibility", "hidden");
+  }
 });

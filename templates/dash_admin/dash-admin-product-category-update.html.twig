@@ -53,7 +53,7 @@
                     Add New Product
                   </div>
                 </a>
-                <a href="{{path('app_dash_admin_categories')}}"
+                <button
                   class="dash__card-rightSide__btn-container"
                   id="category-btn-rightSide"
                 >
@@ -64,7 +64,7 @@
                   >
                     Categories
                   </div>
-                </a>
+                </button>
               </div>
             </div>
             <div class="product">
@@ -187,6 +187,77 @@
         </div>
       </div>
 
+      {#}-----Product Categories Model------{#}
+      <div class="product-categories-model" id="product-categories-model" style="display:block">
+        <div class="product-categories-model__card">
+          <div class="product-categories-model__card-header">
+            <h1>Update Category</h1>
+            <div><a href ="{{path('app_dash_admin_products')}}" class="go-to-productList"><i class="bx bx-x" id="close-category-model"></i></a></div>
+          </div>
+          <hr class="hr-border-categories" />
+          <div class="product-categories-model__card-content">
+            <a href="{{path('app_dash_admin_categories')}}"
+              class="product-categories-model__card-content-btn-container back-to-categories"
+              id=""
+            >
+              <i class='bx bx-arrow-back' ></i>
+              
+            </a>
+
+            {{form_start(formCategorie,{'attr':{'novalidate':'novalidate'}})}}
+            <div  id="" style="display: block">
+              <div
+                class="product-add-form__input__group product-add-form__input__group-category"
+              >
+                <label for="productName" class="product-add-form__input__label"
+                  >Name <span>*</span></label
+                >
+
+                {{form_widget(formCategorie.nomCategorie,{'attr':{'class':'product-add-form__input category-input'}})}}
+                {% if form_errors(formCategorie.nomCategorie) is not empty  %}
+                  <div class="form_errors-product">
+                    {{form_errors(formCategorie.nomCategorie)}}
+                  </div>
+                {% endif %}
+              </div>
+
+              <div
+                class="product-add-form__input__group product-add-form__input__group-category"
+              >
+                <label for="productName" class="product-add-form__input__label"
+                  >Icon <span>*</span></label
+                >
+                <div class="category-image-add">
+                  <div class="category-image-add-container">
+                    <img
+                      class="category-image-add-container__img"
+                      src="{{asset('./contents/uploads/products/') ~ category.imageCategorie}}"
+                      alt=""
+                      id="category-image-add-container__img"
+                      accept="image/*"
+                      style="display: block"
+                    />
+                  </div>
+
+                  <div class="category-image-add-btn__add-icon">
+                    {{ form_label(formCategorie.imageCategorie , 'Change icon:', {'label_attr': {'class': 'category-add-form-image__addBtn','for': 'category-add-image__file-btn'}}) }}
+                    {{form_widget(formCategorie.imageCategorie,{'attr':{'class':'category-add-image__file-btn','name':'category-add-image__file-btn','id':'category-add-image__file-btn','style':'display:none'}})}}
+                  
+                  </div>
+                </div>
+              </div>
+            <button class="add-btnCateg update-btnCateg">{{button_label | default('Update')}}</button>
+            
+            </div>
+            {{form_end(formCategorie)}}
+            {#end form#}
+
+
+          </div>
+        </div>
+
+        <!--end product-categories-model__card-->
+      </div>
    
 {% endblock %}
 

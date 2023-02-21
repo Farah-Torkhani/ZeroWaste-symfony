@@ -9,6 +9,8 @@ body{
 {% endblock %}
 
 {% block frontContent %}
+{% block nav %}
+{% endblock  %}
 
 <div class="products-list__header">
   <div class="products-list__gif1-container">
@@ -26,278 +28,30 @@ body{
   </div>
 
   <div class="shop-items__container">
+    {% for p in products %}
     <div class="shop-items__card">
       <div class="shop-items__card-img-container">
         <img
-          src="{{asset('./contents/img/sac-isotherme-ecologique.jpg')}}"
+          src="{{asset('./contents/uploads/products/') ~ p.image}}"
           class="shop-items__card-img"
           alt=""
         />
       </div>
       <div class="shop-items__info">
-        <div class="shop-items__info__title">Cooler bag</div>
+        <div class="shop-items__info__title">{{p.nomProduit}}</div>
         <p class="shop-items__info__description">
-          Organic cotton bag Organic Textile
+          {{p.description}}
         </p>
       </div>
       <div class="shop__items__cart">
-        <h1 class="shop__items__cart__price">25.99 / 50pts</h1>
+        <h1 class="shop__items__cart__price">${{p.prixProduit}} / {{p.prixPointProduit}}pts</h1>
         <a href="#" class="shop__items__cart__btn">Add to cart</a>
       </div>
     </div>
-    <!----------end card1-------------->
+    {% endfor %}
+    {#----------end card1--------------#}
 
-    <div class="shop-items__card">
-      <div class="shop-items__card-img-container">
-        <img
-          src="{{asset('./contents/img/sac-isotherme-ecologique.jpg')}}"
-          class="shop-items__card-img"
-          alt=""
-        />
-      </div>
-      <div class="shop-items__info">
-        <div class="shop-items__info__title">Cooler bag</div>
-        <p class="shop-items__info__description">
-          Organic cotton bag Organic Textile
-        </p>
-      </div>
-      <div class="shop__items__cart">
-        <h1 class="shop__items__cart__price">25.99 / 50pts</h1>
-        <a href="#" class="shop__items__cart__btn">Add to cart</a>
-      </div>
-    </div>
-    <!----------end card1-------------->
 
-    <div class="shop-items__card">
-      <div class="shop-items__card-img-container">
-        <img
-          src="{{asset('./contents/img/sac-isotherme-ecologique.jpg')}}"
-          class="shop-items__card-img"
-          alt=""
-        />
-      </div>
-      <div class="shop-items__info">
-        <div class="shop-items__info__title">Cooler bag</div>
-        <p class="shop-items__info__description">
-          Organic cotton bag Organic Textile
-        </p>
-      </div>
-      <div class="shop__items__cart">
-        <h1 class="shop__items__cart__price">25.99 / 50pts</h1>
-        <a href="#" class="shop__items__cart__btn">Add to cart</a>
-      </div>
-    </div>
-    <!----------end card1-------------->
-
-    <div class="shop-items__card">
-      <div class="shop-items__card-img-container">
-        <img
-          src="{{asset('./contents/img/sac-isotherme-ecologique.jpg')}}"
-          class="shop-items__card-img"
-          alt=""
-        />
-      </div>
-      <div class="shop-items__info">
-        <div class="shop-items__info__title">Cooler bag</div>
-        <p class="shop-items__info__description">
-          Organic cotton bag Organic Textile
-        </p>
-      </div>
-      <div class="shop__items__cart">
-        <h1 class="shop__items__cart__price">25.99 / 50pts</h1>
-        <a href="#" class="shop__items__cart__btn">Add to cart</a>
-      </div>
-    </div>
-    <!----------end card1-------------->
-
-    <div class="shop-items__card">
-      <div class="shop-items__card-img-container">
-        <img
-          src="{{asset('./contents/img/sac-isotherme-ecologique.jpg')}}"
-          class="shop-items__card-img"
-          alt=""
-        />
-      </div>
-      <div class="shop-items__info">
-        <div class="shop-items__info__title">Cooler bag</div>
-        <p class="shop-items__info__description">
-          Organic cotton bag Organic Textile
-        </p>
-      </div>
-      <div class="shop__items__cart">
-        <h1 class="shop__items__cart__price">25.99 / 50pts</h1>
-        <a href="#" class="shop__items__cart__btn">Add to cart</a>
-      </div>
-    </div>
-    <!----------end card1-------------->
-
-    <div class="shop-items__card">
-      <div class="shop-items__card-img-container">
-        <img
-          src="{{asset('./contents/img/sac-isotherme-ecologique.jpg')}}"
-          class="shop-items__card-img"
-          alt=""
-        />
-      </div>
-      <div class="shop-items__info">
-        <div class="shop-items__info__title">Cooler bag</div>
-        <p class="shop-items__info__description">
-          Organic cotton bag Organic Textile
-        </p>
-      </div>
-      <div class="shop__items__cart">
-        <h1 class="shop__items__cart__price">25.99 / 50pts</h1>
-        <a href="#" class="shop__items__cart__btn">Add to cart</a>
-      </div>
-    </div>
-    <!----------end card1-------------->
-
-    <div class="shop-items__card">
-      <div class="shop-items__card-img-container">
-        <img
-          src="{{asset('./contents/img/sac-isotherme-ecologique.jpg')}}"
-          class="shop-items__card-img"
-          alt=""
-        />
-      </div>
-      <div class="shop-items__info">
-        <div class="shop-items__info__title">Cooler bag</div>
-        <p class="shop-items__info__description">
-          Organic cotton bag Organic Textile
-        </p>
-      </div>
-      <div class="shop__items__cart">
-        <h1 class="shop__items__cart__price">25.99 / 50pts</h1>
-        <a href="#" class="shop__items__cart__btn">Add to cart</a>
-      </div>
-    </div>
-    <!----------end card1-------------->
-
-    <div class="shop-items__card">
-      <div class="shop-items__card-img-container">
-        <img
-          src="{{asset('./contents/img/sac-isotherme-ecologique.jpg')}}"
-          class="shop-items__card-img"
-          alt=""
-        />
-      </div>
-      <div class="shop-items__info">
-        <div class="shop-items__info__title">Cooler bag</div>
-        <p class="shop-items__info__description">
-          Organic cotton bag Organic Textile
-        </p>
-      </div>
-      <div class="shop__items__cart">
-        <h1 class="shop__items__cart__price">25.99 / 50pts</h1>
-        <a href="#" class="shop__items__cart__btn">Add to cart</a>
-      </div>
-    </div>
-    <!----------end card1-------------->
-
-    <div class="shop-items__card">
-      <div class="shop-items__card-img-container">
-        <img
-          src="{{asset('./contents/img/sac-isotherme-ecologique.jpg')}}"
-          class="shop-items__card-img"
-          alt=""
-        />
-      </div>
-      <div class="shop-items__info">
-        <div class="shop-items__info__title">Cooler bag</div>
-        <p class="shop-items__info__description">
-          Organic cotton bag Organic Textile
-        </p>
-      </div>
-      <div class="shop__items__cart">
-        <h1 class="shop__items__cart__price">25.99 / 50pts</h1>
-        <a href="#" class="shop__items__cart__btn">Add to cart</a>
-      </div>
-    </div>
-    <!----------end card1-------------->
-
-    <div class="shop-items__card">
-      <div class="shop-items__card-img-container">
-        <img
-          src="{{asset('./contents/img/sac-isotherme-ecologique.jpg')}}"
-          class="shop-items__card-img"
-          alt=""
-        />
-      </div>
-      <div class="shop-items__info">
-        <div class="shop-items__info__title">Cooler bag</div>
-        <p class="shop-items__info__description">
-          Organic cotton bag Organic Textile
-        </p>
-      </div>
-      <div class="shop__items__cart">
-        <h1 class="shop__items__cart__price">25.99 / 50pts</h1>
-        <a href="#" class="shop__items__cart__btn">Add to cart</a>
-      </div>
-    </div>
-    <!----------end card1-------------->
-
-    <div class="shop-items__card">
-      <div class="shop-items__card-img-container">
-        <img
-          src="{{asset('./contents/img/sac-isotherme-ecologique.jpg')}}"
-          class="shop-items__card-img"
-          alt=""
-        />
-      </div>
-      <div class="shop-items__info">
-        <div class="shop-items__info__title">Cooler bag</div>
-        <p class="shop-items__info__description">
-          Organic cotton bag Organic Textile
-        </p>
-      </div>
-      <div class="shop__items__cart">
-        <h1 class="shop__items__cart__price">25.99 / 50pts</h1>
-        <a href="#" class="shop__items__cart__btn">Add to cart</a>
-      </div>
-    </div>
-    <!----------end card1-------------->
-
-    <div class="shop-items__card">
-      <div class="shop-items__card-img-container">
-        <img
-          src="{{asset('./contents/img/sac-isotherme-ecologique.jpg')}}"
-          class="shop-items__card-img"
-          alt=""
-        />
-      </div>
-      <div class="shop-items__info">
-        <div class="shop-items__info__title">Cooler bag</div>
-        <p class="shop-items__info__description">
-          Organic cotton bag Organic Textile
-        </p>
-      </div>
-      <div class="shop__items__cart">
-        <h1 class="shop__items__cart__price">25.99 / 50pts</h1>
-        <a href="#" class="shop__items__cart__btn">Add to cart</a>
-      </div>
-    </div>
-    <!----------end card1-------------->
-
-    <div class="shop-items__card">
-      <div class="shop-items__card-img-container">
-        <img
-          src="{{asset('./contents/img/sac-isotherme-ecologique.jpg')}}"
-          class="shop-items__card-img"
-          alt=""
-        />
-      </div>
-      <div class="shop-items__info">
-        <div class="shop-items__info__title">Cooler bag</div>
-        <p class="shop-items__info__description">
-          Organic cotton bag Organic Textile
-        </p>
-      </div>
-      <div class="shop__items__cart">
-        <h1 class="shop__items__cart__price">25.99 / 50pts</h1>
-        <a href="#" class="shop__items__cart__btn">Add to cart</a>
-      </div>
-    </div>
-    <!----------end card1-------------->
   </div>
 </div>
 

@@ -8,8 +8,6 @@
   <link rel="icon" href="{{asset('./contents/img/logo.png')}}" />
 {% endblock %}
 
-
-
 {% block dashContent %}
 
 <div class="dash__container">
@@ -45,7 +43,7 @@
   <div class="dash__container-card">
     <div class="dash__card">
       <div class="product">
-        {{form_start(formProduct,{'attr':{'novalidate':'novalidate'}})}}
+        {{form_start(formProduct)}}
         <div class="product-add-card">
           <div class="product-add-card__header">
             <h1 class="product-add-card__header-h1">Product details</h1>
@@ -108,7 +106,6 @@
             {% endif %}
           </div>
 
-         
           <!--end div category-->
 
           <div class="product-add-form__input__group-row">
@@ -170,14 +167,15 @@
             >
             <div class="product-add-form-image">
               <div class="prouct-add-form-image__container">
-                <i class="bx bx-cloud-upload"></i>
+                <i class="bx bx-cloud-upload" style="display:none"></i>
+
                 <img
                   class="prouct-add-form-image__img"
-                  src=""
+                  src="{{asset('./contents/uploads/products/') ~ product.image}}"
                   alt=""
                   id="prouct-add-form-image__img"
                   accept="image/*"
-                  style="display: none"
+                  
                 />
               </div>
               <div class="prouct-add-form-image__description">
@@ -188,8 +186,8 @@
                   on the image.
                 </p>
                 <div class="prouct-add-form-image__add">
-                  {{ form_label(formProduct.Image, 'Choose a photo:', {'label_attr': {'class': 'prouct-add-form-image__addBtn','for': 'prouct-add-form-image__file-btn'}}) }}
-                  {{form_widget(formProduct.Image,{'attr':{'class':'prouct-add-form-image__file-btn','name':'prouct-add-form-image__file-btn','id':'prouct-add-form-image__file-btn','style':'display:none'}})}}
+                  {{ form_label(formProduct.Image, 'Change the photo:', {'label_attr': {'class': 'prouct-add-form-image__addBtn','for': 'prouct-add-form-image__file-btn'}}) }}
+                  {{form_widget(formProduct.Image,{'attr':{'class':'prouct-add-form-image__file-btn','name':'prouct-add-form-image__file-btn','id':'prouct-add-form-image__file-btn', 'style': 'display: none;'}})}}
                   {% if form_errors(formProduct.Image) is not empty %}
                     <div class="form_errors-product">
                       {{form_errors(formProduct.Image)}}
@@ -202,7 +200,7 @@
           <hr class="hr-border hr-border-2" />
           <!--end add product card-->
           <button type="submit" class="add-new-product__submit-btn">
-            {{button_label | default('Add New Product')}}
+            {{button_label | default('Update Product')}}
           </button>
         </div>
         {{form_end(formProduct)}}
@@ -219,18 +217,17 @@
   {% block JsScript %}
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-    console.log("Hello world!");
+    <script>console.log("Hello world!");
     $(function () {
   $("#product_Image").change(function (event) {
-    console.log("test");
+    console.log(URL.createObjectURL(event.target.files[0]));
     var x = URL.createObjectURL(event.target.files[0]);
     $("#prouct-add-form-image__img").attr("src", x);
     $("#prouct-add-form-image__img").show(0);
     $(".bx-cloud-upload").hide(0);
 
+    console.log(x);
   });
 });
-
     </script>
 {% endblock %}
