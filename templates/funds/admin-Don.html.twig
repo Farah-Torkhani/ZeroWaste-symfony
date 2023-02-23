@@ -1,0 +1,103 @@
+{% extends 'funds/basedash.html.twig' %}
+{% block Fundrising %}
+      <div class="dash__container">
+        <nav class="dash__navbar">
+          <div class="dash__navbar-text">Dashboard</div>
+          <div class="navbar__items">
+            <span class="navbar__item">
+              <i class="bx bx-log-out item"></i>
+            </span>
+
+            <div class="notification-icon">
+              <span class="cart-icon__span">3</span>
+              <span class="navbar__item">
+                <i class="bx bx-bell item"></i>
+              </span>
+            </div>
+
+            <span class="dash__top-bar__fullname"> Braiek Ali </span>
+
+            <div class="dash__top-bar__img-container">
+              <a href="#">
+                <img
+                  src="./contents/img/ali.jpg"
+                  class="dash__top-bar__img"
+                  alt="profile"
+                />
+              </a>
+            </div>
+          </div>
+        </nav>
+        <!--end dash__navbar-->
+
+        <div class="dash__container-card">
+          <div class="dash__card">
+            <div class="dash__card-rightSide">
+           
+            </div>
+           
+            <div class="product">
+              <div class="product-title">Fundrising List</div>
+              {% for stu in Funds %}
+              <div class="product-card">
+                <div class="product-card__image-container">
+                  <img src="./contents/img/don1.png" alt="don" class="product-card__image">
+                </div>
+                <div class="product-card__content">
+                  <div>
+                  
+                    <h1 class="product-card__title">{{stu.TitreDon}} </h1>
+                  </div>
+                  <div class="product-card__row-2">
+                    <div class="product-card__stock">{{stu.etat}}</div>
+                    <div class="product-card__price">
+                        <div class="product-card__actions-people-svg">
+                      <img src="./contents/img/people.svg" class="product-card__actions-people-svg" alt="People SVG">
+                    </div>
+                    </div>
+                  </div>
+                
+      
+                  <div class="product-card__actions">
+                    <div class="fund__item__loader">
+                      <p class="fund__item__loader__text1">Last donation 2d ago</p>
+                      <div class="fund__item__loader__container">
+                        <div class="fund__item__loader__container__current"></div>
+                      </div>
+                      <p class="fund__item__loader__text">
+                        <span>700 DNT</span>
+                        raised of
+                        <span>{{stu.objectif}}</span>
+                      </p>
+                    </div>
+                  
+                    
+                    <div class="product-card__actions-category">Details</div>
+                    <div class="product-card__actions-btn">
+                      <a href="" class="product-card__btn product-card__actions-btn-view">
+                        <i class='bx bxs-show product-card__icon'></i>
+                      </a>
+                    
+                    
+                    
+                    </div>
+                  </div>
+                </div>
+              </div>
+             
+
+              
+           
+                  
+                        </td>
+{% endfor %}
+    </tr>
+  {% endblock %}                 
+             
+           
+              
+           
+    
+
+
+

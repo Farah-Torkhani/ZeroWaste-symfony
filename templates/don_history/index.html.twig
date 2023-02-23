@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}DonHistory index{% endblock %}
+
+{% block body %}
+    <h1>DonHistory index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Comment</th>
+                <th>Donation_price</th>
+                <th>Date_donation</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for don_history in don_histories %}
+            <tr>
+                <td>{{ don_history.id }}</td>
+                <td>{{ don_history.comment }}</td>
+                <td>{{ don_history.donationPrice }}</td>
+                <td>{{ don_history.dateDonation ? don_history.dateDonation|date('Y-m-d') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_don_history_show', {'id': don_history.id}) }}">show</a>
+                    <a href="{{ path('app_don_history_edit', {'id': don_history.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_don_history_new') }}">Create new</a>
+{% endblock %}

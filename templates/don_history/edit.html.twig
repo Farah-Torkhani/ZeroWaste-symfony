@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit DonHistory{% endblock %}
+
+{% block body %}
+    <h1>Edit DonHistory</h1>
+
+    {{ include('don_history/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_don_history_index') }}">back to list</a>
+
+    {{ include('don_history/_delete_form.html.twig') }}
+{% endblock %}

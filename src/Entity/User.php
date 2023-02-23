@@ -86,6 +86,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     )]
     private ?string $password = null;
 
+    #[ORM\ManyToOne(inversedBy: 'user_don_id')]
+    private ?DonHistory $donHistory = null;
+
+   
+
 
     public function getId(): ?int
     {
@@ -312,6 +317,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
+
+    public function getDonHistory(): ?DonHistory
+    {
+        return $this->donHistory;
+    }
+
+    public function setDonHistory(?DonHistory $donHistory): self
+    {
+        $this->donHistory = $donHistory;
+
+        return $this;
+    }
+
+ 
+
 
     
 
