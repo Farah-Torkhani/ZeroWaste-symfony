@@ -105,7 +105,7 @@
           </a>
         </div>
         <div class="panier__checkout-form-model-content" style="padding-top:2.3rem;">
-          {{form_start(formAchats)}}
+          {{form_start(formAchats ,{'attr':{'novalidate':'novalidate'}})}}
           <div class="product-add-form__input__group-row checkout-gap">
             <div class="product-add-form__input__group">
               <label for="productPrice" class="product-add-form__input__label"
@@ -119,7 +119,11 @@
                 placeholder="FullName"
               />{#}
               {{form_widget(formAchats.FullName,{'attr':{'class':'product-add-form__input product-add-form__input__label-Price','placeholder':"FullName"}})}}
-            
+              {% if form_errors(formAchats.FullName) is not empty %}
+              <div class="form_errors-product">
+                {{form_errors(formAchats.FullName)}}
+              </div>
+            {% endif %}
             </div>
 
             <div class="product-add-form__input__group">
@@ -134,7 +138,11 @@
                 placeholder="Email"
               />{#}
               {{form_widget(formAchats.Email,{'attr':{'class':'product-add-form__input','placeholder':"Email"}})}}
-            
+              {% if form_errors(formAchats.Email) is not empty %}
+              <div class="form_errors-product">
+                {{form_errors(formAchats.Email)}}
+              </div>
+              {% endif %}
             </div>
           </div>
 
@@ -151,7 +159,11 @@
                 placeholder="City"
               />{#}
               {{form_widget(formAchats.city,{'attr':{'class':'product-add-form__input product-add-form__input__label-Price','placeholder':"City"}})}}
-            
+              {% if form_errors(formAchats.city) is not empty %}
+              <div class="form_errors-product">
+                {{form_errors(formAchats.city)}}
+              </div>
+              {% endif %}
             </div>
 
             <div class="product-add-form__input__group">
@@ -166,7 +178,11 @@
                 placeholder="Phone"
               />{#}
               {{form_widget(formAchats.tel,{'attr':{'class':'product-add-form__input','placeholder':"Phone"}})}}
-            
+              {% if form_errors(formAchats.tel) is not empty %}
+              <div class="form_errors-product">
+                {{form_errors(formAchats.tel)}}
+              </div>
+              {% endif %}
             </div>
           </div>
 
@@ -183,7 +199,11 @@
                 placeholder="Address"
               />{#}
               {{form_widget(formAchats.Address,{'attr':{'class':'product-add-form__input product-add-form__input__label-Price','placeholder':"Address"}})}}
-            
+              {% if form_errors(formAchats.Address) is not empty %}
+              <div class="form_errors-product">
+                {{form_errors(formAchats.Address)}}
+              </div>
+              {% endif %}
             </div>
 
             <div class="product-add-form__input__group">
@@ -198,7 +218,11 @@
                 placeholder="Zip Code"
               />{#}
               {{form_widget(formAchats.zipCode,{'attr':{'class':'product-add-form__input','placeholder':"zip Code"}})}}
-            
+              {% if form_errors(formAchats.zipCode) is not empty %}
+              <div class="form_errors-product">
+                {{form_errors(formAchats.zipCode)}}
+              </div>
+              {% endif %}
             </div>
           </div>
 

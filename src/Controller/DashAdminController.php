@@ -29,16 +29,6 @@ class DashAdminController extends AbstractController
         ]);
     }
 
-    #[Route('/dash/admin/commands', name: 'app_dash_admin_commands')]
-    public function dashAdminCommands(): Response
-    {
-        $userFullname = "Braiek Ali";
-
-        return $this->render('dash_admin/dash-admin-commands.html.twig', [
-            'title' => 'Zero Waste',
-            'userFullname' => $userFullname,
-        ]);
-    }
 
 
 

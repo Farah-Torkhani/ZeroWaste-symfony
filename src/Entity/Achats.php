@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\AchatsRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: AchatsRepository::class)]
 class Achats
@@ -18,24 +19,39 @@ class Achats
     private ?\DateTimeInterface $dateAchat = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
     private ?string $FullName = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Email(
+        message: 'The email {{ value }} is not a valid email.',
+    )]
+    #[Assert\NotBlank]
     private ?string $Email = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
     private ?string $Address = null;
 
     #[ORM\Column]
+    #[Assert\Regex(
+        pattern: '/^[0-9]{8}\d*$/',
+        match: true,
+        message: 'not a valid phone number',
+    )]
+    #[Assert\NotBlank]
     private ?int $tel = null;
 
     #[ORM\ManyToOne]
     private ?Commands $commande = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
     private ?string $city = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank]
+    #[Assert\Positive()]
     private ?int $zipCode = null;
 
     #[ORM\Column(length: 255, nullable: true)]

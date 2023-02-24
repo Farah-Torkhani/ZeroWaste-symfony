@@ -75,10 +75,14 @@
       <hr class="hr-border hr-border-3" />
       <div class="panier-content__RightSide-total">
         <div>Total</div>
-        <div>${{ total }} / {{ Nb_points }}pts</div>
+        <div>
+        {% if commande != null %}
+        ${{ total }} / {{ Nb_points }}pts
+        {% endif %}
+        </div>
       </div>
-      <a  href="{{path('commands_address')}}" class="panier-content__RightSide-Checkout">
-        <button>Checkout</button>
+      <a  href="{{path('commands_address')}}" class="panier-content__RightSide-Checkout  {% if commande == null %}disabled-checkout{% else %}{% if total == 0 %}disabled-checkout{% endif %}{% endif %}" >
+        <button class="checkoutPanier-btn {% if commande == null %}disabled-checkout{% else %}{% if total == 0 %}disabled-checkout{% endif %}{% endif %}">Checkout</button>
       </a>
       <hr class="hr-border hr-border-3" />
 
@@ -105,7 +109,7 @@
           </a>
         </div>
         <div class="panier__checkout-form-model-content" style="padding-top:2.3rem;">
-          {{form_start(formAchats)}}
+          {{form_start(formAchats ,{'attr':{'novalidate':'novalidate'}})}}
           <div class="product-add-form__input__group-row checkout-gap">
             <div class="product-add-form__input__group">
               <label for="productPrice" class="product-add-form__input__label"
@@ -119,7 +123,11 @@
                 placeholder="FullName"
               />{#}
               {{form_widget(formAchats.FullName,{'attr':{'class':'product-add-form__input product-add-form__input__label-Price','placeholder':"FullName"}})}}
-            
+              {% if form_errors(formAchats.FullName) is not empty %}
+              <div class="form_errors-product">
+                {{form_errors(formAchats.FullName)}}
+              </div>
+            {% endif %}
             </div>
 
             <div class="product-add-form__input__group">
@@ -134,7 +142,11 @@
                 placeholder="Email"
               />{#}
               {{form_widget(formAchats.Email,{'attr':{'class':'product-add-form__input','placeholder':"Email"}})}}
-            
+              {% if form_errors(formAchats.Email) is not empty %}
+              <div class="form_errors-product">
+                {{form_errors(formAchats.Email)}}
+              </div>
+              {% endif %}
             </div>
           </div>
 
@@ -151,7 +163,11 @@
                 placeholder="City"
               />{#}
               {{form_widget(formAchats.city,{'attr':{'class':'product-add-form__input product-add-form__input__label-Price','placeholder':"City"}})}}
-            
+              {% if form_errors(formAchats.city) is not empty %}
+              <div class="form_errors-product">
+                {{form_errors(formAchats.city)}}
+              </div>
+              {% endif %}
             </div>
 
             <div class="product-add-form__input__group">
@@ -166,7 +182,11 @@
                 placeholder="Phone"
               />{#}
               {{form_widget(formAchats.tel,{'attr':{'class':'product-add-form__input','placeholder':"Phone"}})}}
-            
+              {% if form_errors(formAchats.tel) is not empty %}
+              <div class="form_errors-product">
+                {{form_errors(formAchats.tel)}}
+              </div>
+              {% endif %}
             </div>
           </div>
 
@@ -183,7 +203,11 @@
                 placeholder="Address"
               />{#}
               {{form_widget(formAchats.Address,{'attr':{'class':'product-add-form__input product-add-form__input__label-Price','placeholder':"Address"}})}}
-            
+              {% if form_errors(formAchats.Address) is not empty %}
+              <div class="form_errors-product">
+                {{form_errors(formAchats.Address)}}
+              </div>
+              {% endif %}
             </div>
 
             <div class="product-add-form__input__group">
@@ -198,7 +222,11 @@
                 placeholder="Zip Code"
               />{#}
               {{form_widget(formAchats.zipCode,{'attr':{'class':'product-add-form__input','placeholder':"zip Code"}})}}
-            
+              {% if form_errors(formAchats.zipCode) is not empty %}
+              <div class="form_errors-product">
+                {{form_errors(formAchats.zipCode)}}
+              </div>
+              {% endif %}
             </div>
           </div>
 
@@ -253,39 +281,37 @@
           </div>
           {#-----end address info---------#}
           <div class="panier__checkout-form-model-content-question">What payment method do you want to use?</div>
-          <form action="">
-            <div class="panier__checkout-form-model-content-payment-btns-container">
-              <input type="radio" id="stripe" name="stripe" value="stripe">
-                <label for="stripe" class="label-stripe"> 
+            <a href="{{path('app_commands-paymentSet', {'test': 1})}}" class="panier__checkout-form-model-content-payment-btns-container">
+              <input type="radio" id="stripe" name="stripe" value="stripe" {% if commandeAchats != null %}{% if commandeAchats.paymentMethod == 'Stripe' %} checked {% endif %}{% endif %}>
+                <div for="" class="label-stripe"> 
                   <div class="payment-btns__container"><img src="./contents/img/visa.png" class="payment-btns__container-img" alt="" /></div>
                   <div class="payment-btns__container"><img src="./contents/img/mastercard1.png" class="payment-btns__container-img mastercard" alt="" /></div>
                   <div class="payment-btns-text">Pay online now!</div>
-                </label>
+                </div>
               
-              </div>
+            </a>
 
-            <div class="panier__checkout-form-model-content-payment-btns-container">
-              <input type="radio" id="livraison" name="stripe" value="livraison">
-                <label for="livraison" class="label-stripe"> 
+            <a href="{{path('app_commands-paymentSet', {'test': 2})}}" class="panier__checkout-form-model-content-payment-btns-container">
+              <input type="radio" id="livraison" name="stripe" value="livraison" {% if commandeAchats != null %}{% if commandeAchats.paymentMethod == 'Livraison' %} checked {% endif %}{% endif %}>
+                <div for="livraison" class="label-stripe"> 
                   <div class="payment-btns__container">
                   <img src="./contents/img/livraison.png" class="payment-btns__container-img livraison-img" alt="" />
                   </div>
                   <div class="payment-btns-text">CASH payment on delivery</div>
-                </label>
+                </div>
               
-            </div>
+            </a>
 
-            <div class="panier__checkout-form-model-content-payment-btns-container">
-              <input type="radio" id="points" name="stripe" value="points">
-                <label for="points" class="label-stripe"> 
+            <a href="{{path('app_commands-paymentSet', {'test': 3})}}" class="panier__checkout-form-model-content-payment-btns-container">
+              <input type="radio" id="points" name="stripe" value="points" {% if commandeAchats != null %}{% if commandeAchats.paymentMethod == 'Points' %} checked {% endif %}{% endif %}>
+                <div for="points" class="label-stripe"> 
                   <div class="payment-btns__container">
                   <img src="./contents/img/logo1.png" class="payment-btns__container-img zerowaste-points" alt="" />
                   </div>
                   <div class="payment-btns-text">ZeroWaste Points payment </div>
-                </label>
+                </div>
               
-            </div>
-          </form>
+            </a>
           
           <hr class="hr-border-checkout-total" />
           <div class="checkout-validation-total">
@@ -294,9 +320,9 @@
           </div>
           <hr class="hr-border-checkout-total" />
           
-          <button type="submit" class="panier__checkout-form-model-btnSave">
+          <a href="{{path('app_commands-validateCheckout')}}" type="submit" class="panier__checkout-form-model-btnSave validateCheckout-btn">
             Validate
-          </button>
+          </a>
         </div>
       </div>
     </div>

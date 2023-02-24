@@ -14,7 +14,6 @@ use App\Entity\CommandsProduit;
 use App\Entity\Produit;
 use App\Entity\Commands;
 use App\Entity\Achats;
-
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\AchatsType;
 use App\Repository\AchatsRepository;
@@ -52,7 +51,7 @@ class CommandsController extends AbstractController
             $em->flush();
             return $this->redirectToRoute("commands_checkout");
         }
-        
+    
         return $this->render('front/front-user-commands.html.twig', [
             'title' => 'Zero Waste',
             'commande' => $commande,
@@ -66,10 +65,15 @@ class CommandsController extends AbstractController
 
 
     #[Route('/commands/plus/{id}', name: 'app_commands-plus')]
-    public function commandsPlus(CommandsProduitRepository $commandsProduitRepository, ManagerRegistry $doct, $id): Response
+    public function commandsPlus(CommandsRepository $commandsRepository, CommandsProduitRepository $commandsProduitRepository, ManagerRegistry $doct, $id): Response
     {
 
-        $commandeProduit = $commandsProduitRepository->findOneBy(['produit' => $id]);
+        $user = $doct->getRepository(User::class)->findOneBy(['email' => $this->getUser()->getUserIdentifier()]);
+        
+        $commande = $commandsRepository->findOneBy(["user" => $user->getId(), "status" => 0]);
+
+        $commandeProduit = $commandsProduitRepository->findOneBy(["commande" => $commande->getId(), "produit" => $id]);
+        
         $quantite = $commandeProduit->getQuantiteC();
 
         if($quantite < $commandeProduit->getProduit()->getQuantite()){
@@ -77,15 +81,20 @@ class CommandsController extends AbstractController
             $em = $doct->getManager();
             $em->flush();
         }
-
+    
         return $this->redirectToRoute('app_commands');
     }
 
     #[Route('/commands/moins/{id}', name: 'app_commands-moins')]
-    public function commandsMoins(CommandsProduitRepository $commandsProduitRepository, ManagerRegistry $doct, $id): Response
+    public function commandsMoins(CommandsRepository $commandsRepository, CommandsProduitRepository $commandsProduitRepository, ManagerRegistry $doct, $id): Response
     {
 
-        $commandeProduit = $commandsProduitRepository->findOneBy(['produit' => $id]);
+        $user = $doct->getRepository(User::class)->findOneBy(['email' => $this->getUser()->getUserIdentifier()]);
+        
+        $commande = $commandsRepository->findOneBy(["user" => $user->getId(), "status" => 0]);
+
+        $commandeProduit = $commandsProduitRepository->findOneBy(["commande" => $commande->getId(), "produit" => $id]);
+        
         $quantite = $commandeProduit->getQuantiteC();
 
         if($quantite > 1){
@@ -156,19 +165,33 @@ class CommandsController extends AbstractController
 
     
     #[Route('/commands/address', name: 'commands_address')]
-    public function commandsAddress(CommandsRepository $commandsRepository,AchatsRepository $achatsRepository , ManagerRegistry $doct): Response
+    public function commandsAddress(CommandsProduitRepository $commandsProduitRepository,CommandsRepository $commandsRepository,AchatsRepository $achatsRepository , ManagerRegistry $doct): Response
     {
         $user = $doct->getRepository(User::class)->findOneBy(['email' => $this->getUser()->getUserIdentifier()]);
         
         $commande = $commandsRepository->findOneBy(["user" => $user->getId(), "status" => 0]);
-        $commandeAchats = $achatsRepository->findOneBy(["commande" => $commande]);
-
+        if($commande == null){
+            $commandeAchats = null ;    
+        }
+        else{
+            $commandeAchats = $achatsRepository->findOneBy(["commande" => $commande]);
+        }
 
 
         if($commandeAchats != null){
             return $this->redirectToRoute('app_commands', ['checkout' => 1]);
+        }else{
+            if($commande == null){
+                return $this->redirectToRoute('app_commands');
+            }
+            $totalCommandes = $commandsProduitRepository->getCommandesNumber($commande->getId());
+            if($totalCommandes == 0){
+                return $this->redirectToRoute('app_commands');    
+            }
+            return $this->redirectToRoute('app_commands', ['address' => 1]);
         }
-        return $this->redirectToRoute('app_commands', ['address' => 1]);
+        
+        
     }
 
     #[Route('/commands/checkout', name: 'commands_checkout')]
@@ -229,6 +252,59 @@ class CommandsController extends AbstractController
     }
 
 
+    #[Route('/commands/payment/{test}', name: 'app_commands-paymentSet')]
+    public function paymentSet( ManagerRegistry $doct, $test, CommandsRepository $commandsRepository, AchatsRepository $achatsRepository, Request $request): Response
+    {
+
+        $user = $doct->getRepository(User::class)->findOneBy(['email' => $this->getUser()->getUserIdentifier()]);
+        
+        $commande = $commandsRepository->findOneBy(["user" => $user->getId(), "status" => 0]);
+        $commandeAchats = $achatsRepository->findOneBy(["commande" => $commande]);
+        
+        if($test == 1){
+            $commandeAchats->setPaymentMethod('Stripe');
+        }else if($test == 2){
+            $commandeAchats->setPaymentMethod('Livraison');
+        }else if($test == 3){
+            $commandeAchats->setPaymentMethod('Points');
+        }
+        $em = $doct->getManager();
+        $em->flush();
+
+        return $this->redirectToRoute('commands_checkout');
+    }
+
+    #[Route('/commands/validate/', name: 'app_commands-validateCheckout')]
+    public function validateCheckout( ManagerRegistry $doct, CommandsRepository $commandsRepository, AchatsRepository $achatsRepository, Request $request): Response
+    {
+
+        $user = $doct->getRepository(User::class)->findOneBy(['email' => $this->getUser()->getUserIdentifier()]);
+        
+        $commande = $commandsRepository->findOneBy(["user" => $user->getId(), "status" => 0]);
+        $commandeAchats = $achatsRepository->findOneBy(["commande" => $commande]);
+        
+        $commandeAchats->setValidate(1);
+        $commande->setStatus(1);
+        $em = $doct->getManager();
+        $em->flush();
+
+        return $this->redirectToRoute('app_commands');
+    }
+
+
+    #[Route('/dash/admin/commands', name: 'app_dash_admin_commands')]
+    public function dashAdminCommands(AchatsRepository $achatsRepository): Response
+    {
+        $userFullname = "Braiek Ali";
+
+        $achats = $achatsRepository->findBy(['validate' => 1], ['id' => 'DESC']);
+
+        return $this->render('dash_admin/dash-admin-commands.html.twig', [
+            'title' => 'Zero Waste',
+            'userFullname' => $userFullname,
+            'achats' => $achats,
+        ]);
+    }
 
 
 }
