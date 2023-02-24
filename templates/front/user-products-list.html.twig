@@ -45,14 +45,46 @@ body{
       </div>
       <div class="shop__items__cart">
         <h1 class="shop__items__cart__price">${{p.prixProduit}} / {{p.prixPointProduit}}pts</h1>
-        <a href="#" class="shop__items__cart__btn">Add to cart</a>
+        <a href="{{path('app_commandes-add', {'id': p.id})}}" class="shop__items__cart__btn">Add to cart</a>
       </div>
     </div>
     {% endfor %}
     {#----------end card1--------------#}
+
+    {#------------------------#}
+    <div class="add-to-cart-model" {% if app.request.query.get('added') == 0 %} style="display :none {% endif %}">
+      <div class="add-to-cart-model-v1">
+        <div class="add-to-cart-model-v1__title">
+          {% if app.request.query.get('added') == 1 %}
+            Product Added To Cart Successfully
+          {% endif %}
+
+          {% if app.request.query.get('added') == 2 %}
+            Product is already Added To Cart
+          {% endif %}
+          
+          </div>
+        <button class="add-to-cart-model-v1__Btn">Contenue Shopping</button>
+        <a href="{{path('app_commands')}}" class="add-to-cart-model-v1__Btn order">Order</a>
+      </div>
+    </div>
 
 
   </div>
 </div>
 
 {% endblock %}
+
+
+  {% block JsScript %}
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        $(".add-to-cart-model-v1__Btn").click(function () {
+          $(".add-to-cart-model").toggle(10);
+        });
+      });
+    </script>
+    
+  {% endblock %}

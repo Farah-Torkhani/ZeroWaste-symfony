@@ -36,7 +36,7 @@ class Produit
     #[Assert\NotBlank(message: "le champ est vide")]
     private ?string $description = null;
 
-    #[ORM\ManyToOne(inversedBy: 'produit_id')]
+    #[ORM\ManyToOne(inversedBy: 'produit_id', cascade: ['persist', 'remove'])]
     private ?CategorieProduit $categorieProduit = null;
 
     #[ORM\Column(nullable: true)]

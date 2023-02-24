@@ -15,7 +15,7 @@ class Commandes
     private ?int $id = null;
 
     #[ORM\Column]
-    private ?int $quantite = null;
+    private ?int $quantiteC = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $date_ajout = null;
@@ -34,14 +34,14 @@ class Commandes
         return $this->id;
     }
 
-    public function getQuantite(): ?int
+    public function getQuantiteC(): ?int
     {
-        return $this->quantite;
+        return $this->quantiteC;
     }
 
-    public function setQuantite(int $quantite): self
+    public function setQuantiteC(int $quantiteC): self
     {
-        $this->quantite = $quantite;
+        $this->quantiteC = $quantiteC;
 
         return $this;
     }
@@ -93,4 +93,6 @@ class Commandes
 
         return $this;
     }
+
+    
 }

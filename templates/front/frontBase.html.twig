@@ -37,7 +37,7 @@
         class="notification-icon cart-icon-link"
         style="position: relative; top: 0.1rem; padding-right: 1rem"
       >
-        <span class="cart-shop-icon__span">2</span>
+        <span class="cart-shop-icon__span">{{totalCommandes}}</span>
         <span class="navbar__item">
           <i class="bx bx-cart item" style="font-size: 3rem"></i>
         </span>
@@ -50,12 +50,12 @@
         </span>
       </div>
 
-      <span class="dash__top-bar__fullname"> Braiek Ali </span>
+      <span class="dash__top-bar__fullname"> {{user.fullName}} </span>
 
       <div class="dash__top-bar__img-container">
         <a href="#">
           <img
-            src="./contents/img/ali.jpg"
+            src="{{asset('./contents/img/') ~ user.imgUrl }}"
             class="dash__top-bar__img"
             alt="profile"
           />

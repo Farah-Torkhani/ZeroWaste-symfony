@@ -226,3 +226,5 @@ button.addEventListener("click", function () {
     localStorage.setItem("divVisibility", "hidden");
   }
 });
+
+//************************************************************************ */

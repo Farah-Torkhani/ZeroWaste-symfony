@@ -63,4 +63,24 @@ class CommandesRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+
+    /*
+    public function getUserCommandes($user_id)
+    {
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager->createQuery("select c,p from APP\Entity\Commandes c join c.produit_id p where c.user_id =:userId ");
+        $query->setParameter('userId', $user_id);
+        return $query->getResult();
+        
+    }
+    */
+
+    public function getCommandesNumber($user_id)
+    {
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager->createQuery('select count(c) from APP\Entity\Commandes c where c.checkOut = 0 ');
+        return $query->getSingleScalarResult();
+    }
+
 }

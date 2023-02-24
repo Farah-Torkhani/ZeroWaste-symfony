@@ -18,6 +18,9 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use App\Repository\CommandsRepository;
+use App\Repository\CommandsProduitRepository;
+use App\Entity\User;
 
 
 class ProductController extends AbstractController
@@ -31,13 +34,25 @@ class ProductController extends AbstractController
     }
 
     #[Route('/products', name: 'app_products')]
-    public function products(ProduitRepository $produitRepository): Response
+    public function products(ProduitRepository $produitRepository, CommandsRepository $commandsRepository, ManagerRegistry $doct,  CommandsProduitRepository $commandsProduitRepository): Response
     {
+        $user = $doct->getRepository(User::class)->findOneBy(['email' => $this->getUser()->getUserIdentifier()]);
+       
+        $commande = $commandsRepository->findOneBy(["user" => $user->getId(), "status" => 0]);
+        if($commande != null)
+        {
+            $totalCommandes = $commandsProduitRepository->getCommandesNumber($commande->getId());
+        }else{
+            $totalCommandes = 0;
+        }
+        
         $products = $produitRepository->findAll();
         return $this->render('front/user-products-list.html.twig', [
             'controller_name' => 'FrontController',
             'title' => 'Zero Waste',
             'products' => $products,
+            'totalCommandes' => $totalCommandes,
+            'user' => $user,
         ]);
 
     }
