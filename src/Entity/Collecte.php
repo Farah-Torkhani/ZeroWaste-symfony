@@ -3,8 +3,12 @@
 namespace App\Entity;
 
 use App\Repository\CollecteRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 #[ORM\Entity(repositoryClass: CollecteRepository::class)]
 class Collecte
@@ -15,28 +19,52 @@ class Collecte
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message:"nom est vide") ]  
     private ?string $nomCollecte = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message:"description est vide") ]  
     private ?string $description = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255)] 
     private ?string $imageCollect = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message:"etat est vide") ]  
     private ?int $etat = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message:"adresse est vide") ]  
     private ?string $adresse = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $date_deb = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]  
     private ?\DateTimeInterface $date_fin = null;
 
-    #[ORM\ManyToOne(inversedBy: 'collecte_id')]
+     /**
+     * @Assert\Callback
+     */
+    public function validate(ExecutionContextInterface $context, $payload)
+    {
+        if ($this->date_deb && $this->date_fin && $this->date_deb >= $this->date_fin) {
+            $context->buildViolation('La date de début doit être inférieure à la date de fin.')
+                ->atPath('date_deb')
+                ->addViolation();
+        }
+    }
+
+    #[ORM\ManyToOne(inversedBy: 'collect_id')]
     private ?CollecteCategorie $collecteCategorie = null;
+
+    #[ORM\ManyToMany(targetEntity: Participation::class, mappedBy: 'collecte_id')]
+    private Collection $participations;
+
+    public function __construct()
+    {
+        $this->participations = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -137,5 +165,37 @@ class Collecte
         $this->collecteCategorie = $collecteCategorie;
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, Participation>
+     */
+    public function getParticipations(): Collection
+    {
+        return $this->participations;
+    }
+
+    public function addParticipation(Participation $participation): self
+    {
+        if (!$this->participations->contains($participation)) {
+            $this->participations->add($participation);
+            $participation->addCollecteId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeParticipation(Participation $participation): self
+    {
+        if ($this->participations->removeElement($participation)) {
+            $participation->removeCollecteId($this);
+        }
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return (string) $this->getNomCollecte();
     }
 }
