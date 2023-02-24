@@ -14,49 +14,85 @@ class Achats
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $full_name = null;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $dateAchat = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $email = null;
+    private ?string $FullName = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $Email = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $Address = null;
 
     #[ORM\Column]
     private ?int $tel = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $adresse = null;
-
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $date_achat = null;
-
     #[ORM\ManyToOne]
-    private ?Commandes $commande_id = null;
+    private ?Commands $commande = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $city = null;
+
+    #[ORM\Column]
+    private ?int $zipCode = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $paymentMethod = null;
+
+    #[ORM\Column]
+    private ?int $validate = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getFullName(): ?string
+    public function getDateAchat(): ?\DateTimeInterface
     {
-        return $this->full_name;
+        return $this->dateAchat;
     }
 
-    public function setFullName(string $full_name): self
+    public function setDateAchat(\DateTimeInterface $dateAchat): self
     {
-        $this->full_name = $full_name;
+        $this->dateAchat = $dateAchat;
+
+        return $this;
+    }
+
+    public function getFullName(): ?string
+    {
+        return $this->FullName;
+    }
+
+    public function setFullName(string $FullName): self
+    {
+        $this->FullName = $FullName;
 
         return $this;
     }
 
     public function getEmail(): ?string
     {
-        return $this->email;
+        return $this->Email;
     }
 
-    public function setEmail(string $email): self
+    public function setEmail(string $Email): self
     {
-        $this->email = $email;
+        $this->Email = $Email;
+
+        return $this;
+    }
+
+    public function getAddress(): ?string
+    {
+        return $this->Address;
+    }
+
+    public function setAddress(string $Address): self
+    {
+        $this->Address = $Address;
 
         return $this;
     }
@@ -73,38 +109,62 @@ class Achats
         return $this;
     }
 
-    public function getAdresse(): ?string
+    public function getCommande(): ?Commands
     {
-        return $this->adresse;
+        return $this->commande;
     }
 
-    public function setAdresse(string $adresse): self
+    public function setCommande(?Commands $commande): self
     {
-        $this->adresse = $adresse;
+        $this->commande = $commande;
 
         return $this;
     }
 
-    public function getDateAchat(): ?\DateTimeInterface
+    public function getCity(): ?string
     {
-        return $this->date_achat;
+        return $this->city;
     }
 
-    public function setDateAchat(\DateTimeInterface $date_achat): self
+    public function setCity(string $city): self
     {
-        $this->date_achat = $date_achat;
+        $this->city = $city;
 
         return $this;
     }
 
-    public function getCommandeId(): ?Commandes
+    public function getZipCode(): ?int
     {
-        return $this->commande_id;
+        return $this->zipCode;
     }
 
-    public function setCommandeId(?Commandes $commande_id): self
+    public function setZipCode(int $zipCode): self
     {
-        $this->commande_id = $commande_id;
+        $this->zipCode = $zipCode;
+
+        return $this;
+    }
+
+    public function getPaymentMethod(): ?string
+    {
+        return $this->paymentMethod;
+    }
+
+    public function setPaymentMethod(?string $paymentMethod): self
+    {
+        $this->paymentMethod = $paymentMethod;
+
+        return $this;
+    }
+
+    public function getValidate(): ?int
+    {
+        return $this->validate;
+    }
+
+    public function setValidate(int $validate): self
+    {
+        $this->validate = $validate;
 
         return $this;
     }

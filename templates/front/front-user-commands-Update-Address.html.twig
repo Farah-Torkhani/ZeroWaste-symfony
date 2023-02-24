@@ -95,7 +95,7 @@
     </div>
     <!--end panier content Right side-->
 
-    <div class="panier__checkout-form-model" {% if app.request.query.get('address') == 0 %} style="display:none" {% endif %}>
+    <div class="panier__checkout-form-model">
       
       <div class="panier__checkout-form-model-v1">
         <div class="panier__checkout-form-model-header">
@@ -203,7 +203,7 @@
           </div>
 
           <button type="submit" class="panier__checkout-form-model-btnSave contenue__btn">
-            {{button_label | default('Contenue')}}
+            {{button_label | default('Update')}}
           </button>
           {{form_end(formAchats)}}
         </div>
