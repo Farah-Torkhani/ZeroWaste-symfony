@@ -86,10 +86,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     )]
     private ?string $password = null;
 
-    #[ORM\ManyToOne(inversedBy: 'user_don_id')]
-    private ?DonHistory $donHistory = null;
+    #[ORM\OneToMany(mappedBy: 'userID', targetEntity: DonHistory::class)]
+    private Collection $fundsID;
 
-   
+    #[ORM\OneToMany(mappedBy: 'userID', targetEntity: DonHistory::class)]
+    private Collection $donHistories;
+
+    public function __construct()
+    {
+        $this->fundsID = new ArrayCollection();
+        $this->donHistories = new ArrayCollection();
+    }
+
+ 
 
 
     public function getId(): ?int
@@ -318,22 +327,39 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
-    public function getDonHistory(): ?DonHistory
+    /**
+     * @return Collection<int, DonHistory>
+     */
+    public function getDonHistories(): Collection
     {
-        return $this->donHistory;
+        return $this->donHistories;
     }
 
-    public function setDonHistory(?DonHistory $donHistory): self
+    public function addDonHistory(DonHistory $donHistory): self
     {
-        $this->donHistory = $donHistory;
+        if (!$this->donHistories->contains($donHistory)) {
+            $this->donHistories->add($donHistory);
+            $donHistory->setUserID($this);
+        }
 
         return $this;
     }
 
- 
+    public function removeDonHistory(DonHistory $donHistory): self
+    {
+        if ($this->donHistories->removeElement($donHistory)) {
+            // set the owning side to null (unless already changed)
+            if ($donHistory->getUserID() === $this) {
+                $donHistory->setUserID(null);
+            }
+        }
+
+        return $this;
+    }
+
+  
 
 
-    
 
     
 }

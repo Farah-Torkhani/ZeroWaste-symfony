@@ -7,35 +7,32 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: DonHistoryRepository::class)]
 class DonHistory
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+   
     private ?int $id = null;
-
+    #[Assert\NotBlank(message:"comment is required")]
     #[ORM\Column(length: 255)]
     private ?string $comment = null;
-
+    #[Assert\NotBlank(message:"donation price is required")]
     #[ORM\Column]
     private ?float $donation_price = null;
-
+    #[Assert\NotBlank(message:"date of donation is required")]
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $date_donation = null;
 
-    #[ORM\OneToMany(mappedBy: 'donHistory', targetEntity: Fundrising::class)]
-    private Collection $fundrisings_id;
+    #[ORM\ManyToOne(inversedBy: 'donHistories')]
+    private ?User $userID = null;
 
-    #[ORM\OneToMany(mappedBy: 'donHistory', targetEntity: User::class)]
-    private Collection $user_don_id;
+    #[ORM\ManyToOne(inversedBy: 'donHistories')]
+    private ?Fundrising $fundsID = null;
 
-    public function __construct()
-    {
-        $this->fundrisings_id = new ArrayCollection();
-        $this->user_don_id = new ArrayCollection();
-    }
+
 
     public function getId(): ?int
     {
@@ -78,63 +75,30 @@ class DonHistory
         return $this;
     }
 
-    /**
-     * @return Collection<int, Fundrising>
-     */
-    public function getFundrisingsId(): Collection
+    public function getUserID(): ?User
     {
-        return $this->fundrisings_id;
+        return $this->userID;
     }
 
-    public function addFundrisingsId(Fundrising $fundrisingsId): self
+    public function setUserID(?User $userID): self
     {
-        if (!$this->fundrisings_id->contains($fundrisingsId)) {
-            $this->fundrisings_id->add($fundrisingsId);
-            $fundrisingsId->setDonHistory($this);
-        }
+        $this->userID = $userID;
 
         return $this;
     }
 
-    public function removeFundrisingsId(Fundrising $fundrisingsId): self
+    public function getFundsID(): ?Fundrising
     {
-        if ($this->fundrisings_id->removeElement($fundrisingsId)) {
-            // set the owning side to null (unless already changed)
-            if ($fundrisingsId->getDonHistory() === $this) {
-                $fundrisingsId->setDonHistory(null);
-            }
-        }
+        return $this->fundsID;
+    }
+
+    public function setFundsID(?Fundrising $fundsID): self
+    {
+        $this->fundsID = $fundsID;
 
         return $this;
     }
 
-    /**
-     * @return Collection<int, User>
-     */
-    public function getUserDonId(): Collection
-    {
-        return $this->user_don_id;
-    }
+    
 
-    public function addUserDonId(User $userDonId): self
-    {
-        if (!$this->user_don_id->contains($userDonId)) {
-            $this->user_don_id->add($userDonId);
-            $userDonId->setDonHistory($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUserDonId(User $userDonId): self
-    {
-        if ($this->user_don_id->removeElement($userDonId)) {
-            // set the owning side to null (unless already changed)
-            if ($userDonId->getDonHistory() === $this) {
-                $userDonId->setDonHistory(null);
-            }
-        }
-
-        return $this;
-    }
 }

@@ -7,6 +7,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: FundrisingRepository::class)]
 class Fundrising
@@ -16,30 +18,34 @@ class Fundrising
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-
+    #[Assert\NotBlank(message:"Title fundrising is required")]
     #[ORM\Column(length: 255)]
     private ?string $TitreDon = null;
-
+    #[Assert\NotBlank(message:"description fundrising is required")]
     #[ORM\Column(length: 255)]
     private ?string $descriptionDon = null;
-
+    #[Assert\NotBlank(message:"image fundrising is required")]
     #[ORM\Column(length: 255)]
     private ?string $imageDon = null;
-
+    #[Assert\NotBlank(message:"date fundrising is required")]
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $date_Don = null;
-
+    #[Assert\NotBlank(message:"date limit  fundrising is required")]
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $date_don_limite = null;
-
     #[ORM\Column(length: 255)]
     private ?string $etat = null;
-
+    #[Assert\NotBlank(message:"Objectif fundrising is required")]
     #[ORM\Column]
     private ?float $objectif = null;
 
-    #[ORM\ManyToOne(inversedBy: 'fundrisings_id')]
-    private ?DonHistory $donHistory = null;
+    #[ORM\OneToMany(mappedBy: 'fundsID', targetEntity: DonHistory::class)]
+    private Collection $donHistories;
+
+    public function __construct()
+    {
+        $this->donHistories = new ArrayCollection();
+    }
 
 
 
@@ -143,19 +149,37 @@ class Fundrising
         return $this;
     }
 
-    public function getDonHistory(): ?DonHistory
+    /**
+     * @return Collection<int, DonHistory>
+     */
+    public function getDonHistories(): Collection
     {
-        return $this->donHistory;
+        return $this->donHistories;
     }
 
-    public function setDonHistory(?DonHistory $donHistory): self
+    public function addDonHistory(DonHistory $donHistory): self
     {
-        $this->donHistory = $donHistory;
+        if (!$this->donHistories->contains($donHistory)) {
+            $this->donHistories->add($donHistory);
+            $donHistory->setFundsID($this);
+        }
 
         return $this;
     }
 
+    public function removeDonHistory(DonHistory $donHistory): self
+    {
+        if ($this->donHistories->removeElement($donHistory)) {
+            // set the owning side to null (unless already changed)
+            if ($donHistory->getFundsID() === $this) {
+                $donHistory->setFundsID(null);
+            }
+        }
 
+        return $this;
+    }
+
+ 
    
   
 }

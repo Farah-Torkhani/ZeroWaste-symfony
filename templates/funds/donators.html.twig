@@ -1,0 +1,42 @@
+{% extends 'funds/fundbase.html.twig' %}
+{% block stylesheets %}
+   <link rel="stylesheet" href="{{asset('./contents/css/ST.css')}}">
+    <link rel="stylesheet" href="{{asset('./contents/css/ST1.css')}}">
+    <link rel="stylesheet" href="{{asset('./contents/css/ST2.css')}}">
+	<link rel="stylesheet" href="{{asset('./style/nabilStyle.css')}}">
+
+	<link rel="shortcut icon" href="{{asset('./assets/img/logo.svg')}}" type="image/x-icon">
+	<link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet"/>
+	<link rel="stylesheet" href="{{asset('./contents/css/style.css')}}">
+	<link rel="stylesheet" href="{{asset('./style/nabilStyle.css')}}">
+	<link rel="shortcut icon" href="{{asset('./assets/img/logo.svg')}}" type="image/x-icon">
+	<link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet"/>
+        <link rel="stylesheet" href="{{asset('./style/farahStyle.css')}}">
+
+    {% endblock %}
+{% block title %}Donators{% endblock %}
+
+{% block body %}
+    <h1>Donators</h1>
+
+    <table class="table">
+        <thead>
+        <th>Full Name</th>
+        <th>Amount</th>
+        <th>Comment</th>
+        </thead>
+        <tbody>
+            {% for donation in donations %}
+            <tr>
+                <td>{{ donation['user'] }}</td>
+                <td>{{ donation['amount'] }}</td>
+                <td>{{ donation['comment'] }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_don_history_index') }}">back to list</a>
+
+
+{% endblock %}

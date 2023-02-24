@@ -1,11 +1,121 @@
-{% extends 'base.html.twig' %}
 
-{% block title %}New DonHistory{% endblock %}
+
+{% block stylesheets %}
+     <link rel="stylesheet" href="{{asset('./contents/css/ST.css')}}">
+    <link rel="stylesheet" href="{{asset('./contents/css/ST1.css')}}">
+    <link rel="stylesheet" href="{{asset('./contents/css/ST2.css')}}">
+	<link rel="stylesheet" href="{{asset('./style/nabilStyle.css')}}">
+	<link rel="shortcut icon" href="{{asset('./assets/img/logo.svg')}}" type="image/x-icon">
+	<link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet"/>
+	<link rel="stylesheet" href="{{asset('./contents/css/style.css')}}">
+	<link rel="stylesheet" href="{{asset('./style/nabilStyle.css')}}">
+	<link rel="shortcut icon" href="{{asset('./assets/img/logo.svg')}}" type="image/x-icon">
+	<link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet"/>
+        <link rel="stylesheet" href="{{asset('./style/farahStyle.css')}}">
+
+{% endblock %}
 
 {% block body %}
-    <h1>Create new DonHistory</h1>
+<nav class="front__navbar front__navbar-scrolled-up">
+    <div class="front__navbar-img-container">
+      <img
+        src="{{asset('./contents/img/logo.png')}}"
+        class="front__navbar-img-container"
+        alt=""
+      />
+    </div>
 
-    {{ include('don_history/_form.html.twig') }}
+    <ul class="front__navbar__link">
+      <li>Home</li>
+      <li>Fundraising</li>
+      <li>Shop</li>
+      <li>collect</li>
+    </ul>
 
-    <a href="{{ path('app_don_history_index') }}">back to list</a>
+    <div class="navbar__items">
+      <div
+        class="notification-icon"
+        style="position: relative; top: 0.1rem"
+      >
+        <span class="cart-icon__span">3</span>
+        <span class="navbar__item">
+          <i class="bx bx-bell item"></i>
+        </span>
+      </div>
+
+      <span class="dash__top-bar__fullname"> {{user.fullname}}  </span>
+
+      <div class="dash__top-bar__img-container">
+        <a href="#">
+          <img
+             src="{{asset('./assets/uploads/img/') ~ user.imgUrl }}"
+            class="dash__top-bar__img"
+            alt="profile"
+          />
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="dash-user-fund-detail">
+    <div class="dash-user-home__greeting">
+        <span class="dash-user-home__greeting--span-1">Fund detail |</span>
+        <h1 class="dash-user-home__greeting--span-2">Hello Nabil, Are you ready to help people and the nature again ?
+        </h1>
+    </div>
+
+
+    <div class="dash-user-fund-detail__container">
+        <div class="dash-user-fund-detail__container__header">
+            <h1 class="dash-user-fund-detail__container__header__title">Help Sami to Beat cancer</h1>
+        </div>
+
+        <div class="dash-user-fund-detail__container__body">
+            <div class="dash-user-fund-detail__container__body__left">
+                <div class="dash-user-fund-detail__container__body__left-1">
+                    <div class="dash-user-fund-detail__img__container">           
+                        {{ form_start(form,{'attr':{'novalidate':'novalidate'}}) }}
+                        {{ form_row(form.comment,{'attr': {'class': 'product-add-form__input'}} ) }}
+                        {{ form_errors(form.comment) }}
+                 
+                        <br>
+                        <br>
+                        {{ form_row(form.donation_price,{'attr': {'class': 'product-add-form__input'}} ) }}
+                        {{ form_errors(form.donation_price) }}
+
+
+                        <br>
+                        <br>
+                        {{ form_row(form.date_donation,{'attr': {'class': 'product-add-form__input'}} ) }}
+                        {{ form_errors(form.date_donation) }}
+                        <br>
+                        <br>
+                        <br>
+
+                        <div style="position: absolute; left: 50%;">
+
+
+                        <button class='dash-user-fund__add__btn'>
+                            <svg class="dash-user-fund__add__btn__icon" xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 36.018 36.019">
+                                <g id="donation-icon" transform="translate(-0.01)">
+                                    <path id="Path_1127" data-name="Path 1127"
+                                        d="M163.07,0a10.06,10.06,0,1,0,10.06,10.06A10.071,10.071,0,0,0,163.07,0Zm1.057,14.633v.221a1.055,1.055,0,1,1-2.11,0v-.1a3.82,3.82,0,0,1-1.492-.634,1.055,1.055,0,0,1,1.156-1.766,1.871,1.871,0,0,0,1.384.357,1,1,0,0,0,1-.851.7.7,0,0,0-.529-.842,8.808,8.808,0,0,1-2.411-1.164,2.643,2.643,0,0,1,.89-4.424V5.276a1.055,1.055,0,1,1,2.11,0v.087A3.436,3.436,0,0,1,165.314,6a1.055,1.055,0,0,1-1.427,1.554,1.274,1.274,0,0,0-1.124-.156.587.587,0,0,0-.375.464.412.412,0,0,0,.041.325,7.523,7.523,0,0,0,1.813.835,2.964,2.964,0,0,1-.115,5.606Z"
+                                        transform="translate(-142.237)" fill="#4a5bcf" />
+                                    <path id="Path_1128" data-name="Path 1128"
+                                        d="M30.511,275.393l-10.246,3.018a6.736,6.736,0,0,1,.5,2.551v.371a3.623,3.623,0,0,1-5.107,3.3l-5.371-2.417a1.055,1.055,0,0,1,.866-1.925l5.371,2.417a1.51,1.51,0,0,0,2.131-1.377v-.371a4.567,4.567,0,0,0-2.722-4.146l-4.641-2.088a6.832,6.832,0,0,0-5.668.025L.628,277.025a1.055,1.055,0,0,0-.618.96v11.229a1.056,1.056,0,0,0,1.431,1.013l7.026-2.677,8.357,2.925a6.8,6.8,0,0,0,5.728-.568l11.369-6.695a4.3,4.3,0,0,0-3.41-7.819Z"
+                                        transform="translate(0 -254.841)" fill="#4a5bcf" />
+                                </g>
+                            </svg>
+                            {{ button_label|default('Donate')}}
+                            </button >  
+                            {{ form_end(form) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>       
+    </div>
+    </div>
+</div>   
 {% endblock %}

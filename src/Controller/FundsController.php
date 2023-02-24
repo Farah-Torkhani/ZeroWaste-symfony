@@ -9,7 +9,10 @@ use Doctrine\Persistence\ManagerRegistry;
 use App\Repository\FundrisingRepository;
 use App\Entity\Fundrising;
 use App\Entity\User;
+use App\Entity\DonHistory;
 use App\Form\FundrisingType;
+use App\Repository\DonHistoryRepository;
+use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
@@ -34,13 +37,13 @@ class FundsController extends AbstractController
     }
 
     #[Route('/afficherFundsdetail/{id}', name: 'funds_detail')]
-    public function afficherfundsdetail(FundrisingRepository $Fundrising, ManagerRegistry $doct,$id): Response
+    public function afficherfundsdetail(Request $request, Fundrising $fund, UserRepository $userRepo): Response
     {
 
-        $user = $doct->getRepository(User::class)->findOneBy(['email' => $this->getUser()->getUserIdentifier()]);
-        $stu = $doct->getRepository(Fundrising::class)->findOneBy(['id' => $id]);
+        $user = $userRepo->findOneBy(['email' => $this->getUser()->getUserIdentifier()]);
+        
 
-               return $this->render('funds/ListFund-details.html.twig', array('stu' => $stu,"user"=>$user));
+        return $this->render('funds/ListFund-details.html.twig', array('stu' => $fund,"user"=>$user,"donHistory"=>$fund->getDonHistories()));
 
     }
 
@@ -63,10 +66,6 @@ class FundsController extends AbstractController
         $form = $this->createForm(FundrisingType::class, $Fundrising);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid() ) {
-
-
-
-
             $em = $doctrine->getManager();
             
             $photo = $form['imageDon']->getData();
@@ -111,6 +110,23 @@ return $this->renderForm("funds/association-Don-Add.html.twig", [
         $stu = $Fundrising->findAll();
 
         return $this->render('funds/admin-Don.html.twig', array('Funds' => $stu,"user"=>$user));
+    }
+
+    #[Route('/{id}/donators', name: 'app_donators_dashA')]
+    
+    public function donators(Fundrising $fund, UserRepository $userRepo): Response
+    {
+        $user = $userRepo->findOneBy(['email' => $this->getUser()->getUserIdentifier()]);
+        $donations = [];
+        foreach ($fund->getDonHistories() as $donation) {
+            array_push($donations, [
+                "user" => $donation->getUserID()->getFullName(),
+                "amount" =>$donation->getDonationPrice(),
+                "comment" =>$donation->getComment()
+            ]);
+        }
+
+        return $this->render('funds/donators.html.twig', array('donations' => $donations,"user"=>$user));
     }
 
     #[Route('/afficherFundrising_dashAssoc', name: 'app_afficherFundrising_dashAssoc')]
