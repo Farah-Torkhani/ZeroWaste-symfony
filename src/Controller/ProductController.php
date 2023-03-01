@@ -106,7 +106,8 @@ class ProductController extends AbstractController
     {
         $userFullname = "Braiek Ali";
         $products = $produitRepository->findAll();
-        $categories = $categorieProduitRepository->findAll();
+       // $categories = $categorieProduitRepository->findAll();
+       $categories = $categorieProduitRepository->getAllCategoriesSortedByOrderCateg();
         
         $categorieProduit = new CategorieProduit();
         $form = $this->createForm(CategorieProduitType::class, $categorieProduit);
@@ -321,6 +322,27 @@ class ProductController extends AbstractController
         $jsonString = json_encode($json);
         //var_dump($jsonString); // hedhi taamel erreur qui tji tasti biha 3leh allahou a3lam 😅
         return new Response($jsonString);
+    }
+
+
+
+    #[Route('products/trieCategories', name: 'trieCategories')]
+    public function trieCategories(ProduitRepository $produitRepository,ManagerRegistry $doctrine, Request $request, NormalizerInterface $Normalizer): Response
+    {
+        $data =$request->get('categOrderData');
+        
+       $entityManager = $doctrine->getManager();
+      
+       foreach ($data as $item) {
+           $categorie = $doctrine->getRepository(CategorieProduit::class)->find($item['id']);
+   
+           $categorie->setOrderCateg($item['categOrder']);
+           $entityManager->persist($categorie);
+       }
+   
+       $entityManager->flush();
+   
+       return new Response('Images updated!');
     }
 
 }
