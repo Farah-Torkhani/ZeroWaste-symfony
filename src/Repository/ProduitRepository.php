@@ -63,4 +63,12 @@ class ProduitRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+    
+    public function filterCategories($category){
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager->createQuery('SELECT p from App\Entity\Produit p where p.categorieProduit =:id')->setParameter('id', $category);
+        return $query->getResult();
+    }
+
 }

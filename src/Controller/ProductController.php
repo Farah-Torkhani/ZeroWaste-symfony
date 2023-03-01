@@ -21,6 +21,8 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use App\Repository\CommandsRepository;
 use App\Repository\CommandsProduitRepository;
 use App\Entity\User;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 
 class ProductController extends AbstractController
@@ -34,7 +36,7 @@ class ProductController extends AbstractController
     }
 
     #[Route('/products', name: 'app_products')]
-    public function products(ProduitRepository $produitRepository, CommandsRepository $commandsRepository, ManagerRegistry $doct,  CommandsProduitRepository $commandsProduitRepository): Response
+    public function products(ProduitRepository $produitRepository, CommandsRepository $commandsRepository, ManagerRegistry $doct,  CommandsProduitRepository $commandsProduitRepository,  CategorieProduitRepository $categorieProduitRepository): Response
     {
         $user = $doct->getRepository(User::class)->findOneBy(['email' => $this->getUser()->getUserIdentifier()]);
        
@@ -47,12 +49,14 @@ class ProductController extends AbstractController
         }
         
         $products = $produitRepository->findAll();
+        $categories = $categorieProduitRepository->findAll();
         return $this->render('front/user-products-list.html.twig', [
             'controller_name' => 'FrontController',
             'title' => 'Zero Waste',
             'products' => $products,
             'totalCommandes' => $totalCommandes,
             'user' => $user,
+            'categories' => $categories,
         ]);
 
     }
@@ -301,5 +305,22 @@ class ProductController extends AbstractController
         ]);
     }
 
+
+    #[Route('products/filterCategories', name: 'filterCategories')]
+    public function filterCategories(ProduitRepository $produitRepository, Request $request, NormalizerInterface $Normalizer): Response
+    {
+        $id =$request->get('categoryIdData');
+        //$id = "37";
+       // var_dump($id);// kan theb tasti chouf l console , kan temchi lel lien mtaa func hedhi taw tel9aha dima null
+        $products = $produitRepository->filterCategories($id);
+       // $products = $produitRepository->findAll();
+        
+        
+        $json = $Normalizer->normalize($products, 'json', ['groups' => 'produit_group']);
+
+        $jsonString = json_encode($json);
+        //var_dump($jsonString); // hedhi taamel erreur qui tji tasti biha 3leh allahou a3lam 😅
+        return new Response($jsonString);
+    }
 
 }

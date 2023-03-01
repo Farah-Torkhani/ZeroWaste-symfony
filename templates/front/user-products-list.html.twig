@@ -27,7 +27,38 @@ body{
     <img src="./contents/img/shopFront.svg" class="shopfront-img" alt="" />
   </div>
 
+   <div class="bx-chevron-left-container wrapper"><i id="left" class='bx bx-chevron-left'></i></div>
+  
+      
+    {#--------------Categories List------------#}
+    <div class="shop-items__categories-container">
+     {% for c in categories %}
+      <div class="shop-items__one-category-container" onclick="filterCategories( x='{{c.id}}'  )" data-id="{{c.id}}" id="shop-items__one-category-container{{c.id}}">
+        <div class="shop-items__one-category">
+          <div class="shop-items__category-img-container">
+            <img src="{{asset('./contents/uploads/products/') ~ c.imageCategorie}}" class="shop-items__category-img" />
+          </div>
+          <div class="shop-items__category-name">
+            {{c.nomCategorie}}
+          </div>
+        </div>
+      </div>
+       {% endfor %}
+      {#--------------end one category--------------#}
+
+    
+    </div>
+
+   <div class="bx-chevron-right-container__full"><div class="bx-chevron-right-container wrapper"><i id="right" class='bx bx-chevron-right'></i></div>
+  </div>
+
+    
+    {#--------------END Categories List------------#}
+
+
+  {#--------------PRODUCTS List------------#}
   <div class="shop-items__container">
+ 
     {% for p in products %}
     <div class="shop-items__card">
       <div class="shop-items__card-img-container">
@@ -51,8 +82,17 @@ body{
     {% endfor %}
     {#----------end card1--------------#}
 
+  </div>
+
+  {#-------------for categories filter-----------------#}
+  <div id="shop-items__containerFilterId" style="display:none">
+    <div class="shop-items__container2">
+    </div>
+  </div>
+
     {#------------------------#}
-    <div class="add-to-cart-model" {% if app.request.query.get('added') == 0 %} style="display :none {% endif %}">
+  {#---------------add to cart model start-----------------------#}
+     <div class="add-to-cart-model" {% if app.request.query.get('added') == 0 %} style="display :none {% endif %}">
       <div class="add-to-cart-model-v1">
         <div class="add-to-cart-model-v1__title">
           {% if app.request.query.get('added') == 1 %}
@@ -68,9 +108,6 @@ body{
         <a href="{{path('app_commands')}}" class="add-to-cart-model-v1__Btn order">Order</a>
       </div>
     </div>
-
-
-  </div>
 </div>
 
 {% endblock %}
@@ -78,13 +115,94 @@ body{
 
   {% block JsScript %}
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script src="./contents/js/user-products-list.js"></script>
+ 
     <script>
-      $(document).ready(function () {
-        $(".add-to-cart-model-v1__Btn").click(function () {
-          $(".add-to-cart-model").toggle(10);
+
+      function filterCategories(x) {
+  //$("#chevron-down" + x).toggle(0);
+  const categoryId = $("#shop-items__one-category-container" + x).data("id");
+  console.log(categoryId);
+
+  var categoryIdData = [];
+  categoryIdData.push({
+    id: categoryId,
+  });
+
+  console.log(categoryIdData);
+
+  $.ajax({
+    type: "GET",
+    url: "{{ path('filterCategories') }}",
+    data: { categoryIdData: categoryIdData },
+
+    success: function (result) {
+      console.log("result");
+      if (result) {
+        console.log(result);
+
+        $(".shop-items__container").empty();
+        $(".shop-items__container").hide();
+        $(".shop-items__container2").empty();
+        $("#shop-items__containerFilterId").show();
+
+        $.each(JSON.parse(result), function (i, obj) {
+          console.log(obj);
+
+          var $newDiv11 = $("<div>" + obj.description + "</div>");
+          //newDiv1 : div container: contains newDiv2 newDiv3 newDiv4
+          var $newDiv1 = $("<div></div>").addClass("shop-items__card");
+
+          var $newDiv2 = $("<div></div>").addClass("shop-items__card-img-container");
+          var $newDiv3 = $("<div></div>").addClass("shop-items__info");
+          var $newDiv4 = $("<div></div>").addClass("shop__items__cart");
+
+          //in $newDiv2
+          var $newImg = $("<img />").addClass("shop-items__card-img");
+          var imagePath = "{{ app.request.basePath }}contents/uploads/products/" + obj.Image;
+          $newImg.attr("src", imagePath);
+
+          //in newdiv3
+          var $newDiv5 = $("<div>" + obj.nomProduit + "</div>").addClass(
+            "shop-items__info__title"
+          );
+          var $newP = $("<p>" + obj.description + "</p>").addClass(
+            "shop-items__info__description"
+          );
+
+          //in newdiv4
+          var $newH1 = $("<div>$" + obj.prixProduit + " / " + obj.prix_point_produit + "pts</div>").addClass("shop__items__cart__price");
+          var $newLink = $("<a></a>").attr("href", "/commandes/add/" + obj.id + "").addClass("shop__items__cart__btn").text("Add to cart");
+
+          $(".shop-items__container2").append($newDiv1);
+          $newDiv1.append($newDiv2);
+          $newDiv1.append($newDiv3);
+          $newDiv1.append($newDiv4);
+
+          $newDiv2.append($newImg);
+
+          $newDiv3.append($newDiv5);
+          $newDiv3.append($newP);
+
+          $newDiv4.append($newH1);
+          $newDiv4.append($newLink);
         });
-      });
+      }
+    },
+    error: function (xhr, status, error) {
+      console.log("Error: " + error);
+    },
+  });
+}
+
+
+
     </script>
     
+
+
+
   {% endblock %}

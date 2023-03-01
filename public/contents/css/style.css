@@ -2611,6 +2611,15 @@ td {
   gap: 5rem;
   padding: 4rem 4rem;
 }
+
+.shop-items__container2{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 5rem;
+  padding: 4rem 4rem;
+}
+
 .shop-items__card {
   background-color: #fff;
   border-radius: 5rem;
@@ -3165,4 +3174,113 @@ td {
   background-color: rgb(128, 128, 128);
   pointer-events: none;
   border-radius: 3rem;
+}
+
+
+/*******************************************************************************/
+.bx-chevron-left-container{
+  font-size: 3rem;
+  background-color: #43882B;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  position: relative;
+  top: 10.5rem;
+  left: 9.6rem;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #fff;
+}
+
+
+.bx-chevron-right-container__full{
+  width: 100%;
+}
+
+.bx-chevron-right-container{
+  font-size: 3rem;
+  background-color: #43882B;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  position: relative;
+  bottom: 13.5rem;
+  left: 88.65%;
+  transform: translateX(50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #fff;
+}
+
+.bx-chevron-right-container:hover, .bx-chevron-left-container:hover{
+  background-color: #97D158;
+}
+
+
+.shop-items__categories-container{
+  width: 84%;
+  margin: 0 auto;
+  min-height: 5rem;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  margin-bottom: 3rem;
+  scroll-behavior: smooth;
+  box-shadow: 0 0.2rem 2rem rgb(0 0 0 / 6%);
+
+}
+
+.shop-items__categories-container.dragging{
+  scroll-behavior: auto;
+  cursor: grab;
+}
+
+.shop-items__categories-container.dragging .shop-items__one-category-container{
+  pointer-events: none;
+}
+
+.shop-items__one-category-container .shop-items__one-category{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 17rem ;
+  height: 17rem;
+  justify-content: center;
+  cursor: pointer;
+
+}
+
+.shop-items__one-category-container:hover{
+  box-shadow: 0 0.2rem 2rem rgb(0 0 0 / 10%);
+}
+.activeCategory{
+  box-shadow: 0 0.2rem 2rem rgb(0 0 0 / 10%);
+}
+
+.shop-items__category-img-container{
+  border-radius: 50%;
+  width: 12rem;
+  height: 12rem;
+  margin-bottom: 1.4rem;
+  border: 0.4rem solid #97D158 ;
+}
+
+.shop-items__category-img{
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+  border: 0.4rem solid #ccfccb ;
+}
+
+.shop-items__category-name{
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #32594A;
+  
 }

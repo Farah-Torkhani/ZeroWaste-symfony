@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ProduitRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: ProduitRepository::class)]
 class Produit
@@ -12,10 +13,12 @@ class Produit
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups("produit_group")]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: "le champ est vide")]
+    #[Groups("produit_group")]
     private ?string $nomProduit = null;
 
 
@@ -27,13 +30,16 @@ class Produit
     #[ORM\Column]
     #[Assert\NotBlank(message: "le champ est vide")]
     #[Assert\Positive]
+    #[Groups("produit_group")]
     private ?float $prixProduit = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups("produit_group")]
     private ?string $Image = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: "le champ est vide")]
+    #[Groups("produit_group")]
     private ?string $description = null;
 
     #[ORM\ManyToOne(inversedBy: 'produit_id')]
@@ -42,6 +48,7 @@ class Produit
     #[ORM\Column(nullable: true)]
     #[Assert\Positive]
     #[Assert\NotBlank(message: "le champ est vide")]
+    #[Groups("produit_group")]
     private ?int $prix_point_produit = null;
 
     public function getId(): ?int
