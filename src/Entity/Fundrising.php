@@ -24,7 +24,7 @@ class Fundrising
     #[Assert\NotBlank(message:"description fundrising is required")]
     #[ORM\Column(length: 255)]
     private ?string $descriptionDon = null;
-    #[Assert\NotBlank(message:"image fundrising is required")]
+
     #[ORM\Column(length: 255)]
     private ?string $imageDon = null;
     #[Assert\NotBlank(message:"date fundrising is required")]

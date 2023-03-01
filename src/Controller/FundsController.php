@@ -13,8 +13,12 @@ use App\Entity\DonHistory;
 use App\Form\FundrisingType;
 use App\Repository\DonHistoryRepository;
 use App\Repository\UserRepository;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+
+
 
 
 class FundsController extends AbstractController
@@ -36,7 +40,7 @@ class FundsController extends AbstractController
         ]);
     }
 
-    #[Route('/afficherFundsdetail/{id}', name: 'funds_detail')]
+    #[Route('/afficherFundsdetail/{id}', name: 'afficherFundsdetail')]
     public function afficherfundsdetail(Request $request, Fundrising $fund, UserRepository $userRepo): Response
     {
 
@@ -47,7 +51,7 @@ class FundsController extends AbstractController
 
     }
 
-    #[Route('/afficherFunds', name: 'add_funds')]
+    #[Route('/afficherFunds', name: 'afficher_funds')]
     public function afficher(FundrisingRepository $Fundrising, ManagerRegistry $doct): Response
     {
 
@@ -98,6 +102,7 @@ class FundsController extends AbstractController
         }
 return $this->renderForm("funds/association-Don-Add.html.twig", [
     'form' => $form,
+    'user'=>$user
 
 ]);    }
     
@@ -129,19 +134,64 @@ return $this->renderForm("funds/association-Don-Add.html.twig", [
         return $this->render('funds/donators.html.twig', array('donations' => $donations,"user"=>$user));
     }
 
+
+    #[Route('/TriPAB', name: 'app_tri_dateA')]
+    public function TriPBackA(FundrisingRepository $repository, ManagerRegistry $doct)
+    {  
+        $user = $doct->getRepository(User::class)->findOneBy(['email' => $this->getUser()->getUserIdentifier()]);
+    
+        $plat = $repository->orderByDateASC();
+        return $this->render("funds/association-Don.html.twig", array("Funds" => $plat, "user"=>$user));
+    }
+
+
+
+
+    #[Route('/s/search',name:'app_funds_search')]
+    public function searchrecbyTitre(Request $request, NormalizerInterface $Normalizer, FundrisingRepository $repository): Response
+    {
+//$repository = $this->getDoctrine()->getRepository(Article::class);
+        $requestString = $request->get('search');
+        $funds = $repository->findrecByfundsTitle($requestString);
+        //var_dump($funds);
+        dump($funds);
+        $jsonContent = $Normalizer->normalize($funds, 'json', ['Groups' => 'funds:read', 'MAX_DEPTH' => '1']);
+        $retour = json_encode($jsonContent);
+        return new Response($retour);
+
+    }
+    
+
+    #[Route('/admin/traiter/{id}', name: 'smsparticipation')]
+    function Traiter(FundrisingRepository $repository, $id, Request $request, ManagerRegistry $doct, UserRepository $repo)
+    {
+        $user = $doct->getRepository(User::class)->findOneBy(['email' => $this->getUser()->getUserIdentifier()]);
+        $user->eraseCredentials();
+        $Fundrising = new Fundrising();
+        $user = $repo->find($id);
+        $em = $doct->getManager();
+        $em->flush();
+        $repository->sms();
+      
+        $em->flush();
+        $this->addFlash('danger', 'reponse envoyée avec succées');
+        return $this->redirectToRoute('afficher_funds');
+    }
+
     #[Route('/afficherFundrising_dashAssoc', name: 'app_afficherFundrising_dashAssoc')]
     
     public function afficherFundrisingAssoc(FundrisingRepository $Fundrising, ManagerRegistry $doct): Response
     {
-         $user = $doct->getRepository(User::class)->findOneBy(['email' => $this->getUser()->getUserIdentifier()]);
+        $user = $doct->getRepository(User::class)->findOneBy(['email' => $this->getUser()->getUserIdentifier()]);
         $stu = $Fundrising->findAll();
 
         return $this->render('funds/association-Don.html.twig', array('Funds' => $stu,"user"=>$user));
     }
 
     #[Route('deleteFunds/{id}', name: 'app_deleteFunds')]
-    public function deleteFunds(FundrisingRepository $Fundrising, ManagerRegistry $man, $id): Response
+    public function deleteFunds(FundrisingRepository $Fundrising, ManagerRegistry $man,ManagerRegistry $doct,$id): Response
     {
+       
         $stu = $Fundrising->find($id);
         $EntityManager = $man->getManager();
         $EntityManager->remove($stu);
@@ -153,17 +203,20 @@ return $this->renderForm("funds/association-Don-Add.html.twig", [
 
  
     #[Route('/find', name: 'app_fundfind')]
-    public function product(FundrisingRepository $Fundrising,ManagerRegistry $man): Response
+    public function product(FundrisingRepository $Fundrising,ManagerRegistry $man, ManagerRegistry $doctrine): Response
     {
+        $user = $doctrine->getRepository(User::class)->findOneBy(['email' => $this->getUser()->getUserIdentifier()]);
         $Fundrising = $Fundrising->findAll();
         $funds = $man->getRepository(Fundrising::class)->findAll();
 
-        return $this->render('funds/association-Don.html.twig', array("Funds"=>$Fundrising,"fundrising1"=>$funds));
+        return $this->render('funds/association-Don.html.twig', array("Funds"=>$Fundrising,"fundrising1"=>$funds, 'user'=>$user    ));
     }
+
+ 
 
     #[Route('/updatep/{id}', name:'updateFunds')]
     public function updatep(Request $request, ManagerRegistry $doctrine, $id):Response{
-    
+        $user = $doctrine->getRepository(User::class)->findOneBy(['email' => $this->getUser()->getUserIdentifier()]);
     $Fundrising = $doctrine->getRepository(Fundrising::class)->find($id);
 
     $form = $this->createForm(FundrisingType::class, $Fundrising);
@@ -176,7 +229,8 @@ return $this->renderForm("funds/association-Don-Add.html.twig", [
         return $this->redirectToRoute('app_fundfind');
     }
     return $this->renderForm('funds/association-Don-Add.html.twig', [
-        'form' => $form
+        'form' => $form ,
+        'user' => $user,
     ]);
 
     }

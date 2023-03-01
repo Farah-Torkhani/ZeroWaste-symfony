@@ -7,6 +7,8 @@ use App\Entity\User;
 use App\Entity\Fundrising;
 use App\Form\DonHistoryType;
 use App\Repository\DonHistoryRepository;
+use App\Repository\FundrisingRepository;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Persistence\ManagerRegistry;
@@ -25,8 +27,19 @@ class DonHistoryController extends AbstractController
         ]);
     }
 
+    #[Route('/afficherFundsdetails/{id}', name: 'afficherFundsdetails')]
+    public function afficherfundsdetails(Request $request, Fundrising $fund, UserRepository $userRepo): Response
+    {
+
+        $user = $userRepo->findOneBy(['email' => $this->getUser()->getUserIdentifier()]);
+        
+
+        return $this->render('don_history/afficherDon.html.twig');
+
+    }
+
     #[Route('/new/{id}', name: 'app_don_history_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, DonHistoryRepository $donHistoryRepository, ManagerRegistry $doct): Response
+    public function new(Request $request, DonHistoryRepository $donHistoryRepository, ManagerRegistry $doct, FundrisingRepository $fundrisingRepository): Response
     {
         $fundrisingId = $request->get('id');
         $fundrising = $doct->getRepository(Fundrising::class)->findOneBy(['id' => $fundrisingId]);
@@ -39,9 +52,12 @@ class DonHistoryController extends AbstractController
             $donHistory->setUserID($user);
             $donHistory->setFundsID($fundrising);
             $donHistoryRepository->save($donHistory, true);
+            $fundrisingRepository->sms();
 
 
-            return $this->redirectToRoute('app_don_history_index', [], Response::HTTP_SEE_OTHER);
+           // dd("tttttttttt");
+            //return $this->redirectToRoute('afficherFundsdetails/{id}', [], Response::HTTP_SEE_OTHER);
+           return $this->redirectToRoute('afficherFundsdetail', array('id' =>$fundrisingId ));
         }
 
         return $this->renderForm('don_history/new.html.twig', [

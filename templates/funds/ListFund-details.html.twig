@@ -112,7 +112,8 @@
 
                         <div class="dash-user-fund-detail__donation__container">
                             <div class="dash-user-fund-detail__donation__container-1">
-                         
+                            {% if donHistory != null %}
+                            {% for c in donHistory %}
                                 <div class="dash-user-fund-detail__donation__item">
                                     <div class="dash-user-fund-detail__donation__item__left">
                                         <img src="{{asset('./contents/img/me.jpg')}}" alt=""
@@ -120,19 +121,22 @@
 
                                         <p class="dash-user-fund-detail__donation__item__date">1d ago</p>
                                     </div>
-                                    {% if donHistory != null %}
-                                   {% for c in donHistory %}
+                                  
+                           
                                     <div class="dash-user-fund-detail__donation__item__right">
                                         <div class="dash-user-fund-detail__donation__item__info">
+                                    
                                             <h1 class="dash-user-fund-detail__donation__item__info__name"><span>{{c.userID.fullName}} </span> donated <span>{{c.donationPrice}} DNT</span>
                                             </h1>
                                             <p class="dash-user-fund-detail__donation__item__info__comment">
                                                 {{c.comment}}
                                             </p>
                                         </div>
+                                    {% endfor %}
+                                {% endif %}
                                     </div>
-                                        {% endfor %}
-                                    {% endif %}
+                                      
+                                 
                                 </div>
 
 
@@ -159,7 +163,7 @@
                     </p>
                 </div>
 
-                <a class="dash-user-fund__add__btn" href="{{path('app_don_history_new', {id: stu.id})}}">
+            <a class="dash-user-fund__add__btn" href="{{path('app_don_history_new', {id: stu.id})}}">
                     <svg class="dash-user-fund__add__btn__icon" xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 36.018 36.019">
                         <g id="donation-icon" transform="translate(-0.01)">
