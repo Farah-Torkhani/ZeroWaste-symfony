@@ -23,7 +23,7 @@ use App\Repository\CommandsProduitRepository;
 use App\Entity\User;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
-
+use App\Form\OffreType;
 
 class ProductController extends AbstractController
 {
@@ -344,5 +344,32 @@ class ProductController extends AbstractController
    
        return new Response('Images updated!');
     }
+
+
+    #[Route('/dash/admin/products/offre/{id}', name: 'offreProduit')]
+    public function offreProduit(ProduitRepository $produitRepository, ManagerRegistry $repo, $id, Request $request): Response
+    {
+        $userFullname = "Braiek Ali";
+        $products = $produitRepository->findAll();
+
+        $product = $repo->getRepository(Produit::class)->find($id);
+
+        $form = $this->createForm(OffreType::class, $product);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $repo->getManager();
+            $em->flush();
+            return $this->redirectToRoute("app_dash_admin_products");
+        }
+        return $this->renderForm('dash_admin/dash-admin-products-offre.html.twig', array(
+            'userFullname' => $userFullname,
+            'title' => 'Zero Waste',
+            'products' => $products,
+            "formOffre" => $form,
+        ));
+    }
+
+        
+        
 
 }

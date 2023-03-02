@@ -53,7 +53,7 @@
                     Add New Product
                   </div>
                 </a>
-                <button
+                <a href="{{path('app_dash_admin_categories')}}"
                   class="dash__card-rightSide__btn-container"
                   id="category-btn-rightSide"
                 >
@@ -64,7 +64,7 @@
                   >
                     Categories
                   </div>
-                </button>
+                </a>
               </div>
             </div>
             <div class="product">
@@ -192,161 +192,43 @@
             </div>
           </div>
         </div>
+        {#---end dash container-card----#}
       </div>
+      {#---end dash container-----#}
 
-      {#}-----Product Categories Model------{#}
-      <div class="product-categories-model" id="product-categories-model" style="display:block">
-        <div class="product-categories-model__card">
-          <div class="product-categories-model__card-header">
-            <h1>Product Categories</h1>
-            <div><a href ="{{path('app_dash_admin_products')}}" class="go-to-productList"><i class="bx bx-x" id="close-category-model"></i></a></div>
+      {#---offre form-----#}
+      <div class="dash-offre-container">
+        <div class="dash-offre-model">
+          <div class="dash-offre-model-header">
+            <div class="dash-offre-model-header__gif">
+              <img class="offre-gif" src="{{asset('./contents/img/gift1.gif')}}" />
+            </div>
+            <a href="{{path('app_dash_admin_products')}}" class="dash-offre-model-header__closeBtn">
+              close
+            </a>
           </div>
-          <hr class="hr-border-categories" />
-          <div class="product-categories-model__card-content">
-            <div
-              class="product-categories-model__card-content-btn-container"
-              id="add-new-category__id"
-            >
-              <i class="bx bx-folder-plus"></i>
-              <p class="product-categories-model__card-content-btn">
-                Add New Category
-              </p>
-            </div>
-
-            {{form_start(formCategorie,{'attr':{'novalidate':'novalidate'}})}}
-            <div  id="add-category__form-id" style="display: block">
-              <div
-                class="product-add-form__input__group product-add-form__input__group-category"
-              >
-                <label for="productName" class="product-add-form__input__label"
-                  >Name <span>*</span></label
-                >
-
-                {{form_widget(formCategorie.nomCategorie,{'attr':{'class':'product-add-form__input category-input'}})}}
-                {% if form_errors(formCategorie.nomCategorie) is not empty %}
-                  <div class="form_errors-product">
-                    {{form_errors(formCategorie.nomCategorie)}}
-                  </div>
-                {% endif %}
-              </div>
-
-              <div
-                class="product-add-form__input__group product-add-form__input__group-category"
-              >
-                <label for="productName" class="product-add-form__input__label"
-                  >Icon <span>*</span></label
-                >
-                <div class="category-image-add">
-                  <div class="category-image-add-container">
-                    <i class="bx bx-image-add"></i>
-                    <img
-                      class="category-image-add-container__img"
-                      src=""
-                      alt=""
-                      id="category-image-add-container__img"
-                      accept="image/*"
-                      style="display: none"
-                    />
-                  </div>
-
-                  <div class="category-image-add-btn__add-icon">
-                    {{ form_label(formCategorie.imageCategorie , 'Add icon:', {'label_attr': {'class': 'category-add-form-image__addBtn','for': 'category-add-image__file-btn'}}) }}
-                    {{form_widget(formCategorie.imageCategorie,{'attr':{'class':'category-add-image__file-btn','name':'category-add-image__file-btn','id':'category-add-image__file-btn','style':'display:none'}})}}
-                  
-                  </div>
-                </div>
-              </div>
-            <button class="add-btnCateg">{{button_label | default('Add')}}</button>
-            
-            </div>
-            {{form_end(formCategorie)}}
-            {#end form#}
-
-            <h2 class="categories-list__title">Categories List</h2>
-            
-            <div id="categories-container-list">
-              {% for c in categories %}
-              <div class="categories-list-one" data-id="{{c.id}}">
-                <div class="categories-list-one-img">
-                  <img
-                    src="{{asset('./contents/uploads/products/') ~ c.imageCategorie }}"
-                    alt=""
-                    class="categories-list-one-image"
-                  />
-                </div>
-                <div class="categories-list-one-content">
-                  <div class="categories-list-one-name">{{c.nomCategorie}}</div>
-                  <div class="categories-list-one-btns">
-                    <a href="{{path('editCategory',{'id':c.id})}}" class="categories-list-one-btn">
-                      <i class="bx bx-edit" id="edit-btn__category"></i>
-                    </a>
-                    <a href="{{path('deleteCategorie',{'id': c.id})}}" class="categories-list-one-btn">
-                      <i class="bx bx-trash"> </i>
-                    </a>
-                  </div>
-                </div>
-              </div>
+          <div class="dash-offre-model-content">
+          {{form_start(formOffre,{'attr':{'novalidate':'novalidate'}})}}
+            <div class="offre-form__input__group">
+              <label for="reduction" class="offre-input-label">Reduction%</label>
               
-              {% endfor %}
+              {#}<input type="number" class="offre-input" name="reduction" id="reduction" placeholder="Reduction %">
+              {#}
+              {{form_widget(formOffre.remise,{'attr':{'class':'offre-input','placeholder':"Reduction %"}})}}
+              {% if form_errors(formOffre.remise) is not empty %}
+                <div class="form_errors-product">
+                  {{form_errors(formOffre.remise)}}
+                </div>
+              {% endif %}
             </div>
-            {#---------------------end category list one -----------------------#}
-
+            <button class="submit-offre-btn">{{button_label | default('Submit offer')}}</button>
+            {{form_end(formOffre)}}
           </div>
         </div>
-
-        <!--end product-categories-model__card-->
       </div>
+      {#---END offre form-----#}
+
    
 {% endblock %}
 
 
-
-
-{% block JsScript %}
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-    <script src="{{asset('./contents/js/script.js')}}"></script> 
-
-  <script>
-
-    $(function() {
-  $("#categories-container-list").sortable({
-    update: function(event, ui) {
-      var categOrderData = [];
-      $(".categories-list-one").each(function(index) {
-        categOrderData.push({
-          id: $(this).data("id"),
-          categOrder: index + 1 
-        });
-      });
-      console.log(categOrderData);
-      $.ajax({
-        type: "GET",
-        url: "{{ path('trieCategories') }}",
-        data: {categOrderData: categOrderData},
-        //data: JSON.stringify(imgOrderData),
-        //contentType: "application/json; charset=utf-8",
-        success: function(result) {
-          console.log('result');
-          if(result){
-           
-            console.log(result);
-             
-          }
-        },
-        error: function(xhr, status, error) {
-          console.log("Error: " + error);
-        }
-      });
-    }
-  });
-});
-
-  </script>
-
-
-
-
-{% endblock %}

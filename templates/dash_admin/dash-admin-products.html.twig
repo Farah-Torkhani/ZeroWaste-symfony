@@ -87,7 +87,14 @@
                   </div>
                   <div class="product-card__row-2">
                     <div class="product-card__stock">In Stock</div>
-                    <div class="product-card__price">{{p.prixProduit}}</div>
+                    <div class="product-card__price">
+                      {% if p.remise == null %}
+                        {{p.prixProduit}}
+                      {% else %}
+                        <span class="product-card__price-after-offre">${{p.prixProduit - (p.prixProduit * p.remise)/100}}</span>
+                        <span class="product-card__price-before-offre">${{p.prixProduit}}</span>
+                      {% endif %}
+                    </div>
                   </div>
                   <div class="product-card__actions">
                     <div class="product-card__actions-category">{{p.categorieProduit}} </div>
@@ -99,7 +106,7 @@
                         <i class="bx bxs-show product-card__icon"></i>
                       </a>
                       <a
-                        href=""
+                        href="{{path('offreProduit',{'id': p.id})}}"
                         class="product-card__btn product-card__actions-btn-gift"
                       >
                         <i class="bx bxs-gift product-card__icon"></i>
@@ -185,7 +192,11 @@
             </div>
           </div>
         </div>
+        {#---end dash container-card----#}
       </div>
+      {#---end dash container-----#}
+
+
 
    
 {% endblock %}

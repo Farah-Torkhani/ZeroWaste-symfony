@@ -51,6 +51,9 @@ class Produit
     #[Groups("produit_group")]
     private ?int $prix_point_produit = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?float $remise = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -136,6 +139,18 @@ class Produit
     public function setPrixPointProduit(?int $prix_point_produit): self
     {
         $this->prix_point_produit = $prix_point_produit;
+
+        return $this;
+    }
+
+    public function getRemise(): ?float
+    {
+        return $this->remise;
+    }
+
+    public function setRemise(?float $remise): self
+    {
+        $this->remise = $remise;
 
         return $this;
     }
