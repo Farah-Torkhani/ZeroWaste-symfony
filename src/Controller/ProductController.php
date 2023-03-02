@@ -24,6 +24,8 @@ use App\Entity\User;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Form\OffreType;
+use Symfony\Component\Mercure\HubInterface;
+use Symfony\Component\Mercure\Update;
 
 class ProductController extends AbstractController
 {
@@ -347,7 +349,7 @@ class ProductController extends AbstractController
 
 
     #[Route('/dash/admin/products/offre/{id}', name: 'offreProduit')]
-    public function offreProduit(ProduitRepository $produitRepository, ManagerRegistry $repo, $id, Request $request): Response
+    public function offreProduit(ProduitRepository $produitRepository, ManagerRegistry $repo, $id, Request $request, HubInterface $hub): Response
     {
         $userFullname = "Braiek Ali";
         $products = $produitRepository->findAll();
@@ -359,6 +361,17 @@ class ProductController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $repo->getManager();
             $em->flush();
+            
+            //-----------------------notification
+            $update = new Update(
+                'https://example.com/books/1',
+                json_encode(['status' => 'msg reçu'])
+            );
+    
+            $hub->publish($update);
+    
+            //return new Response('published!');
+            //-----------------------------------
             return $this->redirectToRoute("app_dash_admin_products");
         }
         return $this->renderForm('dash_admin/dash-admin-products-offre.html.twig', array(

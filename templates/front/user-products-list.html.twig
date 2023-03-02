@@ -110,6 +110,26 @@ body{
     </div>
 </div>
 
+
+{#-------------------------notification modal----------------------------#}
+  <div class="notification-modal">
+   {#} <div class="notification-modal-header">
+      <div class="notification-modal-header__title">New Notification</div>
+      <div class="notification-modal-header__closeBtn"><i class='bx bx-x'></i></div>
+    </div>
+    <div class="notification-modal-content">
+      <div class="notification-modal-content__img-container">
+        <img src="{{asset('./contents/img/avatar2.png')}}" class="notification-modal-content__img" />
+      </div>
+      <div class="notification-modal-content__title">
+        New Product Offer!
+        <div id="message"></div>
+      </div>
+    </div>{#}
+
+  </div>
+{#-------------------------END notification modal----------------------------#}
+
 {% endblock %}
 
 
@@ -201,6 +221,66 @@ body{
 
 
     </script>
+
+    {#---------------------------notification---------------------------#}
+    <script>
+
+    
+const eventSource = new EventSource("{{ mercure('https://example.com/books/1')|escape('js') }}");
+eventSource.onmessage = event => {
+    // Will be called every time an update is published by the server
+    console.log(JSON.parse(event.data));
+    $(".notification-modal").empty();
+    $(".notification-modal").show();
+
+    
+    var $newDiv1 = $("<div></div>").addClass("notification-modal-header");
+    var $newDiv2 = $("<div></div>").addClass("notification-modal-content");
+
+    var $newDiv3 = $("<div>New Notification</div>").addClass("notification-modal-header__title");
+    var $newDiv4 = $("<div></div>").addClass("notification-modal-header__closeBtn");
+    var $newDivI = $("<i></i>").addClass("bx bx-x");
+
+    var $newDiv5 = $("<div></div>").addClass("notification-modal-content__img-container");
+    var $newDiv6 = $("<div>"+(JSON.parse(event.data).status)+"</div>").addClass("notification-modal-content__title");
+    
+    var $newDivImg = $("<img>").addClass("notification-modal-content__img");
+
+    
+    
+    
+
+    //var $newDiv = $("<div>"+(JSON.parse(event.data).status)+"</div>");
+    //$newDiv.addClass("msg");
+    $(".notification-modal").append($newDiv1);
+    $(".notification-modal").append($newDiv2);
+
+    $($newDiv1).append($newDiv3);
+    $($newDiv1).append($newDiv4);
+
+    $($newDiv4).append($newDivI);
+
+    $($newDiv2).append($newDiv5);
+    $($newDiv2).append($newDiv6);
+
+    $($newDiv5).append($newDivImg);
+
+
+
+
+    //document.getElementById(".msg").innerHTML+="<div>"+(JSON.parse(event.data).status)+"</div>";
+
+    // Masquer la div "message" après 5 secondes
+    setTimeout(function() {
+        document.querySelector(".notification-modal").style.display = 'none';
+    }, 5000);
+}
+
+
+
+</script>
+
+
     
 
 
