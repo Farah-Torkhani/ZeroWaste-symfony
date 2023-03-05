@@ -40,6 +40,15 @@ class DonHistoryRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+
+    public function getTotalDonations(int $fund) {
+        return $this->createQueryBuilder('d')
+        ->select('SUM(d.donation_price)')
+        ->where('d.fundsID = :fundrising')
+        ->setParameter('fundrising', $fund)
+        ->getQuery()
+        ->getSingleScalarResult();
+    }
     
 
 //    /**

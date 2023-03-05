@@ -27,7 +27,6 @@ class Fundrising
 
     #[ORM\Column(length: 255)]
     private ?string $imageDon = null;
-    #[Assert\NotBlank(message:"date fundrising is required")]
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $date_Don = null;
     #[Assert\NotBlank(message:"date limit  fundrising is required")]
@@ -41,6 +40,9 @@ class Fundrising
 
     #[ORM\OneToMany(mappedBy: 'fundsID', targetEntity: DonHistory::class)]
     private Collection $donHistories;
+
+    #[ORM\Column(nullable: true)]
+    private ?float $total = null;
 
     public function __construct()
     {
@@ -175,6 +177,18 @@ class Fundrising
                 $donHistory->setFundsID(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getTotal(): ?float
+    {
+        return $this->total;
+    }
+
+    public function setTotal(?float $total): self
+    {
+        $this->total = $total;
 
         return $this;
     }

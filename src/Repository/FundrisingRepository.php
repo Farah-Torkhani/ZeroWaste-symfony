@@ -62,9 +62,8 @@ class FundrisingRepository extends ServiceEntityRepository
         ->setParameter('TitreDon', '%'. $TitreDon. '%')
         ->getQuery()
         ->getResult();
-        return $querybuilder;
-        
-}
+        return $querybuilder;  
+    }
 
 
     public  function sms(){

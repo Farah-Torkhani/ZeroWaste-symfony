@@ -265,13 +265,19 @@ public function addfundsMobile(\Doctrine\Persistence\ManagerRegistry $doctrine, 
 
     #[Route('/afficherFundrising_dashAssoc', name: 'app_afficherFundrising_dashAssoc')]
     
-    public function afficherFundrisingAssoc(FundrisingRepository $Fundrising, ManagerRegistry $doct): Response
+    public function afficherFundrisingAssoc(FundrisingRepository $Fundrising, DonHistoryRepository $donHistoryRepository, ManagerRegistry $doct): Response
     {
 
         $user = $doct->getRepository(User::class)->findOneBy(['email' => $this->getUser()->getUserIdentifier()]);
         $stu = $Fundrising->findAll();
+        $notCompleted_funds = $Fundrising->findBy(['etat' => 2]);
+        $total = 0;
+        foreach($stu as $fund) {
+            $total = $donHistoryRepository->getTotalDonations($fund->getId());
+            $fund->setTotal($total);
+        }
 
-        return $this->render('funds/association-Don.html.twig', array('Funds' => $stu,"user"=>$user));
+        return $this->render('funds/association-Don.html.twig', array('Funds' => $stu,"user"=>$user, "funds_notCompleted" => count($notCompleted_funds)));
     }
 
     #[Route('deleteFunds/{id}', name: 'app_deleteFunds')]

@@ -45,6 +45,10 @@
             </div>
             <div class="product">
               <div class="product-title">Fundrising List</div>
+              <div class="product-title">Not completed funds: 
+                      {{funds_notCompleted}}
+              </div>
+              
             
              
                 {% for stu in Funds %}
@@ -63,11 +67,10 @@
                     <div class="product-card__stock">
               
                     {% if stu.etat == 0 %}
-                      Completed
-                {% elseif stu.etat == 1 %}
-                      In progress
+                    <span style="color:green;">Completed</span>
+             
                       {% elseif stu.etat == 2 %}
-                      Not completed
+                    <span style="color:red;">Not completed</span>
                 {% endif %}
 
                     </div>
@@ -84,12 +87,12 @@
       
                   <div class="product-card__actions">
                     <div class="fund__item__loader">
-                      <p class="fund__item__loader__text1">Last donation 2d ago</p>
+                      <p class="fund__item__loader__text1">Last donation {{ time_diff(stu.dateDon) }}</p>
                       <div class="fund__item__loader__container">
                         <div class="fund__item__loader__container__current"></div>
                       </div>
                       <p class="fund__item__loader__text">
-                        <span>700 DNT</span>
+                        <span>{{ stu.total ? : 0 }}</span>
                         raised of
                         <span>{{stu.objectif}}</span>
                       </p>
