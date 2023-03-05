@@ -15,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Validator\Constraints\File;
 use  App\Controller\FundsController;
+use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 
 class FundrisingType extends AbstractType
 {
@@ -28,16 +29,21 @@ class FundrisingType extends AbstractType
             'attr'=>['placeholder'=>"Funds description"]])
             //->add('imageDon',FileType::class,['label'=>'img',
             //'attr'=>['placeholder'=>"img"], 'mapped' => false,])
-            ->add('date_Don',DateType::class, ['label'=>'startDate',
-            'attr'=>['placeholder'=>"Enter Start Date"]])
+          
+           
             ->add('date_don_limite',DateType::class, ['label'=>'endDate',
-            'attr'=>['placeholder'=>"Enter end Date"]])
+            'attr'=>['placeholder'=>"Enter end Date"], 'data' => new \DateTime(),
+            'constraints' => [
+                new GreaterThanOrEqual('today'),
+            ],])
             ->add('etat', ChoiceType::class, [
                 'choices' => [
                     'Completed' => 0,
                     'In progress' => 1,
                     'Not completed' => 2,
-                ]])
+                ]]
+                
+            )
                 ->add('objectif',TextType::class,['label'=>'objectif',
                 'attr'=>['placeholder'=>"objectif"]])
 

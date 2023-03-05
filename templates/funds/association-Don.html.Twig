@@ -60,7 +60,17 @@
                     <h1 class="product-card__title">{{stu.TitreDon}}</h1>
                   </div>
                   <div class="product-card__row-2">
-                    <div class="product-card__stock">{{stu.etat}}</div>
+                    <div class="product-card__stock">
+              
+                    {% if stu.etat == 0 %}
+                      Completed
+                {% elseif stu.etat == 1 %}
+                      In progress
+                      {% elseif stu.etat == 2 %}
+                      Not completed
+                {% endif %}
+
+                    </div>
 
                     <div class="product-card__price">
                         <div class="product-card__actions-people-svg">

@@ -56,6 +56,16 @@ class FundrisingRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function searchfunds($TitreDon){
+        $querybuilder=$this->createQueryBuilder('s')
+        ->where('s.TitreDon LIKE :TitreDon')
+        ->setParameter('TitreDon', '%'. $TitreDon. '%')
+        ->getQuery()
+        ->getResult();
+        return $querybuilder;
+        
+}
+
 
     public  function sms(){
         // Your Account SID and Auth Token from twilio.com/console

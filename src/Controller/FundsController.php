@@ -11,6 +11,7 @@ use App\Entity\Fundrising;
 use App\Entity\User;
 use App\Entity\DonHistory;
 use App\Form\FundrisingType;
+use App\Form\SearchFundType;
 use App\Repository\DonHistoryRepository;
 use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -62,6 +63,32 @@ class FundsController extends AbstractController
 
     }
 
+    #[Route('/afficherFundsMobile', name: 'afficher_funds_mobile')]
+    public function afficherMobile(FundrisingRepository $Fundrising, ManagerRegistry $doct): Response
+    {
+
+        $stu = $Fundrising->findAll();
+        foreach($stu as $item) {
+            $arrayCollection[] = array(
+                'id' => $item->getId(),
+                'titreDon' => $item->getTitreDon(),
+                'description' => $item->getDescriptionDon(),
+                'ImageDon' => $item->getImageDon(),
+                'Date don' => $item->getDateDon(),
+                'Date don limite' => $item->getDateDonLimite(),
+                'etat' => $item->getEtat(),
+                'objectif' => $item->getObjectif(),
+                
+            );
+       }
+               return $this->json([
+                $arrayCollection
+            ]);
+               
+              
+
+    }
+
     #[Route('/addFunds1', name: 'app_addFundrising')]
     public function addfunds(\Doctrine\Persistence\ManagerRegistry $doctrine, Request $request , SluggerInterface $slugger)
     {
@@ -71,7 +98,8 @@ class FundsController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid() ) {
             $em = $doctrine->getManager();
-            
+            $Fundrising->setDateDon(new \DateTime());
+           
             $photo = $form['imageDon']->getData();
             if ($photo) {
                 $originalFilename = pathinfo($photo->getClientOriginalName(), PATHINFO_FILENAME);
@@ -106,6 +134,55 @@ return $this->renderForm("funds/association-Don-Add.html.twig", [
 
 ]);    }
     
+
+
+#[Route('/addFunds1_mobile', name: 'app_addFundrising_mobile')]
+public function addfundsMobile(\Doctrine\Persistence\ManagerRegistry $doctrine, Request $request , SluggerInterface $slugger)
+{
+    $Fundrising = new Fundrising();
+    $form = $this->createForm(FundrisingType::class, $Fundrising);
+    $form->handleRequest($request);
+    if ($form->isSubmitted() && $form->isValid() ) {
+        $em = $doctrine->getManager();
+        
+        $photo = $form['imageDon']->getData();
+        if ($photo) {
+            $originalFilename = pathinfo($photo->getClientOriginalName(), PATHINFO_FILENAME);
+            // this is needed to safely include the file name as part of the URL
+            $safeFilename = $slugger->slug($originalFilename);
+            $newFilename = $safeFilename.'-'.uniqid().'.'.$photo->guessExtension();
+
+            // Move the file to the directory where brochures are stored
+            try {
+                $photo->move(
+                    $this->getParameter(name :'fund_directory'),
+                    $newFilename
+                );
+            } catch (FileException $e) {
+                // ... handle exception if something happens during file upload
+            }
+
+            // updates the 'photo$photoname' property to store the PDF file name
+            // instead of its contents
+            $Fundrising->setImageDon($newFilename);
+        }
+
+        $em->persist($Fundrising);
+        $em->flush();
+        
+    }
+
+    return $this->json([
+        'id'=>$Fundrising->getId() ,
+        'titreDon' => $Fundrising->getTitreDon(),
+        'description' => $Fundrising->getDescriptionDon(),
+        'ImageDon' => $Fundrising->getImageDon(),
+        'Date don' => $Fundrising->getDateDon(),
+        'Date don limite' => $Fundrising->getDateDonLimite(),
+        'etat' => $Fundrising->getEtat(),
+        'objectif' => $Fundrising->getObjectif(),     
+          ]);
+    }
 
     #[Route('/afficherFundrising_dashA', name: 'app_afficherFundrising_dashA')]
     
@@ -146,20 +223,28 @@ return $this->renderForm("funds/association-Don-Add.html.twig", [
 
 
 
-
-    #[Route('/s/search',name:'app_funds_search')]
-    public function searchrecbyTitre(Request $request, NormalizerInterface $Normalizer, FundrisingRepository $repository): Response
+    #[Route('search', name: 'funds_search')]
+    public function search(FundrisingRepository $funds, Request $request, ManagerRegistry $doct): Response
     {
-//$repository = $this->getDoctrine()->getRepository(Article::class);
-        $requestString = $request->get('search');
-        $funds = $repository->findrecByfundsTitle($requestString);
-        //var_dump($funds);
-        dump($funds);
-        $jsonContent = $Normalizer->normalize($funds, 'json', ['Groups' => 'funds:read', 'MAX_DEPTH' => '1']);
-        $retour = json_encode($jsonContent);
-        return new Response($retour);
-
+        $user = $doct->getRepository(User::class)->findOneBy(['email' => $this->getUser()->getUserIdentifier()]);
+        $issetTitre = isset($_GET['titreDon']);
+        if ($issetTitre) {
+            
+            $Funds = $funds->searchfunds($_GET['titreDon']);
+    
+            return $this->render('funds/listFund.html.twig', [
+                'Funds' => $Funds,
+                'user' => $user
+            ]);
+        }
+    
+        return $this->render('funds/search.html.twig', [
+            'user' => $user,
+            'funds' => $funds,
+        ]);
     }
+
+
     
 
     #[Route('/admin/traiter/{id}', name: 'smsparticipation')]
@@ -182,6 +267,7 @@ return $this->renderForm("funds/association-Don-Add.html.twig", [
     
     public function afficherFundrisingAssoc(FundrisingRepository $Fundrising, ManagerRegistry $doct): Response
     {
+
         $user = $doct->getRepository(User::class)->findOneBy(['email' => $this->getUser()->getUserIdentifier()]);
         $stu = $Fundrising->findAll();
 
