@@ -61,13 +61,13 @@ body{
  
     {% for p in products %}
     <div class="shop-items__card">
-      <div class="shop-items__card-img-container">
+      <a href="{{path('product-one', {'id': p.id})}}" class="shop-items__card-img-container">
         <img
           src="{{asset('./contents/uploads/products/') ~ p.image}}"
           class="shop-items__card-img"
           alt=""
         />
-      </div>
+      </a>
       <div class="shop-items__info">
         <div class="shop-items__info__title">{{p.nomProduit}}</div>
         <p class="shop-items__info__description">

@@ -51,7 +51,9 @@ class ProductController extends AbstractController
         }
         
         $products = $produitRepository->findAll();
-        $categories = $categorieProduitRepository->findAll();
+        //$categories = $categorieProduitRepository->findAll();
+        $categories = $categorieProduitRepository->getAllCategoriesSortedByOrderCateg();
+
         return $this->render('front/user-products-list.html.twig', [
             'controller_name' => 'FrontController',
             'title' => 'Zero Waste',
@@ -344,7 +346,7 @@ class ProductController extends AbstractController
    
        $entityManager->flush();
    
-       return new Response('Images updated!');
+       return new Response('updated!');
     }
 
 
@@ -380,6 +382,30 @@ class ProductController extends AbstractController
             'products' => $products,
             "formOffre" => $form,
         ));
+    }
+
+
+    #[Route('/product-one/{id}', name: 'product-one')]
+    public function productOne(ProduitRepository $produitRepository, $id, CommandsRepository $commandsRepository, ManagerRegistry $doct,  CommandsProduitRepository $commandsProduitRepository): Response
+    {
+        $user = $doct->getRepository(User::class)->findOneBy(['email' => $this->getUser()->getUserIdentifier()]);
+       
+        $commande = $commandsRepository->findOneBy(["user" => $user->getId(), "status" => 0]);
+        if($commande != null)
+        {
+            $totalCommandes = $commandsProduitRepository->getCommandesNumber($commande->getId());
+        }else{
+            $totalCommandes = 0;
+        }
+        
+        $product = $produitRepository->find($id);
+
+        return $this->render('front/user-product-one.html.twig', [
+            'title' => 'Zero Waste',
+            'product' => $product,
+            'totalCommandes' => $totalCommandes,
+            'user' => $user,
+        ]);
     }
 
         
