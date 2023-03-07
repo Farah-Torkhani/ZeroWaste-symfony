@@ -88,7 +88,18 @@ class FundrisingRepository extends ServiceEntityRepository
                 );
             }
        
-     
+      
+ public function findDonByName($TitreDon)
+ {
+  
+     $qb = $this->createQueryBuilder('p')
+         ->where('p.TitreDon LIKE :TitreDon')
+         ->setParameter('TitreDon', '%' . $TitreDon . '%')
+         ->getQuery()
+         ->getResult();
+         return $qb;
+ }
+
        
 //    /**
 //     * @return Fundrising[] Returns an array of Fundrising objects

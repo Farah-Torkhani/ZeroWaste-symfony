@@ -328,6 +328,19 @@ public function addfundsMobile(\Doctrine\Persistence\ManagerRegistry $doctrine, 
     }
 
   
- 
+    #[Route('/rechercheAjax', name: 'rechercheAjax')]
+    public function searchAjax(Request $request, FundrisingRepository $Fundrising, ManagerRegistry $doctrine)
+    {
+        $user = $doctrine->getRepository(User::class)->findOneBy(['email' => $this->getUser()->getUserIdentifier()]);
+        // Récupérez le paramètre de recherche depuis la requête
+        $query = $request->query->get('q');
+        // Récupérez les funds correspondants depuis la base de données
+        $Funds = $Fundrising->findDonByName($query);
+        $html = $this->renderView("funds/listFund.html.twig", [
+            "Funds" => $Funds,'user' => $user,
+        ]);
+    
+        return new Response($html);
+    }
 
 }

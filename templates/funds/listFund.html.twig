@@ -73,10 +73,11 @@
  
 
         <div class="dash-user-fund__container">
-
+        <input type="text" id="search" class="form-control" placeholder="Search">
+        <div id="tabv">
      
-        {{ include('funds/search.html.twig')}}
-
+        {# {{ include('funds/search.html.twig')}} #}
+<table>
         <div class="dash-user-fund__container--right">
  {% for stu in Funds %}
             <div class="fund--1__item" id="test">
@@ -146,7 +147,7 @@
             </div>
 
 {% endfor %}
-
+</table>
 
         </div>
     </div>
@@ -160,6 +161,26 @@
 </div>
        
           {% block Js %} 
+
+        <script src="{{ asset('https://code.jquery.com/jquery-3.5.1.min.js') }}"></script>
+        <script>
+            $(document).ready(function() {
+                $('#search').on('keyup', function() {
+                    var query = $(this).val();
+                    console.log(query);
+                    $.ajax({
+                        url: '{{ path('rechercheAjax') }}',
+                        type: 'GET',
+                        data: { q: query },
+                        success: function(response) {
+                            console.log(response);
+                            $('#tabv').html($(response).find('#tabv').html());
+                        }
+                    });
+                });
+            });
+        </script>
+        
 <script src="{{asset('./contents/js/script.js')}}"> </script>  
 {% endblock %}
 
