@@ -3672,7 +3672,8 @@ td {
   align-items: center;
   justify-content: center;
   text-decoration: none;
-  transition: all 0.3s
+  transition: all 0.3s;
+  cursor: pointer;
 }
 
 .user-one-product-rightSide-fb-container:hover{
@@ -3703,11 +3704,14 @@ td {
 
 .reviews-container-rightSide{
   padding: 2rem 1rem 2rem 1rem;
+  margin: 1rem 2rem 0 0;
+  width: 65%;
 }
 
 .reviews-container-leftSide{
   width: 30rem;
   padding: 2rem;
+  margin: 1rem 3rem 0 2rem;
 }
 
 .reviews-container-leftSide__title , .reviews-container-rightSide__title{
@@ -3803,7 +3807,7 @@ td {
 .one-comment-last-row{
   display: flex;
   align-items: center;
-  width: 89rem;
+  width: 100%;
   font-size: 1.6rem;
 }
 

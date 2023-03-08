@@ -117,9 +117,16 @@ body{
         <div class="user-one-product-rightSide-partage-text">
           Share this product
         </div>
-        <a href="" class="user-one-product-rightSide-fb-container">
+        {% if user.getRoles()[0] == 'ROLE_USER' %}
+        <a href="https://www.facebook.com/sharer/sharer.php?u={{ absolute_url(path('facebook_share', {id: product.id})) }}" class="user-one-product-rightSide-fb-container" target="_blank">
           <i class='bx bxl-facebook'></i>
         </a>
+        
+        {% elseif user.getRoles()[0] == 'ROLE_ADMIN' %}
+        <a  class="user-one-product-rightSide-fb-container" id="shareFb" data-id="{{product.id}}">
+          <i class='bx bxl-facebook'></i>
+        </a>
+        {% endif %}
       </div>
 
       </div>
@@ -406,6 +413,41 @@ body{
           $.ajax({
             type: "GET",
             url: "{{ path('app_productsFavAdd') }}",
+            data: { productIdData: productId },
+
+            success: function (result) {
+              console.log("result");
+              if (result) {
+                console.log(result);
+                
+
+
+              }
+            },
+            error: function (xhr, status, error) {
+              console.log("Error: " + error);
+            },
+          });
+
+        });
+      });
+    </script>
+
+    <script>
+      $(document).ready(function () {
+        $("#shareFb").click(function () {
+         // $("#bxs-heart1").toggle(0);
+         // $("#bx-heart1").toggle(0);
+         // $("#bxs-heart2").toggle(0);
+         // $("#bx-heart2").toggle(0);
+         
+          
+          const productId = $("#shareFb" ).data("id");
+          console.log(productId);
+
+          $.ajax({
+            type: "GET",
+            url: "{{ path('facebook_share') }}",
             data: { productIdData: productId },
 
             success: function (result) {

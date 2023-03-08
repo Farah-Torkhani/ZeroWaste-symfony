@@ -29,6 +29,20 @@ use Symfony\Component\Mercure\Update;
 
 use App\Entity\ProductFavoris;
 use App\Repository\ProductFavorisRepository;
+use Facebook\Facebook;
+
+
+use Facebook\Exceptions\FacebookResponseException;
+use Facebook\Exceptions\FacebookSDKException;
+
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use GuzzleHttp\Client;
+
+use Symfony\Component\Asset\Packages;
+use Symfony\Component\Asset\VersionStrategy\StaticVersionStrategy;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\File\File;
+
 
 
 class ProductController extends AbstractController
@@ -469,6 +483,64 @@ class ProductController extends AbstractController
         
         return new Response('updated!');
     }
+
+    
+    #[Route('/facebook_share', name: 'facebook_share')]
+    public function facebook_share(ManagerRegistry $doct, Request $request): Response
+    {
+        $id =$request->get('productIdData');
+        $product= $doct->getRepository(Produit::class)->find($id);
+
+        
+
+        $fb = new Facebook([
+            'app_id' => '162589433299922',
+            'app_secret' => '8951380abcab7557b3c9fe51303dde33',
+            'default_graph_version' => 'v16.0',
+            'default_access_token' => 'EAACT381qg9IBAMTogYd8cvuZBcuXruqGfBGq1ZB2n203ptbr7V31k1ggjSjYdK0OlsNGQQPIFDChjSwZB4WjkMehOx3keeKVnEpfEpJ6ELLBicWMuueO4wMW0dg6ZBMQqkOchl7ZC2ik3JtdOq31hwexZCUOV7O3nDzTjIDmKnPyE9VTMXIcDLvz0TauwjXQ1xbnQ8RMK0WYZBiJcHomcZCA',
+        ]);
+        
+        $productUrl = 'https://127.0.0.1:8000/product-one/48';
+      //pour envoyer une image changer feed par photos
+        //  $imageUrl = 'https://scontent.ftun9-1.fna.fbcdn.net/v/t39.30808-6/334954366_866719021098542_7251173562485808604_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=730e14&_nc_ohc=vfw_82p3lmAAX_co5Bd&_nc_ht=scontent.ftun9-1.fna&oh=00_AfBAxE4r48haqlt5XdDtkrOfWvNxpFxP1vrAhs5uvOZjxA&oe=640D0C1A';
+        
+      //  $img = 'https://drive.google.com/file/d/1i9TP4fkMNKBHblB3jFhbguH0ANzMmPt7/view';
+      /*  $data = [
+            'caption' => $product->getNomProduit(),
+            'url' => $imageUrl,
+            'link' => $productUrl,
+            'additional_text' => 'Cliquez ici pour en savoir plus : https://127.0.0.1:8000/product-one/48'
+            
+            
+        ];
+        */
+        $message ='a new product is available on ZeroWaste: '. '                                                                ' 
+                    .'Name: '.$product->getNomProduit() . '                                                                                 '  
+                    .'**Description: '. $product->getDescription() . '                                                                                        ' 
+                    .'**Price: '. $product->getPrixProduit() . '                                                                                                                                         ' 
+                    .'**Points: '. $product->getPrixPointProduit();
+        $data = [
+            'message' => $message ,
+            'link' => sprintf('https://127.0.0.1:8000/product-one/%d', $product->getId()),
+        ];
+        
+        $response = $fb->post('/me/feed', $data);
+      //  dd($response);
+ //       return $this->redirectToRoute("product-one");
+        
+        if ($response->isError()) {
+            // handle error
+            
+        } else {
+            //return $this->redirectToRoute("product-one");
+            // post was shared successfully
+        }
+        
+        return new Response('updated!');
+    }
+
+   
+    
 
 
         
