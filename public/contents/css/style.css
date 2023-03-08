@@ -3523,6 +3523,7 @@ td {
   justify-content: center;
   color: #32bb6f;
   transition: all 0.3s;
+  cursor: pointer;
 }
 
 .user-one-product-rightSide-content__header-favBtn:hover{
@@ -3829,4 +3830,72 @@ td {
 .one-comment-hr{
   border: 1px solid #DEFEE6;
   margin: 2rem 0;
+}
+
+/**************************model account user**********************************/
+.dash__top-bar__toggle-model-account{
+  background-color: #fff;
+  width: 20rem;
+  min-height: 20rem;
+  position: relative;
+  right: 12rem;
+  box-shadow: 0 0.2rem 2rem rgb(0 0 0 / 30%);
+  border-radius: 1rem;
+  bottom: 0.5rem;
+  padding-top: 1rem;
+  padding-bottom: 2rem;
+}
+
+.bxs-up-arrow{
+  font-size: 2rem;
+  color: #fff;
+}
+
+.dash__top-bar__toggle-model-account-row{
+  text-decoration: none;
+  font-size: 1.6rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  padding-bottom: 1rem;
+  padding:  1rem 2rem;
+  border-radius: 1rem;
+  color: #32594A;
+}
+
+.dash__top-bar__toggle-model-account-row:first-child{
+  padding-top: 1rem;
+}
+
+.dash__top-bar__toggle-model-account-row:hover{
+  background-color: #DEFEE6;
+}
+
+.dash__top-bar__toggle-model-account-link{
+  padding-left: 1rem;
+}
+
+.toggle-model-account-hr{
+  border: 1px solid #DEFEE6;
+  margin: 1rem 0 2rem 0;
+}
+
+.toggle-model-account-logoutBtn{
+  background-color: #97D158;
+  font-size: 1.6rem;
+  font-weight: 600;
+  text-decoration: none;
+  color: #fff;
+  display: flex;
+  margin: 0 2rem;
+  padding: 1rem 0;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  border-radius: 1rem;
+  transition: all 0.3s;
+}
+
+.toggle-model-account-logoutBtn:hover{
+  background-color: #82c837;
 }

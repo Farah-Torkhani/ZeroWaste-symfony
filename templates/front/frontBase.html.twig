@@ -53,13 +53,30 @@
       <span class="dash__top-bar__fullname"> {{user.fullName}} </span>
 
       <div class="dash__top-bar__img-container">
-        <a href="#">
+        <a >
           <img
             src="{{asset('./contents/img/') ~ user.imgUrl }}"
             class="dash__top-bar__img"
             alt="profile"
           />
         </a>
+        <i class='bx bxs-up-arrow' style="display:none"></i>
+        <div class="dash__top-bar__toggle-model-account" style="display:none">
+          <a href="" class="dash__top-bar__toggle-model-account-row">
+            <i class='bx bx-user'></i>
+            <div class="dash__top-bar__toggle-model-account-link">Your account</div>
+          </a>
+          <a href="" class="dash__top-bar__toggle-model-account-row">
+            <i class='bx bx-shopping-bag' ></i>
+            <div class="dash__top-bar__toggle-model-account-link">Your orders</div>
+          </a>
+          <a href="{{path('app_productsFav')}}" class="dash__top-bar__toggle-model-account-row">
+            <i class='bx bx-heart'></i>
+            <div class="dash__top-bar__toggle-model-account-link">Your wish list</div>
+          </a>
+          <hr class="toggle-model-account-hr" />
+          <a href="" class="toggle-model-account-logoutBtn">Logout</a>  
+        </div>
       </div>
     </div>
   </nav>

@@ -139,7 +139,16 @@ body{
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     <script src="{{asset('./contents/js/user-products-list.js')}}"></script> 
- 
+
+    <script>
+      $(document).ready(function () {
+        $(".dash__top-bar__img-container").click(function () {
+          $(".dash__top-bar__toggle-model-account").toggle(0);
+          $(".bxs-up-arrow").toggle(0);
+        });
+      });
+    </script>
+    
     <script>
 
       function filterCategories(x) {

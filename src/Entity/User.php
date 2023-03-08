@@ -86,6 +86,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     )]
     private ?string $password = null;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: ProductFavoris::class)]
+    private Collection $productFavoris;
+
+    public function __construct()
+    {
+        $this->productFavoris = new ArrayCollection();
+    }
+
 
     public function getId(): ?int
     {
@@ -317,6 +325,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __toString()
     {
         return (string)$this->getId();
+    }
+
+    /**
+     * @return Collection<int, ProductFavoris>
+     */
+    public function getProductFavoris(): Collection
+    {
+        return $this->productFavoris;
+    }
+
+    public function addProductFavori(ProductFavoris $productFavori): self
+    {
+        if (!$this->productFavoris->contains($productFavori)) {
+            $this->productFavoris->add($productFavori);
+            $productFavori->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProductFavori(ProductFavoris $productFavori): self
+    {
+        if ($this->productFavoris->removeElement($productFavori)) {
+            // set the owning side to null (unless already changed)
+            if ($productFavori->getUser() === $this) {
+                $productFavori->setUser(null);
+            }
+        }
+
+        return $this;
     }
     
 

@@ -22,9 +22,15 @@ body{
           <div class="user-one-product-rightSide-content__header-title">
             {{product.nomProduit}}
           </div>
-          <a href="" class="user-one-product-rightSide-content__header-favBtn">
-            <i class='bx bx-heart'></i>
-          </a>
+          <a class="user-one-product-rightSide-content__header-favBtn" id="add-fav"  data-id="{{product.id}}">
+            {% if productFav == null %}
+            <i class='bx bx-heart' id="bx-heart1"></i>
+            <i class='bx bxs-heart' id="bxs-heart1" style="display:none"></i>
+            {% else %}
+            <i class='bx bxs-heart' id="bxs-heart2"></i>
+            <i class='bx bx-heart' id="bx-heart2" style="display:none"></i>
+            {% endif %}
+          </a> 
         </div>
         <div class="user-one-product-rightSide-category">
           <b>Category:</b> {{product.getCategorieProduit()}}
@@ -376,7 +382,49 @@ body{
 
     <script src="{{asset('./contents/js/user-products-list.js')}}"></script> 
 
+    <script>
+      $(document).ready(function () {
+        $(".dash__top-bar__img-container").click(function () {
+          $(".dash__top-bar__toggle-model-account").toggle(0);
+          $(".bxs-up-arrow").toggle(0);
+        });
+      });
+    </script>
 
+    <script>
+      $(document).ready(function () {
+        $("#add-fav").click(function () {
+          $("#bxs-heart1").toggle(0);
+          $("#bx-heart1").toggle(0);
+          $("#bxs-heart2").toggle(0);
+          $("#bx-heart2").toggle(0);
+         
+          
+          const productId = $(".user-one-product-rightSide-content__header-favBtn" ).data("id");
+          console.log(productId);
+
+          $.ajax({
+            type: "GET",
+            url: "{{ path('app_productsFavAdd') }}",
+            data: { productIdData: productId },
+
+            success: function (result) {
+              console.log("result");
+              if (result) {
+                console.log(result);
+                
+
+
+              }
+            },
+            error: function (xhr, status, error) {
+              console.log("Error: " + error);
+            },
+          });
+
+        });
+      });
+    </script>
     
 
 

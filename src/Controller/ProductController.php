@@ -27,6 +27,10 @@ use App\Form\OffreType;
 use Symfony\Component\Mercure\HubInterface;
 use Symfony\Component\Mercure\Update;
 
+use App\Entity\ProductFavoris;
+use App\Repository\ProductFavorisRepository;
+
+
 class ProductController extends AbstractController
 {
     #[Route('/product', name: 'app_product')]
@@ -386,7 +390,7 @@ class ProductController extends AbstractController
 
 
     #[Route('/product-one/{id}', name: 'product-one')]
-    public function productOne(ProduitRepository $produitRepository, $id, CommandsRepository $commandsRepository, ManagerRegistry $doct,  CommandsProduitRepository $commandsProduitRepository): Response
+    public function productOne(ProduitRepository $produitRepository, $id, CommandsRepository $commandsRepository, ManagerRegistry $doct,  CommandsProduitRepository $commandsProduitRepository, ProductFavorisRepository $productFavorisRepository): Response
     {
         $user = $doct->getRepository(User::class)->findOneBy(['email' => $this->getUser()->getUserIdentifier()]);
        
@@ -400,13 +404,72 @@ class ProductController extends AbstractController
         
         $product = $produitRepository->find($id);
 
+        $productFav = $productFavorisRepository->findOneBy(["user" => $user->getId(), "product" => $id]);
+        //dd($productFav);
+
         return $this->render('front/user-product-one.html.twig', [
             'title' => 'Zero Waste',
             'product' => $product,
             'totalCommandes' => $totalCommandes,
             'user' => $user,
+            'productFav' => $productFav,
         ]);
     }
+
+    #[Route('/productsFavList', name: 'app_productsFav')]
+    public function productsFav(ProduitRepository $produitRepository, CommandsRepository $commandsRepository, ManagerRegistry $doct,  CommandsProduitRepository $commandsProduitRepository, ProductFavorisRepository $productFavorisRepository): Response
+    {
+        $user = $doct->getRepository(User::class)->findOneBy(['email' => $this->getUser()->getUserIdentifier()]);
+       
+        $commande = $commandsRepository->findOneBy(["user" => $user->getId(), "status" => 0]);
+        if($commande != null)
+        {
+            $totalCommandes = $commandsProduitRepository->getCommandesNumber($commande->getId());
+        }else{
+            $totalCommandes = 0;
+        }
+        
+        $productsFav = $user->getProductFavoris();
+        //$products = $productFavorisRepository->findBy(["user" => $user->getId()]);
+        
+        //dd($products);
+        
+        return $this->render('front/user-products-favoris.html.twig', [
+            'title' => 'Zero Waste',
+            'productsFav' => $productsFav,
+            'totalCommandes' => $totalCommandes,
+            'user' => $user,
+        ]);
+
+    }
+
+
+    #[Route('/productsFavAdd', name: 'app_productsFavAdd')]
+    public function productsFavAdd(ManagerRegistry $doct, Request $request, ProductFavorisRepository $productFavorisRepository): Response
+    {
+        $user = $doct->getRepository(User::class)->findOneBy(['email' => $this->getUser()->getUserIdentifier()]);
+       
+        
+        $id =$request->get('productIdData');
+
+        $product= $doct->getRepository(Produit::class)->find($id);
+        
+        $productFav = $productFavorisRepository->findOneBy(["user" => $user->getId(), "product" => $id]);
+        $em = $doct->getManager();
+        if($productFav == null){
+            $productFavoris = new ProductFavoris();
+            $productFavoris->setUser($user);
+            $productFavoris->setProduct($product);
+
+            $em->persist($productFavoris);
+        }else{
+            $em->remove($productFav);
+        }
+        $em->flush();
+        
+        return new Response('updated!');
+    }
+
 
         
         
