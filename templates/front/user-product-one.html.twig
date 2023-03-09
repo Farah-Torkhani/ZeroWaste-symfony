@@ -1,0 +1,474 @@
+{% extends 'front/frontBase.html.twig' %}
+
+{% block bgColor %}
+<style>
+body{
+    background-color:#DEFEE6;
+  }
+</style>
+{% endblock %}
+
+{% block nav %}
+{% endblock %}
+
+{% block frontContent %}
+  <div class="user-one-product-container">
+    <div class="user-one-product-content">
+      <div class="user-one-product-img__container">
+        <img src="{{asset('./contents/uploads/products/') ~ product.image}}" class="user-one-product-img" />
+      </div>
+      <div class="user-one-product-rightSide-content">
+        <div class="user-one-product-rightSide-content__header">
+          <div class="user-one-product-rightSide-content__header-title">
+            {{product.nomProduit}}
+          </div>
+          <a class="user-one-product-rightSide-content__header-favBtn" id="add-fav"  data-id="{{product.id}}">
+            {% if productFav == null %}
+            <i class='bx bx-heart' id="bx-heart1"></i>
+            <i class='bx bxs-heart' id="bxs-heart1" style="display:none"></i>
+            {% else %}
+            <i class='bx bxs-heart' id="bxs-heart2"></i>
+            <i class='bx bx-heart' id="bx-heart2" style="display:none"></i>
+            {% endif %}
+          </a> 
+        </div>
+        <div class="user-one-product-rightSide-category">
+          <b>Category:</b> {{product.getCategorieProduit()}}
+        </div>
+        <div class="user-one-product-rightSide-reviews">
+          <div class="user-one-product-rightSide-stars">
+            <div class="user-one-product-rightSide-one-star-img-container">
+              <img src="{{asset('./contents/img/star-empty.png')}}" class="user-one-product-rightSide-one-star-img" />
+              <div class="fullstar-container" style="width:50%">
+                <img src="{{asset('./contents/img/star.png')}}" class="user-one-product-rightSide-one-star-img full-star" />
+              </div>
+            </div>
+
+            <div class="user-one-product-rightSide-one-star-img-container">
+              <img src="{{asset('./contents/img/star-empty.png')}}" class="user-one-product-rightSide-one-star-img" />
+              <div class="fullstar-container" style="width:50%">
+                <img src="{{asset('./contents/img/star.png')}}" class="user-one-product-rightSide-one-star-img full-star" />
+              </div>
+            </div>
+
+            <div class="user-one-product-rightSide-one-star-img-container">
+              <img src="{{asset('./contents/img/star-empty.png')}}" class="user-one-product-rightSide-one-star-img" />
+              <div class="fullstar-container" style="width:50%">
+                <img src="{{asset('./contents/img/star.png')}}" class="user-one-product-rightSide-one-star-img full-star" />
+              </div>
+            </div>
+
+            <div class="user-one-product-rightSide-one-star-img-container">
+              <img src="{{asset('./contents/img/star-empty.png')}}" class="user-one-product-rightSide-one-star-img" />
+              <div class="fullstar-container" style="width:50%">
+                <img src="{{asset('./contents/img/star.png')}}" class="user-one-product-rightSide-one-star-img full-star" />
+              </div>
+            </div>
+
+            <div class="user-one-product-rightSide-one-star-img-container">
+              <img src="{{asset('./contents/img/star-empty.png')}}" class="user-one-product-rightSide-one-star-img" />
+              <div class="fullstar-container" style="width:50%">
+                <img src="{{asset('./contents/img/star.png')}}" class="user-one-product-rightSide-one-star-img full-star" />
+              </div>
+            </div>
+
+            
+          </div>
+          <div class="reviews-text">
+            (21 avis vérifiés)
+          </div>
+        </div>
+        <hr class="user-one-product-rightSide-hr" />
+        <div class="user-one-product-rightSide-price">
+          <div class="user-one-product-rightSide-price-tnd">
+            <div class="user-one-product-rightSide-price-tnd-afterOffer">
+              {{product.prixProduit}} TND
+            </div>
+            <div class="user-one-product-rightSide-price-tnd-beforeOffer">
+              <div class="user-one-product-rightSide-price-tnd-beforeOffer-price">
+                160 TND
+              </div>
+              <div class="user-one-product-rightSide-price-Offer">
+                -50%
+              </div>
+            </div>
+          
+          </div>
+    
+          <div class="user-one-product-rightSide-price-pts">
+            {{product.prixPointProduit}} pts
+          </div>
+        </div>
+
+        <div class="user-one-product-rightSide-dispo">
+            Description:
+            <p class="user-one-product-rightSide-desc">
+              {{product.description}}
+            </p>
+        </div>
+
+        <div class="user-one-product-rightSide-dispo">
+            Disponible
+        </div>
+
+      <a href="{{path('app_commandes-add', {'id': product.id})}}" class="user-one-product__addBtn">Add To Cart</a>
+
+      <div class="user-one-product-rightSide-partage">
+        <div class="user-one-product-rightSide-partage-text">
+          Share this product
+        </div>
+        {% if user.getRoles()[0] == 'ROLE_USER' %}
+        <a href="https://www.facebook.com/sharer/sharer.php?u={{ absolute_url(path('facebook_share', {id: product.id})) }}" class="user-one-product-rightSide-fb-container" target="_blank">
+          <i class='bx bxl-facebook'></i>
+        </a>
+        
+        {% elseif user.getRoles()[0] == 'ROLE_ADMIN' %}
+        <a  class="user-one-product-rightSide-fb-container" id="shareFb" data-id="{{product.id}}">
+          <i class='bx bxl-facebook'></i>
+        </a>
+        {% endif %}
+      </div>
+
+      </div>
+    </div>
+  </div>
+
+  {#************reviews****************************#}
+  <h1 class="reviews-title">Verified Clients Reviews</h1>
+  <div class="reviews-container">
+    <div class="reviews-container-leftSide">
+      <div class="reviews-container-leftSide__title">
+        VERIFIED REVIEWS (110)
+      </div>
+      <div class="reviews-container-leftSide__total-container">
+        <div class="reviews-container-leftSide__percent"><b>3.8</b>/5</div>
+         <div class="user-one-product-rightSide-stars">
+            <div class="user-one-product-rightSide-one-star-img-container">
+              <img src="{{asset('./contents/img/star-empty.png')}}" class="user-one-product-rightSide-one-star-img" />
+              <div class="fullstar-container" style="width:50%">
+                <img src="{{asset('./contents/img/star.png')}}" class="user-one-product-rightSide-one-star-img full-star" />
+              </div>
+            </div>
+
+            <div class="user-one-product-rightSide-one-star-img-container">
+              <img src="{{asset('./contents/img/star-empty.png')}}" class="user-one-product-rightSide-one-star-img" />
+              <div class="fullstar-container" style="width:50%">
+                <img src="{{asset('./contents/img/star.png')}}" class="user-one-product-rightSide-one-star-img full-star" />
+              </div>
+            </div>
+
+            <div class="user-one-product-rightSide-one-star-img-container">
+              <img src="{{asset('./contents/img/star-empty.png')}}" class="user-one-product-rightSide-one-star-img" />
+              <div class="fullstar-container" style="width:50%">
+                <img src="{{asset('./contents/img/star.png')}}" class="user-one-product-rightSide-one-star-img full-star" />
+              </div>
+            </div>
+
+            <div class="user-one-product-rightSide-one-star-img-container">
+              <img src="{{asset('./contents/img/star-empty.png')}}" class="user-one-product-rightSide-one-star-img" />
+              <div class="fullstar-container" style="width:50%">
+                <img src="{{asset('./contents/img/star.png')}}" class="user-one-product-rightSide-one-star-img full-star" />
+              </div>
+            </div>
+
+            <div class="user-one-product-rightSide-one-star-img-container">
+              <img src="{{asset('./contents/img/star-empty.png')}}" class="user-one-product-rightSide-one-star-img" />
+              <div class="fullstar-container" style="width:50%">
+                <img src="{{asset('./contents/img/star.png')}}" class="user-one-product-rightSide-one-star-img full-star" />
+              </div>
+            </div>
+        </div>
+        <div class="total-reviews-verified">110 verified reviews</div>
+      </div>
+      
+      <div class="reviews-details-container">
+        <div class="reviews-details-container-row">
+          <p>5</p>
+          <div class="user-one-product-rightSide-one-star-img-container">
+            <img src="{{asset('./contents/img/star.png')}}" class="user-one-product-rightSide-one-star-img" />
+          </div>
+          <p>(54)</p>
+          <div class="range-container">
+            <div class="range-value" style="width:60%">
+            </div>
+          </div>
+        </div>
+        {#------------------End reviews-details-container-row 1------------------------#}
+        <div class="reviews-details-container-row">
+          <p>4</p>
+          <div class="user-one-product-rightSide-one-star-img-container">
+            <img src="{{asset('./contents/img/star.png')}}" class="user-one-product-rightSide-one-star-img" />
+          </div>
+          <p>(54)</p>
+          <div class="range-container">
+            <div class="range-value" style="width:60%">
+            </div>
+          </div>
+        </div>
+        {#------------------End reviews-details-container-row 2------------------------#}
+        <div class="reviews-details-container-row">
+          <p>3</p>
+          <div class="user-one-product-rightSide-one-star-img-container">
+            <img src="{{asset('./contents/img/star.png')}}" class="user-one-product-rightSide-one-star-img" />
+          </div>
+          <p>(54)</p>
+          <div class="range-container">
+            <div class="range-value" style="width:60%">
+            </div>
+          </div>
+        </div>
+        {#------------------End reviews-details-container-row 3------------------------#}
+        <div class="reviews-details-container-row">
+          <p>2</p>
+          <div class="user-one-product-rightSide-one-star-img-container">
+            <img src="{{asset('./contents/img/star.png')}}" class="user-one-product-rightSide-one-star-img" />
+          </div>
+          <p>(54)</p>
+          <div class="range-container">
+            <div class="range-value" style="width:60%">
+            </div>
+          </div>
+        </div>
+        {#------------------End reviews-details-container-row 4------------------------#}
+        <div class="reviews-details-container-row">
+          <p>1</p>
+          <div class="user-one-product-rightSide-one-star-img-container">
+            <img src="{{asset('./contents/img/star.png')}}" class="user-one-product-rightSide-one-star-img" />
+          </div>
+          <p>(54)</p>
+          <div class="range-container">
+            <div class="range-value" style="width:60%">
+            </div>
+          </div>
+        </div>
+        {#------------------End reviews-details-container-row 5------------------------#}
+      </div>
+
+
+
+    </div>
+    <div class="reviews-container-rightSide">
+      <div class="reviews-container-rightSide__title">
+        COMMENTS (14)
+      </div>
+      <div class="one-comment-container">
+        <div class="user-one-product-rightSide-one-star-img-container" style="display:flex">
+          <img src="{{asset('./contents/img/star.png')}}" class="user-one-product-rightSide-one-star-img one-comment-star" />
+          <img src="{{asset('./contents/img/star.png')}}" class="user-one-product-rightSide-one-star-img one-comment-star" />
+          <img src="{{asset('./contents/img/star.png')}}" class="user-one-product-rightSide-one-star-img one-comment-star" />
+          <img src="{{asset('./contents/img/star.png')}}" class="user-one-product-rightSide-one-star-img one-comment-star" />
+          <img src="{{asset('./contents/img/star.png')}}" class="user-one-product-rightSide-one-star-img one-comment-star" />
+        </div>
+        <div class="one-comment-title">j'aime</div>
+        <div class="one-comment-desc">bon produit</div>
+        <div class="one-comment-last-row">
+          <div class="one-comment-last-row__date">
+            06-03-2023
+          </div>
+          <div class="one-comment-last-row__userName">
+            par ALi
+          </div>
+          <div class="one-comment-last-row__verified">
+            <img src="{{asset('./contents/img/check-mark.png')}}" class="one-comment-last-row__verified-img" />
+            Verified purchase
+          </div>
+        </div>
+        <hr class="one-comment-hr">
+      </div>
+      {#************END one comment****************************#}
+      <div class="one-comment-container">
+        <div class="user-one-product-rightSide-one-star-img-container" style="display:flex">
+          <img src="{{asset('./contents/img/star.png')}}" class="user-one-product-rightSide-one-star-img one-comment-star" />
+          <img src="{{asset('./contents/img/star.png')}}" class="user-one-product-rightSide-one-star-img one-comment-star" />
+          <img src="{{asset('./contents/img/star.png')}}" class="user-one-product-rightSide-one-star-img one-comment-star" />
+          <img src="{{asset('./contents/img/star.png')}}" class="user-one-product-rightSide-one-star-img one-comment-star" />
+          <img src="{{asset('./contents/img/star.png')}}" class="user-one-product-rightSide-one-star-img one-comment-star" />
+        </div>
+        <div class="one-comment-title">j'aime</div>
+        <div class="one-comment-desc">bon produit</div>
+        <div class="one-comment-last-row">
+          <div class="one-comment-last-row__date">
+            06-03-2023
+          </div>
+          <div class="one-comment-last-row__userName">
+            par ALi
+          </div>
+          <div class="one-comment-last-row__verified">
+            <img src="{{asset('./contents/img/check-mark.png')}}" class="one-comment-last-row__verified-img" />
+            Verified purchase
+          </div>
+        </div>
+        <hr class="one-comment-hr">
+      </div>
+      {#************END one comment****************************#}
+      <div class="one-comment-container">
+        <div class="user-one-product-rightSide-one-star-img-container" style="display:flex">
+          <img src="{{asset('./contents/img/star.png')}}" class="user-one-product-rightSide-one-star-img one-comment-star" />
+          <img src="{{asset('./contents/img/star.png')}}" class="user-one-product-rightSide-one-star-img one-comment-star" />
+          <img src="{{asset('./contents/img/star.png')}}" class="user-one-product-rightSide-one-star-img one-comment-star" />
+          <img src="{{asset('./contents/img/star.png')}}" class="user-one-product-rightSide-one-star-img one-comment-star" />
+          <img src="{{asset('./contents/img/star.png')}}" class="user-one-product-rightSide-one-star-img one-comment-star" />
+        </div>
+        <div class="one-comment-title">j'aime</div>
+        <div class="one-comment-desc">bon produit</div>
+        <div class="one-comment-last-row">
+          <div class="one-comment-last-row__date">
+            06-03-2023
+          </div>
+          <div class="one-comment-last-row__userName">
+            par ALi
+          </div>
+          <div class="one-comment-last-row__verified">
+            <img src="{{asset('./contents/img/check-mark.png')}}" class="one-comment-last-row__verified-img" />
+            Verified purchase
+          </div>
+        </div>
+        <hr class="one-comment-hr">
+      </div>
+      {#************END one comment****************************#}
+      <div class="one-comment-container">
+        <div class="user-one-product-rightSide-one-star-img-container" style="display:flex">
+          <img src="{{asset('./contents/img/star.png')}}" class="user-one-product-rightSide-one-star-img one-comment-star" />
+          <img src="{{asset('./contents/img/star.png')}}" class="user-one-product-rightSide-one-star-img one-comment-star" />
+          <img src="{{asset('./contents/img/star.png')}}" class="user-one-product-rightSide-one-star-img one-comment-star" />
+          <img src="{{asset('./contents/img/star.png')}}" class="user-one-product-rightSide-one-star-img one-comment-star" />
+          <img src="{{asset('./contents/img/star.png')}}" class="user-one-product-rightSide-one-star-img one-comment-star" />
+        </div>
+        <div class="one-comment-title">j'aime</div>
+        <div class="one-comment-desc">bon produit</div>
+        <div class="one-comment-last-row">
+          <div class="one-comment-last-row__date">
+            06-03-2023
+          </div>
+          <div class="one-comment-last-row__userName">
+            par ALi
+          </div>
+          <div class="one-comment-last-row__verified">
+            <img src="{{asset('./contents/img/check-mark.png')}}" class="one-comment-last-row__verified-img" />
+            Verified purchase
+          </div>
+        </div>
+        <hr class="one-comment-hr">
+      </div>
+      {#************END one comment****************************#}
+      <div class="one-comment-container">
+        <div class="user-one-product-rightSide-one-star-img-container" style="display:flex">
+          <img src="{{asset('./contents/img/star.png')}}" class="user-one-product-rightSide-one-star-img one-comment-star" />
+          <img src="{{asset('./contents/img/star.png')}}" class="user-one-product-rightSide-one-star-img one-comment-star" />
+          <img src="{{asset('./contents/img/star.png')}}" class="user-one-product-rightSide-one-star-img one-comment-star" />
+          <img src="{{asset('./contents/img/star.png')}}" class="user-one-product-rightSide-one-star-img one-comment-star" />
+          <img src="{{asset('./contents/img/star.png')}}" class="user-one-product-rightSide-one-star-img one-comment-star" />
+        </div>
+        <div class="one-comment-title">j'aime</div>
+        <div class="one-comment-desc">bon produit</div>
+        <div class="one-comment-last-row">
+          <div class="one-comment-last-row__date">
+            06-03-2023
+          </div>
+          <div class="one-comment-last-row__userName">
+            par ALi
+          </div>
+          <div class="one-comment-last-row__verified">
+            <img src="{{asset('./contents/img/check-mark.png')}}" class="one-comment-last-row__verified-img" />
+            Verified purchase
+          </div>
+        </div>
+        <hr class="one-comment-hr">
+      </div>
+      {#************END one comment****************************#}
+    </div>
+  </div>
+  {#************END reviews****************************#}
+{% endblock  %}
+
+
+  {% block JsScript %}
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script src="{{asset('./contents/js/user-products-list.js')}}"></script> 
+
+    <script>
+      $(document).ready(function () {
+        $(".dash__top-bar__img-container").click(function () {
+          $(".dash__top-bar__toggle-model-account").toggle(0);
+          $(".bxs-up-arrow").toggle(0);
+        });
+      });
+    </script>
+
+    <script>
+      $(document).ready(function () {
+        $("#add-fav").click(function () {
+          $("#bxs-heart1").toggle(0);
+          $("#bx-heart1").toggle(0);
+          $("#bxs-heart2").toggle(0);
+          $("#bx-heart2").toggle(0);
+         
+          
+          const productId = $(".user-one-product-rightSide-content__header-favBtn" ).data("id");
+          console.log(productId);
+
+          $.ajax({
+            type: "GET",
+            url: "{{ path('app_productsFavAdd') }}",
+            data: { productIdData: productId },
+
+            success: function (result) {
+              console.log("result");
+              if (result) {
+                console.log(result);
+                
+
+
+              }
+            },
+            error: function (xhr, status, error) {
+              console.log("Error: " + error);
+            },
+          });
+
+        });
+      });
+    </script>
+
+    <script>
+      $(document).ready(function () {
+        $("#shareFb").click(function () {
+         // $("#bxs-heart1").toggle(0);
+         // $("#bx-heart1").toggle(0);
+         // $("#bxs-heart2").toggle(0);
+         // $("#bx-heart2").toggle(0);
+         
+          
+          const productId = $("#shareFb" ).data("id");
+          console.log(productId);
+
+          $.ajax({
+            type: "GET",
+            url: "{{ path('facebook_share') }}",
+            data: { productIdData: productId },
+
+            success: function (result) {
+              console.log("result");
+              if (result) {
+                console.log(result);
+                
+
+
+              }
+            },
+            error: function (xhr, status, error) {
+              console.log("Error: " + error);
+            },
+          });
+
+        });
+      });
+    </script>
+    
+
+
+
+  {% endblock %}

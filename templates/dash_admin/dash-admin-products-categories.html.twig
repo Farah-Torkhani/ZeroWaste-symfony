@@ -87,7 +87,14 @@
                   </div>
                   <div class="product-card__row-2">
                     <div class="product-card__stock">In Stock</div>
-                    <div class="product-card__price">{{p.prixProduit}}</div>
+                    <div class="product-card__price">
+                      {% if p.remise == null %}
+                        {{p.prixProduit}}
+                      {% else %}
+                        <span class="product-card__price-after-offre">${{p.prixProduit - (p.prixProduit * p.remise)/100}}</span>
+                        <span class="product-card__price-before-offre">${{p.prixProduit}}</span>
+                      {% endif %}
+                    </div>
                   </div>
                   <div class="product-card__actions">
                     <div class="product-card__actions-category">{{p.categorieProduit}} </div>
@@ -257,29 +264,31 @@
 
             <h2 class="categories-list__title">Categories List</h2>
             
-            {% for c in categories %}
-            <div class="categories-list-one">
-              <div class="categories-list-one-img">
-                <img
-                  src="{{asset('./contents/uploads/products/') ~ c.imageCategorie }}"
-                  alt=""
-                  class="categories-list-one-image"
-                />
-              </div>
-              <div class="categories-list-one-content">
-                <div class="categories-list-one-name">{{c.nomCategorie}}</div>
-                <div class="categories-list-one-btns">
-                  <a href="{{path('editCategory',{'id':c.id})}}" class="categories-list-one-btn">
-                    <i class="bx bx-edit" id="edit-btn__category"></i>
-                  </a>
-                  <a href="{{path('deleteCategorie',{'id': c.id})}}" class="categories-list-one-btn">
-                    <i class="bx bx-trash"> </i>
-                  </a>
+            <div id="categories-container-list">
+              {% for c in categories %}
+              <div class="categories-list-one" data-id="{{c.id}}">
+                <div class="categories-list-one-img">
+                  <img
+                    src="{{asset('./contents/uploads/products/') ~ c.imageCategorie }}"
+                    alt=""
+                    class="categories-list-one-image"
+                  />
+                </div>
+                <div class="categories-list-one-content">
+                  <div class="categories-list-one-name">{{c.nomCategorie}}</div>
+                  <div class="categories-list-one-btns">
+                    <a href="{{path('editCategory',{'id':c.id})}}" class="categories-list-one-btn">
+                      <i class="bx bx-edit" id="edit-btn__category"></i>
+                    </a>
+                    <a href="{{path('deleteCategorie',{'id': c.id})}}" class="categories-list-one-btn">
+                      <i class="bx bx-trash"> </i>
+                    </a>
+                  </div>
                 </div>
               </div>
+              
+              {% endfor %}
             </div>
-
-            {% endfor %}
             {#---------------------end category list one -----------------------#}
 
           </div>
@@ -291,3 +300,53 @@
 {% endblock %}
 
 
+
+
+{% block JsScript %}
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script src="{{asset('./contents/js/script.js')}}"></script> 
+
+  <script>
+
+    $(function() {
+  $("#categories-container-list").sortable({
+    update: function(event, ui) {
+      var categOrderData = [];
+      $(".categories-list-one").each(function(index) {
+        categOrderData.push({
+          id: $(this).data("id"),
+          categOrder: index + 1 
+        });
+      });
+      console.log(categOrderData);
+      $.ajax({
+        type: "GET",
+        url: "{{ path('trieCategories') }}",
+        data: {categOrderData: categOrderData},
+        //data: JSON.stringify(imgOrderData),
+        //contentType: "application/json; charset=utf-8",
+        success: function(result) {
+          console.log('result');
+          if(result){
+           
+            console.log(result);
+             
+          }
+        },
+        error: function(xhr, status, error) {
+          console.log("Error: " + error);
+        }
+      });
+    }
+  });
+});
+
+  </script>
+
+
+
+
+{% endblock %}

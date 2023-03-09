@@ -63,4 +63,13 @@ class CategorieProduitRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+    public function getAllCategoriesSortedByOrderCateg(): array
+    {
+        $qb = $this->createQueryBuilder('c')
+            ->orderBy('c.orderCateg', 'ASC');
+        
+        return $qb->getQuery()->getResult();
+    }
+
 }

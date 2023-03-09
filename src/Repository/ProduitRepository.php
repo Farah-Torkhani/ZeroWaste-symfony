@@ -63,4 +63,32 @@ class ProduitRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+    
+    public function filterCategories($category){
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager->createQuery('SELECT p from App\Entity\Produit p where p.categorieProduit =:id')->setParameter('id', $category);
+        return $query->getResult();
+    }
+
+    public function searchProductFunction($value){
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager->createQuery('SELECT p from App\Entity\Produit p where p.nomProduit like :value or p.description like :value')->setParameter('value', '%'.$value.'%');
+        return $query->getResult();
+    }
+
+    public function searchProductByImage($etiquette, $score){
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager->createQuery('SELECT p from App\Entity\Produit p where p.etiquette =:etiquette and p.score =:score ')->setParameter('etiquette', $etiquette)->setParameter('score', $score);
+        return $query->getResult();
+    }
+
+    public function searchSimilairesProductByImage($etiquette){
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager->createQuery('SELECT p from App\Entity\Produit p where p.etiquette =:etiquette ')->setParameter('etiquette', $etiquette);
+        return $query->getResult();
+    }
+
+    
+
 }

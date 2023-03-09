@@ -1,0 +1,234 @@
+{% extends 'dash_admin/dashAdminBase.html.twig' %}
+
+{% block product_active %}active {% endblock %}
+
+{% block stylesheets %}
+  <link rel="stylesheet" href="{{asset('./contents/css/style.css')}}" />
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet"/>
+  <link rel="icon" href="{{asset('./contents/img/logo.png')}}" />
+{% endblock %}
+
+{% block dashContent %}
+      <div class="dash__container">  
+        <nav class="dash__navbar">
+          <div class="dash__navbar-text">Dashboard</div>
+          <div class="navbar__items">
+            <span class="navbar__item">
+              <i class="bx bx-log-out item"></i>
+            </span>
+
+            <div class="notification-icon">
+              <span class="cart-icon__span">3</span>
+              <span class="navbar__item">
+                <i class="bx bx-bell item"></i>
+              </span>
+            </div>
+
+            <span class="dash__top-bar__fullname"> Braiek Ali </span>
+
+            <div class="dash__top-bar__img-container">
+              <a href="#">
+                <img
+                  src="{{asset('./contents/img/ali.jpg')}}"
+                  class="dash__top-bar__img"
+                  alt="profile"
+                />
+              </a>
+            </div>
+          </div>
+        </nav>
+        <!--end dash__navbar-->
+
+        <div class="dash__container-card">
+          <div class="dash__card">
+            <div class="dash__card-rightSide">
+              <div class="dash__card-rightSide__first-row">
+                <a
+                  href="{{path('app_dash_admin_products_add')}}"
+                  class="dash__card-rightSide__btn-container list-plus"
+                  id="add-btn-rightSide"
+                >
+                  <i class="bx bx-list-plus"></i>
+                  <div class="btn-hover-container" id="add-btn-hover-container">
+                    Add New Product
+                  </div>
+                </a>
+                <a href="{{path('app_dash_admin_categories')}}"
+                  class="dash__card-rightSide__btn-container"
+                  id="category-btn-rightSide"
+                >
+                  <i class="bx bx-category"></i>
+                  <div
+                    class="btn-hover-container Categories-hover"
+                    id="category-btn-hover-container"
+                  >
+                    Categories
+                  </div>
+                </a>
+              </div>
+            </div>
+            <div class="product">
+              <div class="product-title">Products List</div>
+
+              {% for p in products %}
+              <div class="product-card">
+                <div class="product-card__image-container">
+                  <img
+                    src="{{asset('./contents/uploads/products/') ~ p.image}}"
+                    alt="product"
+                    class="product-card__image"
+                  />
+                </div>
+                <div class="product-card__content">
+                  <div>
+                    <h1 class="product-card__title">
+                      {{p.nomProduit}}
+                    </h1>
+                  </div>
+                  <div class="product-card__row-2">
+                    <div class="product-card__stock">In Stock</div>
+                    <div class="product-card__price">
+                      {% if p.remise == null %}
+                        {{p.prixProduit}}
+                      {% else %}
+                        <span class="product-card__price-after-offre">${{p.prixProduit - (p.prixProduit * p.remise)/100}}</span>
+                        <span class="product-card__price-before-offre">${{p.prixProduit}}</span>
+                      {% endif %}
+                    </div>
+                  </div>
+                  <div class="product-card__actions">
+                    <div class="product-card__actions-category">{{p.categorieProduit}} </div>
+                    <div class="product-card__actions-btn">
+                      <a
+                        href=""
+                        class="product-card__btn product-card__actions-btn-view"
+                      >
+                        <i class="bx bxs-show product-card__icon"></i>
+                      </a>
+                      <a
+                        href=""
+                        class="product-card__btn product-card__actions-btn-gift"
+                      >
+                        <i class="bx bxs-gift product-card__icon"></i>
+                      </a>
+                      <a
+                        href="{{path('editProduit',{'id': p.id})}}"
+                        class="product-card__btn product-card__actions-btn-edit"
+                      >
+                        <i class="bx bx-edit product-card__icon"></i>
+                      </a>
+                      <a
+                        href="{{path('deleteProduit',{'id': p.id})}}"
+                        class="product-card__btn product-card__actions-btn-delete"
+                      >
+                        <i class="bx bx-trash product-card__icon"></i>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+              {#----------------end product card---------------------------#}
+
+              {#}
+              <div class="product-card">
+                <div class="product-card__image-container">
+                  <img
+                    src="{{asset('./contents/img/sac-isotherme-ecologique.jpg')}}"
+                    alt="product"
+                    class="product-card__image"
+                  />
+                </div>
+                <div class="product-card__content">
+                  <div>
+                    <h1 class="product-card__title">
+                      Sac isotherme écologique - Bandoulière"
+                    </h1>
+                  </div>
+                  <div class="product-card__row-2">
+                    <div class="product-card__stock">In Stock</div>
+                    <div class="product-card__price">
+                      <span class="product-card__price-after-offre"
+                        >$59.99</span
+                      >
+                      <span class="product-card__price-before-offre"
+                        >$29.99</span
+                      >
+                    </div>
+                  </div>
+                  <div class="product-card__actions">
+                    <div class="product-card__actions-category">Shoes</div>
+                    <div class="product-card__actions-btn">
+                      <a
+                        href=""
+                        class="product-card__btn product-card__actions-btn-view"
+                      >
+                        <i class="bx bxs-show product-card__icon"></i>
+                      </a>
+                      <a
+                        href=""
+                        class="product-card__btn product-card__actions-btn-gift"
+                      >
+                        <i class="bx bxs-gift product-card__icon"></i>
+                      </a>
+                      <a
+                        href=""
+                        class="product-card__btn product-card__actions-btn-edit"
+                      >
+                        <i class="bx bx-edit product-card__icon"></i>
+                      </a>
+                      <a
+                        href=""
+                        class="product-card__btn product-card__actions-btn-delete"
+                      >
+                        <i class="bx bx-trash product-card__icon"></i>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {#}
+
+            </div>
+          </div>
+        </div>
+        {#---end dash container-card----#}
+      </div>
+      {#---end dash container-----#}
+
+      {#---offre form-----#}
+      <div class="dash-offre-container">
+        <div class="dash-offre-model">
+          <div class="dash-offre-model-header">
+            <div class="dash-offre-model-header__gif">
+              <img class="offre-gif" src="{{asset('./contents/img/gift1.gif')}}" />
+            </div>
+            <a href="{{path('app_dash_admin_products')}}" class="dash-offre-model-header__closeBtn">
+              close
+            </a>
+          </div>
+          <div class="dash-offre-model-content">
+          {{form_start(formOffre,{'attr':{'novalidate':'novalidate'}})}}
+            <div class="offre-form__input__group">
+              <label for="reduction" class="offre-input-label">Reduction%</label>
+              
+              {#}<input type="number" class="offre-input" name="reduction" id="reduction" placeholder="Reduction %">
+              {#}
+              {{form_widget(formOffre.remise,{'attr':{'class':'offre-input','placeholder':"Reduction %"}})}}
+              {% if form_errors(formOffre.remise) is not empty %}
+                <div class="form_errors-product">
+                  {{form_errors(formOffre.remise)}}
+                </div>
+              {% endif %}
+            </div>
+            <button class="submit-offre-btn">{{button_label | default('Submit offer')}}</button>
+            {{form_end(formOffre)}}
+          </div>
+        </div>
+      </div>
+      {#---END offre form-----#}
+
+   
+{% endblock %}
+
+

@@ -27,6 +27,9 @@ class CategorieProduit
     #[ORM\OneToMany(mappedBy: 'categorieProduit', targetEntity: Produit::class)]
     private Collection $produit_id;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $orderCateg = null;
+
     public function __construct()
     {
         $this->produit_id = new ArrayCollection();
@@ -94,5 +97,17 @@ class CategorieProduit
     public function __toString()
     {
         return (string)$this->getNomCategorie();
+    }
+
+    public function getOrderCateg(): ?int
+    {
+        return $this->orderCateg;
+    }
+
+    public function setOrderCateg(?int $orderCateg): self
+    {
+        $this->orderCateg = $orderCateg;
+
+        return $this;
     }
 }
