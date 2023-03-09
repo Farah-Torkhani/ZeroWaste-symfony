@@ -1,0 +1,135 @@
+{% extends 'funds/basedash.html.twig' %}
+{% block nav %}
+
+{% endblock %}
+{% block Fundrising %}
+      
+      <div class="dash__container">
+        <nav class="dash__navbar">
+          <div class="dash__navbar-text">Dashboard</div>
+          <div class="navbar__items">
+            <span class="navbar__item">
+              <i class="bx bx-log-out item"></i>
+            </span>
+
+            <div class="notification-icon">
+              <span class="cart-icon__span">3</span>
+              <span class="navbar__item">
+                <i class="bx bx-bell item"></i>
+              </span>
+            </div>
+
+            <span class="dash__top-bar__fullname">  {{user.fullname}} </span>
+
+            <div class="dash__top-bar__img-container">
+              <a href="#">
+                <img
+                  src="{{asset('./assets/uploads/img/') ~ user.imgUrl }}"
+                  class="dash__top-bar__img"
+                  alt="profile"
+                />
+              </a>
+            </div>
+          </div>
+        </nav>
+        <!--end dash__navbar-->
+
+        <div class="dash__container-card">
+          <div class="dash__card">
+            <div class="dash__card-rightSide">
+              <div class="">
+              
+                <a style="padding:1rem 2rem" href="{{ path('app_addFundrising') }}" class="dash__card-rightSide__add-new-product-btn">Add Fundrising</a>
+              </div>
+              
+            </div>
+            <div class="product">
+              <div class="product-title">Fundrising List</div>
+              <div class="product-title">Not completed funds   : 
+                      {{funds_notCompleted}}
+              </div>
+              
+            
+             
+                {% for stu in Funds %}
+              <div class="product-card">
+                <div class="product-card__image-container">
+
+   <img src="{{asset('./contents/uploads/funds/') ~ stu.imageDon }}" alt="{{ stu.imageDon }}" class="product-card__image" />
+
+             
+                </div>
+                <div class="product-card__content">
+                  <div>
+                    <h1 class="product-card__title">{{stu.TitreDon}}</h1>
+                  </div>
+                  <div class="product-card__row-2">
+                    <div class="product-card__stock">
+              
+                    {% if stu.etat == 0 %}
+                    <span style="color:green;">Completed</span>
+             
+                      {% elseif stu.etat == 2 %}
+                    <span style="color:red;">Not completed</span>
+                {% endif %}
+
+                    </div>
+
+                    <div class="product-card__price">
+                        <div class="product-card__actions-people-svg">
+                        <a href="{{ path('app_donators_dashA',{'id':stu.id}) }}">
+                      <img src="./contents/img/people.svg" class="product-card__actions-people-svg" alt="People SVG">
+                      </a>
+                    </div>
+                    </div>
+                  </div>
+                
+      
+                  <div class="product-card__actions">
+                    <div class="fund__item__loader">
+                      {# <p class="fund__item__loader__text1">Last donation {{ time_diff(stu.dateDon) }}</p> #}
+                      <div class="fund__item__loader__container">
+                        <div class="fund__item__loader__container__current"></div>
+                      </div>
+                      <p class="fund__item__loader__text">
+                        <span>{{ stu.total ? : 0 }}</span>
+                        raised of
+                        <span>{{stu.objectif}}</span>
+                      </p>
+                    </div>
+                  
+                    
+                    <div class="product-card__actions-category">Details</div>
+                    <div class="product-card__actions-btn">
+                      <a href="" class="product-card__btn product-card__actions-btn-view">
+                        <i class='bx bxs-show product-card__icon'></i>
+                      </a>
+                    
+                      <a href="{{path('updateFunds',{'id':stu.id})}}" class="product-card__btn product-card__actions-btn-edit">
+                        <i class='bx bx-edit product-card__icon' ></i>
+                      </a>
+                      <a href="{{path('app_deleteFunds',{'id':stu.id})}}" class="product-card__btn product-card__actions-btn-delete">
+                        <i class='bx bx-trash product-card__icon' ></i>
+                      </a>
+
+                    <a href="{{ path('app_tri_dateA') }}" class="product-card__btn product-card__actions-btn-view"><i class="fas fa-sort-amount-up"></i>Trier par date</a>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+             
+
+              {% endfor %}
+           
+          
+                
+  {% endblock %}                 
+             
+           
+              
+           
+    
+
+
+

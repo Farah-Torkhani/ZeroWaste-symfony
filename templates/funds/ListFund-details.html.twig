@@ -1,0 +1,191 @@
+
+{% extends 'funds/fundbase.html.twig' %}
+{% block stylesheets %}
+   <link rel="stylesheet" href="{{asset('./contents/css/ST.css')}}">
+    <link rel="stylesheet" href="{{asset('./contents/css/ST1.css')}}">
+    <link rel="stylesheet" href="{{asset('./contents/css/ST2.css')}}">
+	<link rel="stylesheet" href="{{asset('./style/nabilStyle.css')}}">
+
+	<link rel="shortcut icon" href="{{asset('./assets/img/logo.svg')}}" type="image/x-icon">
+	<link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet"/>
+	<link rel="stylesheet" href="{{asset('./contents/css/style.css')}}">
+	<link rel="stylesheet" href="{{asset('./style/nabilStyle.css')}}">
+	<link rel="shortcut icon" href="{{asset('./assets/img/logo.svg')}}" type="image/x-icon">
+	<link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet"/>
+        <link rel="stylesheet" href="{{asset('./style/farahStyle.css')}}">
+
+    {% endblock %}
+
+{% block Fundrisingfront %}
+    
+<nav class="front__navbar front__navbar-scrolled-up">
+    <div class="front__navbar-img-container">
+      <img
+        src="{{asset('./contents/img/logo.png')}}"
+        class="front__navbar-img-container"
+        alt=""
+      />
+    </div>
+
+    <ul class="front__navbar__link">
+      <li>Home</li>
+      <li>Fundraising</li>
+      <li>Shop</li>
+      <li>collect</li>
+    </ul>
+
+    <div class="navbar__items">
+      <div
+        class="notification-icon"
+        style="position: relative; top: 0.1rem"
+      >
+        <span class="cart-icon__span">3</span>
+        <span class="navbar__item">
+          <i class="bx bx-bell item"></i>
+        </span>
+      </div>
+
+      <span class="dash__top-bar__fullname"> {{user.fullname}}  </span>
+
+      <div class="dash__top-bar__img-container">
+        <a href="#">
+          <img
+             src="{{asset('./assets/uploads/img/') ~ user.imgUrl }}"
+            class="dash__top-bar__img"
+            alt="profile"
+          />
+        </a>
+      </div>
+    </div>
+  </nav>
+  <!--end dash__navbar-->
+
+
+
+<div class="dash-user-fund-detail">
+    <div class="dash-user-home__greeting">
+        <span class="dash-user-home__greeting--span-1">Fund detail |</span>
+        <h1 class="dash-user-home__greeting--span-2">Hello {{user.fullname}} Are you ready to help people and the nature again ?
+        </h1>
+    </div>
+
+
+    <div class="dash-user-fund-detail__container">
+        <div class="dash-user-fund-detail__container__header">
+            <h1 class="dash-user-fund-detail__container__header__title">{{stu.TitreDon}}</h1>
+        </div>
+
+        <div class="dash-user-fund-detail__container__body">
+            <div class="dash-user-fund-detail__container__body__left">
+                <div class="dash-user-fund-detail__container__body__left-1">
+                    <div class="dash-user-fund-detail__img__container">
+                        <img src="{{asset('./contents/uploads/funds/') ~ stu.imageDon }}" alt="" class="dash-user-fund-detail__img">
+                    </div>
+
+                    <div class="dash-user-fund-detail__association">
+                        <img src="{{asset('./assets/img/hilal-logo.png')}}" alt=""
+                            class="dash-user-fund-detail__association__img">
+                        <h1 class="dash-user-fund-detail__association__name"><a href="#">Hilal Ahmar</a> is organizing
+                            this
+                            fundraiser.</h1>
+                        <a href=""></a>
+                    </div>
+
+                    <div class="dash-user-fund-detail__date">
+                        <svg class="dash-user-fund-detail__date__icon" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 31.096 31.096">
+                            <g id="svgexport-7_1_" data-name="svgexport-7 (1)" transform="translate(-2.25 -2.25)">
+                                <path id="Path_394" data-name="Path 394"
+                                    d="M25.772,3.845h-.4v-.4a1.2,1.2,0,0,0-2.392,0v.4H12.615v-.4a1.2,1.2,0,1,0-2.392,0v.4h-.4A7.584,7.584,0,0,0,2.25,11.419V25.772a7.584,7.584,0,0,0,7.575,7.575H25.772a7.584,7.584,0,0,0,7.575-7.575V11.419a7.584,7.584,0,0,0-7.575-7.575ZM9.825,6.237h.4V8.23a1.2,1.2,0,1,0,2.392,0V6.237H22.981V8.23a1.2,1.2,0,0,0,2.392,0V6.237h.4a5.189,5.189,0,0,1,5.183,5.183v.4H4.642v-.4A5.189,5.189,0,0,1,9.825,6.237ZM25.772,30.954H9.825a5.189,5.189,0,0,1-5.183-5.183V14.21H30.954V25.772a5.189,5.189,0,0,1-5.183,5.183Zm0-11.561A1.595,1.595,0,1,1,24.177,17.8,1.595,1.595,0,0,1,25.772,19.393Zm-6.379,0A1.595,1.595,0,1,1,17.8,17.8,1.595,1.595,0,0,1,19.393,19.393Zm-6.379,0A1.595,1.595,0,1,1,11.419,17.8,1.595,1.595,0,0,1,13.014,19.393Zm12.758,6.379a1.595,1.595,0,1,1-1.595-1.595A1.595,1.595,0,0,1,25.772,25.772Zm-6.379,0A1.595,1.595,0,1,1,17.8,24.177,1.595,1.595,0,0,1,19.393,25.772Zm-6.379,0a1.595,1.595,0,1,1-1.595-1.595A1.595,1.595,0,0,1,13.014,25.772Z"
+                                    transform="translate(0 0)" fill="#7262af" />
+                            </g>
+                        </svg>
+                        <h1 class="dash-user-fund-detail__date__text"><spancreated</span> {{stu.getDateDon()? stu.getDateDon()|date('Y-m-d') : '' }} - {{stu.getDateDonLimite()? stu.getDateDonLimite()|date('Y-m-d') : '' }}</h1>
+                    </div>
+
+                    <p class="dash-user-fund-detail__description">
+                      {{stu.descriptionDon}}
+                    </p>
+
+                    <div class="dash-user-fund-detail__donation">
+                        <h1 class="dash-user-fund-detail__donation__title">{{stu.TitreDon}}</h1>
+
+                        <div class="dash-user-fund-detail__donation__container">
+                            <div class="dash-user-fund-detail__donation__container-1">
+                            {% if donHistory != null %}
+                            {% for c in donHistory %}
+                                <div class="dash-user-fund-detail__donation__item">
+                                    <div class="dash-user-fund-detail__donation__item__left">
+                                        <img src="{{asset('./contents/img/me.jpg')}}" alt=""
+                                            class="dash-user-fund-detail__donation__item__img">
+
+                                        <p class="dash-user-fund-detail__donation__item__date">1d ago</p>
+                                    </div>
+                                  
+                           
+                                    <div class="dash-user-fund-detail__donation__item__right">
+                                        <div class="dash-user-fund-detail__donation__item__info">
+                                    
+                                            <h1 class="dash-user-fund-detail__donation__item__info__name"><span>{{c.userID.fullName}} </span> donated <span>{{c.donationPrice}} DNT</span>
+                                            </h1>
+                                            <p class="dash-user-fund-detail__donation__item__info__comment">
+                                                {{c.comment}}
+                                            </p>
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+                                    </div>
+                                      
+                                 
+                                </div>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="dash-user-fund-detail__container__body__right">
+                <div class="dash-user-fund-detail__loader">
+                    {# <p class="dash-user-fund-detail__loader__text">Last donation {{ time_diff(stu.dateDon) }} #}
+                    </p>
+                    <div class="dash-user-fund-detail__loader__container">
+                        <div class="dash-user-fund-detail__loader__container__current"></div>
+                    </div>
+                    <p class="dash-user-fund-detail__loader__text">
+                        <span>{{stu.total ? : 0 }}</span>
+                        raised
+                        of
+                        <span>{{stu.objectif}} DNT </span>
+                    </p>
+                </div>
+
+            <a class="dash-user-fund__add__btn" href="{{path('app_don_history_new', {id: stu.id})}}">
+                    <svg class="dash-user-fund__add__btn__icon" xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 36.018 36.019">
+                        <g id="donation-icon" transform="translate(-0.01)">
+                            <path id="Path_1127" data-name="Path 1127"
+                                d="M163.07,0a10.06,10.06,0,1,0,10.06,10.06A10.071,10.071,0,0,0,163.07,0Zm1.057,14.633v.221a1.055,1.055,0,1,1-2.11,0v-.1a3.82,3.82,0,0,1-1.492-.634,1.055,1.055,0,0,1,1.156-1.766,1.871,1.871,0,0,0,1.384.357,1,1,0,0,0,1-.851.7.7,0,0,0-.529-.842,8.808,8.808,0,0,1-2.411-1.164,2.643,2.643,0,0,1,.89-4.424V5.276a1.055,1.055,0,1,1,2.11,0v.087A3.436,3.436,0,0,1,165.314,6a1.055,1.055,0,0,1-1.427,1.554,1.274,1.274,0,0,0-1.124-.156.587.587,0,0,0-.375.464.412.412,0,0,0,.041.325,7.523,7.523,0,0,0,1.813.835,2.964,2.964,0,0,1-.115,5.606Z"
+                                transform="translate(-142.237)" fill="#4a5bcf" />
+                            <path id="Path_1128" data-name="Path 1128"
+                                d="M30.511,275.393l-10.246,3.018a6.736,6.736,0,0,1,.5,2.551v.371a3.623,3.623,0,0,1-5.107,3.3l-5.371-2.417a1.055,1.055,0,0,1,.866-1.925l5.371,2.417a1.51,1.51,0,0,0,2.131-1.377v-.371a4.567,4.567,0,0,0-2.722-4.146l-4.641-2.088a6.832,6.832,0,0,0-5.668.025L.628,277.025a1.055,1.055,0,0,0-.618.96v11.229a1.056,1.056,0,0,0,1.431,1.013l7.026-2.677,8.357,2.925a6.8,6.8,0,0,0,5.728-.568l11.369-6.695a4.3,4.3,0,0,0-3.41-7.819Z"
+                                transform="translate(0 -254.841)" fill="#4a5bcf" />
+                        </g>
+                    </svg>
+                    Donate
+                </a>
+            </div>
+        </div>
+      
+    </div>
+</div>
+
+          {% block Js %} 
+<script src="{{asset('./contents/js/script.js')}}"> </script>  
+{% endblock %}
+
+{% endblock %}
+           
