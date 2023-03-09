@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>My PDF</title>
+            <img src="{{asset('./contents/img/logo.png')}}" alt="Logo" height="180" />
+   </head>
+
+<table class="table table-striped" border="1"style="background-color: #97D158; color: #000000;  margin: auto;  width: 80%;"  >
+    <thead>
+    <tr>
+        <th>fullName</th>
+        <th>Address</th>
+        <th>email</th>
+        <th>tel</th>
+      
+    </tr>
+    </thead>
+    <tbody>
+    {% block stylesheets %}
+  <style>
+    body {
+      background-color: #DDDDDD;
+    }
+  </style>
+  <link rel="stylesheet" href="{{asset('./contents/css/style.css')}}" />
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet"/>
+  <link rel="icon" href="{{asset('./contents/img/logo.png')}}" />
+
+
+{% endblock %}
+{% for a in achats %}
+            <tr>
+<td style="font-weight:bold; color:black;">{{a.fullName}}</td>
+                 <td> {{a.address}}, {{a.city}} </td>
+                <td> {{a.email}}</td>
+                <td> {{a.tel}}</td>
+               {# {% set img = a.image %}
+                <td><img src="{{asset(img)}}" alt="#" class="" style="width:90%;"></td>#}
+            </tr>
+    {% else %}
+        <tr>
+            <td colspan="8">no records found</td>
+        </tr>
+     {% endfor %}
+    </tbody>
+</table>
+</html>

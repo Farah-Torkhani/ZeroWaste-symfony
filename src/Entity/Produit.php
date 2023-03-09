@@ -12,36 +12,44 @@ class Produit
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups("products")]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: "le champ est vide")]
+    #[Groups("products")]
     private ?string $nomProduit = null;
 
 
     #[ORM\Column]
     #[Assert\NotBlank(message: "le champ est vide")]
     #[Assert\Positive]
+
     private ?int $quantite = null;
 
     #[ORM\Column]
     #[Assert\NotBlank(message: "le champ est vide")]
     #[Assert\Positive]
+    #[Groups("products")]
     private ?float $prixProduit = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups("products")]
     private ?string $Image = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: "le champ est vide")]
+    #[Groups("products")]
     private ?string $description = null;
 
     #[ORM\ManyToOne(inversedBy: 'produit_id')]
+    #[Groups("products")]
     private ?CategorieProduit $categorieProduit = null;
 
     #[ORM\Column(nullable: true)]
     #[Assert\Positive]
     #[Assert\NotBlank(message: "le champ est vide")]
+    #[Groups("products")]
     private ?int $prix_point_produit = null;
 
     public function getId(): ?int

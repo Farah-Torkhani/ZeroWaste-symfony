@@ -21,6 +21,9 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use App\Repository\CommandsRepository;
 use App\Repository\CommandsProduitRepository;
 use App\Entity\User;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\SerializerInterface;
 
 
 class ProductController extends AbstractController
@@ -301,5 +304,24 @@ class ProductController extends AbstractController
         ]);
     }
 
+
+
+//stripe
+#[Route('/{id}/stripe/create-charge', name: 'app_products_charge', methods: ['POST'])]
+    public function createCharge($id,ProductsRepository $ProductsRepository, Request $request)
+    {
+        Stripe\Stripe::setApiKey($_ENV["STRIPE_SECRET"]);
+        Stripe\Charge::create ([
+                "amount" => 50000,
+                "currency" => "usd",
+                "source" => $request->request->get('stripeToken'),
+                "description" => "Binaryboxtuts Payment Test",
+        ]);
+        $this->addFlash(
+            'success',
+            'Payment Successful!'
+        );
+        return $this->redirectToRoute('app_products_success', ['id' => $id], Response::HTTP_SEE_OTHER);
+    }
 
 }

@@ -13,6 +13,7 @@
 <div class="dash__container">
   <nav class="dash__navbar">
     <div class="dash__navbar-text">Dashboard</div>
+    
     <div class="navbar__items">
       <span class="navbar__item">
         <i class="bx bx-log-out item"></i>
@@ -30,7 +31,7 @@
       <div class="dash__top-bar__img-container">
         <a href="#">
           <img
-            src="{{asset('./contents/img/ali.jpg')}}"
+            src="{{asset('./contents/img/asma.png')}}"
             class="dash__top-bar__img"
             alt="profile"
           />
@@ -43,8 +44,77 @@
   <div class="dash__container-card">
     <div class="dash__card">
       <div class="product product-card-commands">
+        <div class="right">
+   <a href="{{ path('pdf') }}" class="pdf-button"><img   src="{{asset('./contents/img/pdfgreen.png')}}"> 
+   </a>
+ <script>
+document.getElementById('best-seller-button').addEventListener('click', function(event) {
+    event.preventDefault();
+    
+    // AJAX request to load the mostCommandedProduct
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', '{{ path('most') }}');
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            // Create a pop-up with the mostCommandedProduct data
+            var popUp = document.createElement('div');
+            popUp.innerHTML = xhr.responseText;
+            document.body.appendChild(popUp);
+        } else {
+            console.log('Error loading mostCommandedProduct.');
+        }
+    };
+    xhr.send();
+});
+    </script>
+   </div>
         <div class="product-card-commands-header">
           <h1>Commands List</h1>
+<a href="{{ path('most') }}" class="chart-button" id="best-seller-button">Best seller</a>
+   </a> 
+      <!--END OF PDF button--> 
+      <!--PDF button style-->
+  <!--will change the style in the css later-->
+<style>
+.chart-button {
+  display: inline-flex;
+  display: inline-block;
+  padding: 4px 9px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.5;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  border: 1px solid #ccc;
+  border-radius: 3rem;
+  color: #333;
+  background-color: #defee6;
+  cursor: pointer;
+}
+
+.chart-button:hover {
+ color: #333;
+  background-color: #e6e6e6;
+  border-color: #adadad;
+  padding: 5px;
+}
+
+.pdf-button {
+  display: inline-flex;
+}
+
+.pdf-button:hover {
+
+  border-radius: 0px;
+  padding: 5px;
+}
+  .right {
+    float: right;
+     border-radius: 0.5px;
+   
+  }
+</style>
         </div>
         {% for a in achats %}
         <div
@@ -124,17 +194,14 @@
                       <td class="btn-td">${{p.getProduit().prixProduit * p.quantiteC}}</td>
                     </tr>
                     {% endfor %}
-                    
-
                   </tbody>
                 </table>
               </div>
             </div>
-          </div>
+          </div>      
         </div>
         {% endfor %}
         <!---end product command-->
-
         <!--endproduct-card-commands-->
       </div>
     </div>

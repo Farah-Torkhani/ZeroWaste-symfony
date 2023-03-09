@@ -9,6 +9,7 @@
   <div class="panier-content">
     <div class="panier-content__leftSide">
       <div class="panier-content__leftSide-title">item(s)</div>
+      z <div class="text-center">
       {% if commande != null %}
       {% set total = 0 %}
       {% set Nb_points = 0 %}
@@ -75,7 +76,10 @@
       <hr class="hr-border hr-border-3" />
       <div class="panier-content__RightSide-total">
         <div>Total</div>
-        <div>${{ total }} / {{ Nb_points }}pts</div>
+           {% if commande != null %}
+     <div id="total">{{ total }}USD / {{ Nb_points }}pts</div>
+     
+        {% endif %}
       </div>
       <a  href="{{path('commands_address')}}" class="panier-content__RightSide-Checkout">
         <button>Checkout</button>
@@ -91,6 +95,8 @@
           class="promo-code__groupe-input"
           placeholder="Enter your promo code"
         />
+      
+
       </div>
     </div>
     <!--end panier content Right side-->
@@ -314,7 +320,10 @@
           <hr class="hr-border-checkout-total" />
           <div class="checkout-validation-total">
             <div>Total</div>
-            <div>$350 / 600pts</div>
+             {% if commande != null %}
+     <div id="total">{{ total }}USD / {{ Nb_points }}pts</div>
+     
+        {% endif %}
           </div>
           <hr class="hr-border-checkout-total" />
           

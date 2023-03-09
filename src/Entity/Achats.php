@@ -173,7 +173,7 @@ class Achats
         return $this;
     }
 
-    public function getValidate(): ?int
+  public function getValidate(): ?int
     {
         return $this->validate;
     }

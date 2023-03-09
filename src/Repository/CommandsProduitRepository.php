@@ -74,4 +74,17 @@ class CommandsProduitRepository extends ServiceEntityRepository
     }
 
 
+   public function findMostCommandedProduct()
+{
+    $qb = $this->createQueryBuilder('cp')
+        ->select('p.id', 'COUNT(cp.id) AS command_count')
+        ->join('cp.produit', 'p')
+        ->groupBy('p.id')
+        ->orderBy('command_count', 'DESC')
+        ->setMaxResults(1);
+    
+    return $qb->getQuery()->getOneOrNullResult();
+}
+
+
 }

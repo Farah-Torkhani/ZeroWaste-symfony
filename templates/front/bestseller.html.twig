@@ -1,0 +1,5 @@
+{% if mostCommandedProduct is not null %}
+    <p>The most commanded product ID is {{ mostCommandedProduct.id }} with {{ mostCommandedProduct.command_count }} total commands.</p>
+{% else %}
+    <p>No products found.</p>
+{% endif %}
