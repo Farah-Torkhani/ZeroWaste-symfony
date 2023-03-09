@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class PaymentController extends AbstractController
 {
-    #[Route('/payment', name: 'app_payment')]
+    #[Route('/payment', name: 'app_payment1')]
     public function index(): Response
     {
         return $this->render('payment/index.html.twig', [
@@ -21,7 +21,7 @@ class PaymentController extends AbstractController
         ]);
     }
 
-    #[Route('/payment/create-charge', name: 'app_stripe_charge', methods: ['POST'])]
+    #[Route('/payment/create-charge', name: 'app_stripe_charge2', methods: ['POST'])]
     public function createCharge(Request $request)
     {
         Stripe::setApiKey($_ENV["STRIPE_SECRET_KEY"]);
@@ -35,6 +35,6 @@ class PaymentController extends AbstractController
             'success',
             'Payment Successful!'
         );
-        return $this->redirectToRoute('app_payment', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('afficher_funds', [], Response::HTTP_SEE_OTHER);
     }
 }
