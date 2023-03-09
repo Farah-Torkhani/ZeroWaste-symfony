@@ -43,6 +43,16 @@ use Symfony\Component\Asset\VersionStrategy\StaticVersionStrategy;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpFoundation\File\File;
 
+use Google\Cloud\Vision\V1\ImageAnnotatorClient;
+
+use Google\Cloud\Vision\V1\AnnotateImageRequest;
+use Google\Cloud\Vision\V1\Feature;
+use Google\Cloud\Vision\V1\Feature\Type;
+use Google\Cloud\Vision\V1\Image;
+
+use App\Form\SearchProductType;
+
+
 
 
 class ProductController extends AbstractController
@@ -56,9 +66,9 @@ class ProductController extends AbstractController
     }
 
     #[Route('/products', name: 'app_products')]
-    public function products(ProduitRepository $produitRepository, CommandsRepository $commandsRepository, ManagerRegistry $doct,  CommandsProduitRepository $commandsProduitRepository,  CategorieProduitRepository $categorieProduitRepository): Response
+    public function products(ProduitRepository $produitRepository, CommandsRepository $commandsRepository, CommandsProduitRepository $commandsProduitRepository,  CategorieProduitRepository $categorieProduitRepository, Request $request, ManagerRegistry $doctrine,  SluggerInterface $slugger): Response
     {
-        $user = $doct->getRepository(User::class)->findOneBy(['email' => $this->getUser()->getUserIdentifier()]);
+        $user = $doctrine->getRepository(User::class)->findOneBy(['email' => $this->getUser()->getUserIdentifier()]);
        
         $commande = $commandsRepository->findOneBy(["user" => $user->getId(), "status" => 0]);
         if($commande != null)
@@ -72,13 +82,94 @@ class ProductController extends AbstractController
         //$categories = $categorieProduitRepository->findAll();
         $categories = $categorieProduitRepository->getAllCategoriesSortedByOrderCateg();
 
-        return $this->render('front/user-products-list.html.twig', [
+        $form = $this->createForm(SearchProductType::class);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() ) {
+            
+            //******************************* */
+            $image = $form->get('Image')->getData();
+
+            // this condition is needed because the 'brochure' field is not required
+            // so the PDF file must be processed only when a file is uploaded
+            if ($image) {
+                $originalFilename = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$image->guessExtension();
+
+                // Move the file to the directory where brochures are stored
+                try {
+                    $image->move(
+                        $this->getParameter('product_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+
+                // updates the 'brochureFilename' property to store the PDF file name
+                // instead of its contents
+                
+                //*******get the object and the score using google cloud api**************** */
+                // Chemin vers votre fichier de clé Google Cloud
+                $googleCloudCredentialsPath = __DIR__ . '/../config/google_cloud_credentials.json';
+                // Création d'un client ImageAnnotator
+                $imageAnnotator = new ImageAnnotatorClient([
+                    'credentials' => $googleCloudCredentialsPath
+                ]);
+
+                // Chemin vers l'image à analyser  
+                $imagePath = __DIR__ . '/../../public/contents/uploads/products/'.$newFilename;
+                
+                // Lecture du contenu de l'image
+                $imageContent = file_get_contents($imagePath);
+
+                // Requête de détection d'objets
+                $response = $imageAnnotator->objectLocalization($imageContent);
+                
+                // Récupération des annotations d'objets
+                $objects = $response->getLocalizedObjectAnnotations();
+                
+                $etiquette = $objects[0]->getName();
+                $score = $objects[0]->getScore();
+                // Affichage des annotations d'objets
+              //  echo $objects[0]->getName() . ' (score : ' . $objects[0]->getScore() . ')' . PHP_EOL;
+                /*foreach ($objects as $object) {
+                    echo $object->getName() . ' (score : ' . $object->getScore() . ')' . PHP_EOL;
+                }*/
+                
+                // Fermeture du client ImageAnnotator
+                $imageAnnotator->close();
+                //*******END: get the object and the score using google cloud api**************** */
+                
+            }
+            //***************************** */
+            $products = $produitRepository->searchProductByImage($etiquette, $score);
+            //dd($products);
+            /*if($products == null){
+                $products = $produitRepository->searchSimilairesProductByImage($etiquette);
+            }*/
+            
+            //return $this->redirectToRoute("app_dash_admin_products");
+            return $this->renderForm('front/user-products-list.html.twig', [
+                'controller_name' => 'FrontController',
+                'title' => 'Zero Waste',
+                'products' => $products,
+                'totalCommandes' => $totalCommandes,
+                'user' => $user,
+                'categories' => $categories,
+                'searchProdoctForm' => $form,
+            ]);
+        }
+
+        return $this->renderForm('front/user-products-list.html.twig', [
             'controller_name' => 'FrontController',
             'title' => 'Zero Waste',
             'products' => $products,
             'totalCommandes' => $totalCommandes,
             'user' => $user,
             'categories' => $categories,
+            'searchProdoctForm' => $form,
         ]);
 
     }
@@ -213,6 +304,37 @@ class ProductController extends AbstractController
                 $product->setImage($newFilename);
             }
             //***************************** */
+            //*******get the object and the score using google cloud api**************** */
+            // Chemin vers votre fichier de clé Google Cloud
+            $googleCloudCredentialsPath = __DIR__ . '/../config/google_cloud_credentials.json';
+            // Création d'un client ImageAnnotator
+            $imageAnnotator = new ImageAnnotatorClient([
+                'credentials' => $googleCloudCredentialsPath
+            ]);
+
+            // Chemin vers l'image à analyser  
+            $imagePath = __DIR__ . '/../../public/contents/uploads/products/'.$newFilename;
+            
+            // Lecture du contenu de l'image
+            $imageContent = file_get_contents($imagePath);
+
+            // Requête de détection d'objets
+            $response = $imageAnnotator->objectLocalization($imageContent);
+            
+            // Récupération des annotations d'objets
+            $objects = $response->getLocalizedObjectAnnotations();
+            
+            $product->setEtiquette($objects[0]->getName());
+            $product->setScore($objects[0]->getScore());
+            // Affichage des annotations d'objets
+            echo $objects[0]->getName() . ' (score : ' . $objects[0]->getScore() . ')' . PHP_EOL;
+            /*foreach ($objects as $object) {
+                echo $object->getName() . ' (score : ' . $object->getScore() . ')' . PHP_EOL;
+            }*/
+            
+            // Fermeture du client ImageAnnotator
+            $imageAnnotator->close();
+            //*******END: get the object and the score using google cloud api**************** */
             $em->persist($product);
             $em->flush();
             return $this->redirectToRoute("app_dash_admin_products");
@@ -261,8 +383,41 @@ class ProductController extends AbstractController
                 // updates the 'brochureFilename' property to store the PDF file name
                 // instead of its contents
                 $product->setImage($newFilename);
+                //*******get the object and the score using google cloud api**************** */
+                // Chemin vers votre fichier de clé Google Cloud
+                $googleCloudCredentialsPath = __DIR__ . '/../config/google_cloud_credentials.json';
+                // Création d'un client ImageAnnotator
+                $imageAnnotator = new ImageAnnotatorClient([
+                    'credentials' => $googleCloudCredentialsPath
+                ]);
+
+                // Chemin vers l'image à analyser  
+                $imagePath = __DIR__ . '/../../public/contents/uploads/products/'.$newFilename;
+                
+                // Lecture du contenu de l'image
+                $imageContent = file_get_contents($imagePath);
+
+                // Requête de détection d'objets
+                $response = $imageAnnotator->objectLocalization($imageContent);
+                
+                // Récupération des annotations d'objets
+                $objects = $response->getLocalizedObjectAnnotations();
+                
+                $product->setEtiquette($objects[0]->getName());
+                $product->setScore($objects[0]->getScore());
+                // Affichage des annotations d'objets
+                echo $objects[0]->getName() . ' (score : ' . $objects[0]->getScore() . ')' . PHP_EOL;
+                /*foreach ($objects as $object) {
+                    echo $object->getName() . ' (score : ' . $object->getScore() . ')' . PHP_EOL;
+                }*/
+                
+                // Fermeture du client ImageAnnotator
+                $imageAnnotator->close();
+                //*******END: get the object and the score using google cloud api**************** */
+                
             }
             //***************************** */
+            
             $em->flush();
             return $this->redirectToRoute("app_dash_admin_products");
         }
@@ -501,11 +656,11 @@ class ProductController extends AbstractController
         ]);
         
         $productUrl = 'https://127.0.0.1:8000/product-one/48';
-      //pour envoyer une image changer feed par photos
+        //pour envoyer une image changer feed par photos
         //  $imageUrl = 'https://scontent.ftun9-1.fna.fbcdn.net/v/t39.30808-6/334954366_866719021098542_7251173562485808604_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=730e14&_nc_ohc=vfw_82p3lmAAX_co5Bd&_nc_ht=scontent.ftun9-1.fna&oh=00_AfBAxE4r48haqlt5XdDtkrOfWvNxpFxP1vrAhs5uvOZjxA&oe=640D0C1A';
         
-      //  $img = 'https://drive.google.com/file/d/1i9TP4fkMNKBHblB3jFhbguH0ANzMmPt7/view';
-      /*  $data = [
+        //  $img = 'https://drive.google.com/file/d/1i9TP4fkMNKBHblB3jFhbguH0ANzMmPt7/view';
+        /*  $data = [
             'caption' => $product->getNomProduit(),
             'url' => $imageUrl,
             'link' => $productUrl,
@@ -525,8 +680,8 @@ class ProductController extends AbstractController
         ];
         
         $response = $fb->post('/me/feed', $data);
-      //  dd($response);
- //       return $this->redirectToRoute("product-one");
+        //  dd($response);
+        // return $this->redirectToRoute("product-one");
         
         if ($response->isError()) {
             // handle error
@@ -539,8 +694,110 @@ class ProductController extends AbstractController
         return new Response('updated!');
     }
 
-   
+    #[Route('products/searchProduct', name: 'searchProduct')]
+    public function searchProduct(ProduitRepository $produitRepository, Request $request, NormalizerInterface $Normalizer): Response
+    {
+        $value =$request->get('searchProductData');
+        $products = $produitRepository->searchProductFunction($value);        
+        
+        $json = $Normalizer->normalize($products, 'json', ['groups' => 'produit_group']);
+
+        $jsonString = json_encode($json);
+
+        return new Response($jsonString);
+    }
+
     
+
+
+   
+    /************************************tester recherche par image****************************************/
+    #[Route('/ImageSearch', name: 'ImageSearch')]
+    public function ImageSearch(ManagerRegistry $doct, Request $request): Response
+    {
+        // Chemin vers votre fichier de clé Google Cloud
+        $googleCloudCredentialsPath = __DIR__ . '/../config/google_cloud_credentials.json';
+        // Création d'un client ImageAnnotator
+        $imageAnnotator = new ImageAnnotatorClient([
+            'credentials' => $googleCloudCredentialsPath
+        ]);
+
+        // Chemin vers l'image à analyser
+        $imagePath1 = __DIR__ . '/../../public/contents/img/b13.jpg';
+        $imagePath2 = __DIR__ . '/../../public/contents/img/b13.jpg';
+
+        $imageContent1 = file_get_contents($imagePath1);
+        $imageContent2 = file_get_contents($imagePath2);
+        
+        // Chemin vers l'image à analyser
+        $imagePath = __DIR__ . '/../../public/contents/img/green.webp';
+        
+        // Lecture du contenu de l'image
+        $imageContent = file_get_contents($imagePath);
+        
+        // Requête de détection d'objets
+        $response = $imageAnnotator->objectLocalization($imageContent);
+        
+        // Récupération des annotations d'objets
+        $objects = $response->getLocalizedObjectAnnotations();
+        
+        // Affichage des annotations d'objets
+        echo $objects[0]->getName() . ' (score : ' . $objects[0]->getScore() . ')' . PHP_EOL;
+        /*foreach ($objects as $object) {
+            echo $object->getName() . ' (score : ' . $object->getScore() . ')' . PHP_EOL;
+        }*/
+        
+        // Fermeture du client ImageAnnotator
+        $imageAnnotator->close();
+    return new Response('updated!');
+}
+
+
+
+
+    #[Route('/mercure', name: 'mercure')]
+public function mercure(): Response
+{
+    // Chemin vers votre fichier de clé Google Cloud
+    $googleCloudCredentialsPath = __DIR__ . '/../config/google_cloud_credentials.json';
+    // Création d'un client ImageAnnotator
+    $imageAnnotator = new ImageAnnotatorClient([
+        'credentials' => $googleCloudCredentialsPath
+    ]);
+
+    // Chemin vers l'image à analyser
+    $imagePath = __DIR__ . '/../../public/contents/img/b13.jpg';
+
+    // Lecture du contenu de l'image
+    $imageContent = file_get_contents($imagePath);
+
+    // Requête de détection d'objets
+    $response = $imageAnnotator->objectLocalization($imageContent);
+
+    // Récupération des annotations d'objets
+    $objects = $response->getLocalizedObjectAnnotations();
+
+    // Parcours des annotations d'objets pour trouver une bouteille plastique
+    $containsBottle = false;
+    foreach ($objects as $object) {
+        if ($object->getName() == 'Bottle' && $object->getScore() >= 0.5) {
+            $containsBottle = true;
+            break;
+        }
+    }
+
+    // Affichage du résultat de la détection
+    if ($containsBottle) {
+        echo "L'image contient une bouteille plastique." . PHP_EOL;
+    } else {
+        echo "L'image ne contient pas de bouteille plastique." . PHP_EOL;
+    }
+
+    // Fermeture du client ImageAnnotator
+    $imageAnnotator->close();
+
+    return new Response('updated!');
+}
 
 
         

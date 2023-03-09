@@ -25,7 +25,7 @@
       />
     </div>
 
-    <ul class="front__navbar__link" style="position: relative; right: 0rem">
+    <ul class="front__navbar__link" style="position: relative; right: -2rem">
       <li><a href="{{path('app_landing_page')}}" class="text-decoration">Home</a></li>
       <li><a href="" class="text-decoration">Fundraising</a></li>
       <li><a href="{{path('app_products')}}" class="text-decoration">shop</a></li>
@@ -33,6 +33,15 @@
     </ul>
 
     <div class="navbar__items">
+      <a id="searchIdNav"
+        class="notification-icon cart-icon-link"
+        style="position: relative; top: 0.1rem; padding-right: 1rem"
+      >
+        <span class="navbar__item">
+        <i class='bx bx-search-alt-2' style="font-size: 3rem"></i>
+        </span>
+      </a>
+
       <a href="{{path('app_commands')}}"
         class="notification-icon cart-icon-link"
         style="position: relative; top: 0.1rem; padding-right: 1rem"

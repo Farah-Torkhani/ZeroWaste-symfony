@@ -54,6 +54,12 @@ class Produit
     #[ORM\Column(nullable: true)]
     private ?float $remise = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $etiquette = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?float $score = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -151,6 +157,30 @@ class Produit
     public function setRemise(?float $remise): self
     {
         $this->remise = $remise;
+
+        return $this;
+    }
+
+    public function getEtiquette(): ?string
+    {
+        return $this->etiquette;
+    }
+
+    public function setEtiquette(?string $etiquette): self
+    {
+        $this->etiquette = $etiquette;
+
+        return $this;
+    }
+
+    public function getScore(): ?float
+    {
+        return $this->score;
+    }
+
+    public function setScore(?float $score): self
+    {
+        $this->score = $score;
 
         return $this;
     }

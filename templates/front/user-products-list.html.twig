@@ -58,7 +58,7 @@ body{
 
   {#--------------PRODUCTS List------------#}
   <div class="shop-items__container">
- 
+    {% if products != null %}
     {% for p in products %}
     <div class="shop-items__card">
       <a href="{{path('product-one', {'id': p.id})}}" class="shop-items__card-img-container">
@@ -80,6 +80,7 @@ body{
       </div>
     </div>
     {% endfor %}
+    {% endif %}
     {#----------end card1--------------#}
 
   </div>
@@ -129,6 +130,62 @@ body{
 
   </div>
 {#-------------------------END notification modal----------------------------#}
+
+{#--searchIdNav---------------------------------search modal--------------------------------#}
+  <div id="searchModalId" style="display:none">
+    <div class="searchModal" >
+      <div class="searchModal-card" >
+        <div class="searchModal-card-header">
+          <img src="{{asset('./contents/img/search.gif')}}" class="searchGif" />
+          <div class="searchModal-card-header-close">
+            close
+          </div>
+        </div> 
+        <div class="searchModal-card-content">
+          <input type="search" class="input-search-product" placeholder="Search" />
+          <div id="search__byImage"><i class='bx bx-image' ></i></div>
+          <div class="search-container_v1" id="searchImage-container">
+            <div class="search-container_header">
+              <h2 class="searchTitle">Search any image with Zero Waste</h2>
+              <div class="searchClose-btn" id="searchImage-CloseBtn"><i class='bx bx-x' ></i></div>
+            </div>
+            <div class='searchByImage-container'>
+            <div>
+              <div class='searchByImage-content'>
+                <i class='bx bx-images'></i>
+                {{form_start(searchProdoctForm,{'attr':{'novalidate':'novalidate'}})}}
+
+                    {{ form_label(searchProdoctForm.Image, 'Upload image:', {'label_attr': {'class': 'searchByImage-btn','for': 'searchByImagBtn'}}) }}
+                    
+                    {{form_widget(searchProdoctForm.Image,{'attr':{'class':'prouct-add-form-image__file-btn','name':'searchByImagBtn','id':'searchByImagBtn','style':'display:none'}})}}
+                    
+                <div class="searchByImage-searchRow">
+                  <div class="searchByImage-content__img-container">
+                    <img
+                      class="searchByImage-content__img"
+                      src=""
+                      alt=""
+                      id="searchByImage-content__img"
+                      accept="image/*"
+                      style="display: block"
+                    />   
+                  </div> 
+                  <button class='prouct-add-form-image__addBtn heightBtn'> {{button_label | default('Search')}}</button>
+                </div>
+                {{form_end(searchProdoctForm)}}
+              </div>
+              
+            </div>
+          </div>
+          </div>
+          
+        
+        </div>
+      </div> 
+    </div>
+  </div>
+{#-----------------------------------END search modal--------------------------------#}
+
 
 {% endblock %}
 
@@ -288,6 +345,131 @@ eventSource.onmessage = event => {
 
 
 </script>
+
+  <script>
+  $(document).ready(function () {
+    $("#search__byImage").click(function () {
+      $("#search__byImage").hide(0);
+      $("#searchImage-container").toggle(0);
+      $(".input-search-product").toggle(0);
+      $(".searchModal-card").css('margin-top', '7.5rem');
+      
+    });
+  });
+
+  $(document).ready(function () {
+    $("#searchImage-CloseBtn").click(function () {
+      $("#search__byImage").toggle(0);
+      $("#searchImage-container").toggle(0);
+      $(".input-search-product").toggle(0);
+      $(".searchModal-card").css('margin-top', '0rem');
+    });
+  });
+
+  $(document).ready(function () {
+    $(".searchModal-card-header-close").click(function () {
+      $("#searchModalId").toggle(0);
+    });
+  });
+
+  $(document).ready(function () {
+    $(".bx-search-alt-2").click(function () {
+      $("#searchModalId").toggle(0);
+    });
+  });
+
+  </script>
+
+
+  <script>
+    $(document).ready(function () {
+      $(".input-search-product").keyup(function (e) {
+        var value = $(this).val();
+        console.log(value);
+
+        $.ajax({
+          type: "GET",
+          url: "{{ path('searchProduct') }}",
+          data: { searchProductData: value },
+
+          success: function (result) {
+            console.log("result");
+            if (result) {
+              console.log(result);
+
+              $(".shop-items__container").empty();
+              $(".shop-items__container").hide();
+              $(".shop-items__container2").empty();
+              $("#shop-items__containerFilterId").show();
+
+              $.each(JSON.parse(result), function (i, obj) {
+                console.log(obj);
+
+                var $newDiv11 = $("<div>" + obj.description + "</div>");
+                //newDiv1 : div container: contains newDiv2 newDiv3 newDiv4
+                var $newDiv1 = $("<div></div>").addClass("shop-items__card");
+
+                var $newDiv2 = $("<div></div>").addClass("shop-items__card-img-container");
+                var $newDiv3 = $("<div></div>").addClass("shop-items__info");
+                var $newDiv4 = $("<div></div>").addClass("shop__items__cart");
+
+                //in $newDiv2
+                var $newImg = $("<img />").addClass("shop-items__card-img");
+                var imagePath = "{{ app.request.basePath }}contents/uploads/products/" + obj.Image;
+                $newImg.attr("src", imagePath);
+
+                //in newdiv3
+                var $newDiv5 = $("<div>" + obj.nomProduit + "</div>").addClass(
+                  "shop-items__info__title"
+                );
+                var $newP = $("<p>" + obj.description + "</p>").addClass(
+                  "shop-items__info__description"
+                );
+
+                //in newdiv4
+                var $newH1 = $("<div>$" + obj.prixProduit + " / " + obj.prix_point_produit + "pts</div>").addClass("shop__items__cart__price");
+                var $newLink = $("<a></a>").attr("href", "/commandes/add/" + obj.id + "").addClass("shop__items__cart__btn").text("Add to cart");
+
+                $(".shop-items__container2").append($newDiv1);
+                $newDiv1.append($newDiv2);
+                $newDiv1.append($newDiv3);
+                $newDiv1.append($newDiv4);
+
+                $newDiv2.append($newImg);
+
+                $newDiv3.append($newDiv5);
+                $newDiv3.append($newP);
+
+                $newDiv4.append($newH1);
+                $newDiv4.append($newLink);
+              });
+            }
+          },
+          error: function (xhr, status, error) {
+            console.log("Error: " + error);
+          },
+        });
+
+
+      });
+    });
+  </script>
+
+  <script>
+    $(function () {
+      $("#search_product_Image").change(function (event) {
+        console.log("test");
+        var x = URL.createObjectURL(event.target.files[0]);
+        $("#searchByImage-content__img").attr("src", x);
+        $(".searchByImage-content__img-container").show(0);
+        $(".heightBtn").show(0);
+        $(".bx-images").hide(0);
+        $(".searchByImage-btn").hide(0);
+        
+
+      });
+    });
+  </script>
 
 
     

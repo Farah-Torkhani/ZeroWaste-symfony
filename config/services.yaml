@@ -21,6 +21,10 @@ services:
         "default_graph_version": "v16.0"
         "default_access_token": "%env(FACEBOOK_ACCESS_TOKEN)%"
 
+  Google\Cloud\Vision\V1\ImageAnnotatorClient:
+    factory:
+      ['Google\Cloud\Vision\V1\ImageAnnotatorClient', "fromServiceAccountJson"]
+    arguments: ["%google_cloud_credentials%"]
   # makes classes in src/ available to be used as services
   # this creates a service per class whose id is the fully-qualified class name
   App\:
