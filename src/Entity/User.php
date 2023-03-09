@@ -89,9 +89,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: ProductFavoris::class)]
     private Collection $productFavoris;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: UserNotification::class)]
+    private Collection $userNotifications;
+
     public function __construct()
     {
         $this->productFavoris = new ArrayCollection();
+        $this->userNotifications = new ArrayCollection();
     }
 
 
@@ -351,6 +355,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($productFavori->getUser() === $this) {
                 $productFavori->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, UserNotification>
+     */
+    public function getUserNotifications(): Collection
+    {
+        return $this->userNotifications;
+    }
+
+    public function addUserNotification(UserNotification $userNotification): self
+    {
+        if (!$this->userNotifications->contains($userNotification)) {
+            $this->userNotifications->add($userNotification);
+            $userNotification->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserNotification(UserNotification $userNotification): self
+    {
+        if ($this->userNotifications->removeElement($userNotification)) {
+            // set the owning side to null (unless already changed)
+            if ($userNotification->getUser() === $this) {
+                $userNotification->setUser(null);
             }
         }
 

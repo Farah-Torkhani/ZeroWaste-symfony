@@ -52,7 +52,12 @@ use Google\Cloud\Vision\V1\Image;
 
 use App\Form\SearchProductType;
 
-
+use App\Entity\Notification;
+use App\Repository\NotificationRepository;
+use DateTime;
+use App\Entity\UserNotification;
+use App\Repository\UserNotificationRepository;
+use Doctrine\ORM\EntityManagerInterface;
 
 
 class ProductController extends AbstractController
@@ -66,7 +71,7 @@ class ProductController extends AbstractController
     }
 
     #[Route('/products', name: 'app_products')]
-    public function products(ProduitRepository $produitRepository, CommandsRepository $commandsRepository, CommandsProduitRepository $commandsProduitRepository,  CategorieProduitRepository $categorieProduitRepository, Request $request, ManagerRegistry $doctrine,  SluggerInterface $slugger): Response
+    public function products(NotificationRepository $notif, ProduitRepository $produitRepository, CommandsRepository $commandsRepository, CommandsProduitRepository $commandsProduitRepository,  CategorieProduitRepository $categorieProduitRepository, Request $request, ManagerRegistry $doctrine,  SluggerInterface $slugger): Response
     {
         $user = $doctrine->getRepository(User::class)->findOneBy(['email' => $this->getUser()->getUserIdentifier()]);
        
@@ -77,6 +82,8 @@ class ProductController extends AbstractController
         }else{
             $totalCommandes = 0;
         }
+
+        $notifications = $notif->getUserNotifications($user);
         
         $products = $produitRepository->findAll();
         //$categories = $categorieProduitRepository->findAll();
@@ -159,6 +166,7 @@ class ProductController extends AbstractController
                 'user' => $user,
                 'categories' => $categories,
                 'searchProdoctForm' => $form,
+                'notifications' => $notifications,
             ]);
         }
 
@@ -170,6 +178,7 @@ class ProductController extends AbstractController
             'user' => $user,
             'categories' => $categories,
             'searchProdoctForm' => $form,
+            'notifications' => $notifications,
         ]);
 
     }
@@ -536,17 +545,34 @@ class ProductController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $repo->getManager();
             $em->flush();
+            $date = new DateTime();
             
             //-----------------------notification
             $update = new Update(
                 'https://example.com/books/1',
-                json_encode(['status' => 'msg reçu'])
+                json_encode([
+                    'status' => 'New Product Offer!',
+                    'id' => $id,
+                    'image' => $product->getImage(),
+                    'nomProduit' => $product->getNomProduit(),
+                    'date' => $date,
+                    ])
             );
     
             $hub->publish($update);
     
             //return new Response('published!');
             //-----------------------------------
+            //add the notification to the database
+            $notif = new Notification();
+            $notif->setContent("New Product Offer!");
+            $date = new DateTime();
+            $notif->setDate($date);
+            $notif->setProduct($product);
+            $em->persist($notif);
+            $em->flush();
+
+            
             return $this->redirectToRoute("app_dash_admin_products");
         }
         return $this->renderForm('dash_admin/dash-admin-products-offre.html.twig', array(
@@ -711,7 +737,7 @@ class ProductController extends AbstractController
 
 
    
-    /************************************tester recherche par image****************************************/
+    /************************************recherche par image****************************************/
     #[Route('/ImageSearch', name: 'ImageSearch')]
     public function ImageSearch(ManagerRegistry $doct, Request $request): Response
     {
@@ -749,8 +775,57 @@ class ProductController extends AbstractController
         
         // Fermeture du client ImageAnnotator
         $imageAnnotator->close();
-    return new Response('updated!');
-}
+        return new Response('updated!');
+    }
+
+
+
+    #[Route('/NotifMarkAsRead/{id}', name: 'NotifMarkAsRead')]
+    public function NotifMarkAsRead($id, UserNotificationRepository $userNotif,  NotificationRepository $notif , ManagerRegistry $doct, Request $request, ProductFavorisRepository $productFavorisRepository): Response
+    {
+        $user = $doct->getRepository(User::class)->findOneBy(['email' => $this->getUser()->getUserIdentifier()]);
+       
+
+        $notification = $notif->find($id);
+
+        $userNotification = new UserNotification();
+        $userNotification->setUser($user);
+        $userNotification->setNotification($notification);
+        $userNotification->setMarkAsread(1);
+        
+        $em = $doct->getManager();
+        $em->persist($userNotification);
+        $em->flush();
+        
+        
+        return $this->redirectToRoute("product-one",['id' => $notification->getProduct()->getId()]);
+    }
+
+
+
+    #[Route('/userNotificationsGoTo/', name: 'userNotificationsGoTo')]
+    public function userNotificationsGoTo(  NotificationRepository $notif ,ManagerRegistry $doct, Request $request): Response
+    {
+        $user = $doct->getRepository(User::class)->findOneBy(['email' => $this->getUser()->getUserIdentifier()]);
+       
+        $notifId =$request->get('notifId');
+
+         $notification = $notif->find($notifId);
+
+        $userNotification = new UserNotification();
+        $userNotification->setUser($user);
+        $userNotification->setNotification($notification);
+        $userNotification->setMarkAsread(1);
+        
+        $em = $doct->getManager();
+        $em->persist($userNotification);
+        $em->flush();
+        
+        //dd($notifications);
+
+        
+        return new Response('updated!');
+    }
 
 
 

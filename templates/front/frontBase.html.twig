@@ -53,10 +53,45 @@
       </a>
 
       <div class="notification-icon" style="position: relative; top: 0.1rem">
-        <span class="cart-icon__span">3</span>
+        <span class="cart-icon__span" id="notifNumber">{% if notifications is defined and notifications != null %}{{notifications | length }}{% else %}0{% endif %}</span>
         <span class="navbar__item">
           <i class="bx bx-bell item"></i>
         </span>
+
+        <i class="bx bxs-up-arrow bxs-up-arrow-notif " style="display:none"></i>
+        <div class="notif-model__toggle" style="display:none">
+          <div class="notif-model__toggle-container">
+            {#------------one notif---------------------#}
+            {% if notifications is defined and notifications != null %}
+            {% for n in notifications %}
+            <div class="notif-model__toggle-content-one-notif" id="notif-model__toggle-content-one-notif{{n.id}}" data-id="{{n.id}}">
+              <a href="{{path('NotifMarkAsRead', {'id': n.id})}}" class="notif-model__toggle-content-linkP">
+                <div class="notif-model__toggle-content-img-container">
+                  <img src="{{asset('/contents/uploads/products/') ~ n.getProduct().Image}}" class="notif-model__toggle-content-img" />
+                </div>
+                <div class="notif-model__toggle-content-text">
+                  <div class="notif-model__toggle-content-text-title">{{n.getProduct().nomProduit}}</div>
+                  <div class="notif-model__toggle-content-text-description">{{n.content}}</div>
+                  <div class="notif-model__toggle-content-text-date">{{n.date |date('d/m/Y H:i:s')}}</div>
+                </div>
+              </a>
+              <div class="notif-model__toggle-content-MarkAsReadbtn" onclick="MarkAsRead( x='{{n.id}}'  )"  >
+                <i class='bx bx-show markAsReadIcon'></i>
+                <div class="notif-model__toggle-content-MarkAsReadbtn-text">Mark As <br>Read</div>
+              </div>
+            </div>
+            <hr class="all-notif-hr" id="hrNotif{{n.id}}">
+            {% endfor %}
+            {% endif %}
+            {#------------end one notif---------------------#}
+
+            {# for the mercure notification list#}
+            <div id="notifMercureId">
+            </div>
+            
+
+          </div>
+        </div>
       </div>
 
       <span class="dash__top-bar__fullname"> {{user.fullName}} </span>
@@ -69,7 +104,7 @@
             alt="profile"
           />
         </a>
-        <i class='bx bxs-up-arrow' style="display:none"></i>
+        <i class='bx bxs-up-arrow' id="bxs-up-arrowProfil" style="display:none"></i>
         <div class="dash__top-bar__toggle-model-account" style="display:none">
           <a href="" class="dash__top-bar__toggle-model-account-row">
             <i class='bx bx-user'></i>

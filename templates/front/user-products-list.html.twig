@@ -113,20 +113,20 @@ body{
 
 
 {#-------------------------notification modal----------------------------#}
-  <div class="notification-modal">
+  <div class="notification-modal" >
    {#} <div class="notification-modal-header">
       <div class="notification-modal-header__title">New Notification</div>
       <div class="notification-modal-header__closeBtn"><i class='bx bx-x'></i></div>
     </div>
-    <div class="notification-modal-content">
+    <a href="" class="notification-modal-content">
       <div class="notification-modal-content__img-container">
-        <img src="{{asset('./contents/img/avatar2.png')}}" class="notification-modal-content__img" />
+        <img src="{{asset('./contents/img/gift1.gif')}}" class="notification-modal-content__img" />
       </div>
       <div class="notification-modal-content__title">
         New Product Offer!
         <div id="message"></div>
       </div>
-    </div>{#}
+    </a>{#}
 
   </div>
 {#-------------------------END notification modal----------------------------#}
@@ -201,7 +201,7 @@ body{
       $(document).ready(function () {
         $(".dash__top-bar__img-container").click(function () {
           $(".dash__top-bar__toggle-model-account").toggle(0);
-          $(".bxs-up-arrow").toggle(0);
+          $("#bxs-up-arrowProfil").toggle(0);
         });
       });
     </script>
@@ -301,7 +301,7 @@ eventSource.onmessage = event => {
 
     
     var $newDiv1 = $("<div></div>").addClass("notification-modal-header");
-    var $newDiv2 = $("<div></div>").addClass("notification-modal-content");
+    var $newDiv2 = $("<a></a>").attr("href", "/product-one/" + (JSON.parse(event.data).id) + "").addClass("notification-modal-content");
 
     var $newDiv3 = $("<div>New Notification</div>").addClass("notification-modal-header__title");
     var $newDiv4 = $("<div></div>").addClass("notification-modal-header__closeBtn");
@@ -311,6 +311,9 @@ eventSource.onmessage = event => {
     var $newDiv6 = $("<div>"+(JSON.parse(event.data).status)+"</div>").addClass("notification-modal-content__title");
     
     var $newDivImg = $("<img>").addClass("notification-modal-content__img");
+    //var imagePath = "{{ app.request.basePath }}contents/img/gift1.gif" + (JSON.parse(event.data).image);
+    var imagePath = "{{ app.request.basePath }}contents/img/gift1.gif" ;
+    $newDivImg.attr("src", imagePath);
 
     
     
@@ -332,6 +335,54 @@ eventSource.onmessage = event => {
     $($newDiv5).append($newDivImg);
 
 
+    //create the notification in the list**************************************************************
+    var $newDivNotif1 = $("<div></div>").addClass("notif-model__toggle-content-one-notif").attr("id", "notif-model__toggle-content-one-notif"+ (JSON.parse(event.data).id) +"").data("id", ""+ (JSON.parse(event.data).id) + "");
+    var $newDivNotif2 = $("<a></a>").attr("href", "/NotifMarkAsRead/" + (JSON.parse(event.data).id) + "").addClass("notif-model__toggle-content-linkP");
+    var $newDivNotif3 = $("<div></div>").addClass("notif-model__toggle-content-img-container");
+    var $newDivNotifImg = $("<img>").addClass("notif-model__toggle-content-img");
+    var imageNotifPath = "{{ app.request.basePath }}contents/uploads/products/" + (JSON.parse(event.data).image);
+    $newDivNotifImg.attr("src", imageNotifPath);
+
+    var $newDivNotif4 = $("<div></div>").addClass("notif-model__toggle-content-text");
+    var $newDivNotif5 = $("<div>"+(JSON.parse(event.data).nomProduit)+"</div>").addClass("notif-model__toggle-content-text-title");
+    var $newDivNotif6 = $("<div>"+(JSON.parse(event.data).status)+"</div>").addClass("notif-model__toggle-content-text-description");
+    
+    //var dateStr = moment(JSON.parse(event.data).date).format('DD/MM/YYYY HH:mm:ss');
+    var $newDivNotif7 = $("<div>" + (JSON.parse(event.data).date) + "</div>").addClass("notif-model__toggle-content-text-date");
+    
+    var $newDivNotif8= $("<div></div>").addClass("notif-model__toggle-content-MarkAsReadbtn").click(function() {
+      MarkAsRead('{{'+(JSON.parse(event.data).id)+'}}');
+    });
+
+    var $newINotif = $("<i></i>").addClass("bx bx-show markAsReadIcon");
+
+    var $newDivNotif9 = $("<div></div>").addClass("notif-model__toggle-content-MarkAsReadbtn-text").text("Mark\nAs\nRead");
+
+    var $newHr = $("<hr>").addClass("all-notif-hr").attr("id", "hrNotif" + (JSON.parse(event.data).id));
+
+     $("#notifMercureId").append($newDivNotif1);
+     $("#notifMercureId").append($newHr);
+     $($newDivNotif1).append($newDivNotif2);
+     $($newDivNotif1).append($newDivNotif8);
+
+     $($newDivNotif2).append($newDivNotif3);
+     $($newDivNotif2).append($newDivNotif4);
+
+     $($newDivNotif8).append($newINotif);
+     $($newDivNotif8).append($newDivNotif9 );
+
+      //
+     $($newDivNotif3).append($newDivNotifImg);
+     //
+     $($newDivNotif4).append($newDivNotif5 );
+     $($newDivNotif4).append($newDivNotif6 );
+     $($newDivNotif4).append($newDivNotif7 );
+
+      var number = parseInt($("#notifNumber").text()); // get current value of number
+      $("#notifNumber").text(number + 1); // increment the number by 1 and update the text
+    //END create the notification in the list************************************************************
+
+
 
 
     //document.getElementById(".msg").innerHTML+="<div>"+(JSON.parse(event.data).status)+"</div>";
@@ -339,7 +390,7 @@ eventSource.onmessage = event => {
     // Masquer la div "message" après 5 secondes
     setTimeout(function() {
         document.querySelector(".notification-modal").style.display = 'none';
-    }, 5000);
+    }, 9000);
 }
 
 
@@ -470,8 +521,75 @@ eventSource.onmessage = event => {
       });
     });
   </script>
+    
+
+  <script>
+  /*
+     $(document).ready(function () {
+      $(".notification-icon").click(function () {
+        $(".notif-model__toggle").show(0);
+        $(".bxs-up-arrow-notif").show(0);
+      });
+    });
+    */
+
+    $(document).ready(function () {
+      $(".notification-icon").click(function (event) {
+        event.stopPropagation(); // Empêcher la propagation de l'événement click jusqu'au document
+
+        $(".notif-model__toggle").show(0);
+        $(".bxs-up-arrow-notif").show(0);
+
+        // Ajouter un gestionnaire d'événement click au document
+        $(document).click(function (event) {
+          // Vérifier si l'événement a été déclenché en dehors de .notification-icon et .notif-model__toggle
+          if (!$(event.target).closest(".notification-icon, .notif-model__toggle").length) {
+            // Masquer les éléments
+            $(".notif-model__toggle").hide(0);
+            $(".bxs-up-arrow-notif").hide(0);
+
+            // Supprimer le gestionnaire d'événement click du document
+            $(document).off("click");
+          }
+        });
+      });
+    });
 
 
+    function MarkAsRead(x) {
+      //$("#chevron-down" + x).toggle(0);
+      $("#notif-model__toggle-content-one-notif" + x).toggle();
+      $("#hrNotif" + x).toggle();
+      var number = parseInt($("#notifNumber").text()); // get current value of number
+      $("#notifNumber").text(number - 1); // increment the number by 1 and update the text
+      
+      const notifId = $("#notif-model__toggle-content-one-notif" + x).data("id");
+      console.log(notifId);
+
+      $.ajax({
+        type: "GET",
+        url: "{{ path('userNotificationsGoTo') }}",
+        data: { notifId: notifId },
+
+        success: function (result) {
+          console.log("result");
+          if (result) {
+            console.log(result);
+                
+
+
+          }
+        },
+        error: function (xhr, status, error) {
+          console.log("Error: " + error);
+        },
+      });
+
+
+    }
+    
+  
+  </script>
     
 
 
