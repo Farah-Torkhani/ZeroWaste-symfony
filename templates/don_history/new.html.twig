@@ -13,6 +13,14 @@
 	<link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet"/>
         <link rel="stylesheet" href="{{asset('./style/farahStyle.css')}}">
 
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <title>Stripe Payment Gateway</title>
+          <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+          <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+      </head>
+
 {% endblock %}
 
 {% block body %}
@@ -60,14 +68,14 @@
   <div class="dash-user-fund-detail">
     <div class="dash-user-home__greeting">
         <span class="dash-user-home__greeting--span-1">Fund detail |</span>
-        <h1 class="dash-user-home__greeting--span-2">Hello Nabil, Are you ready to help people and the nature again ?
+        <h1 class="dash-user-home__greeting--span-2">Hello  {{user.fullname}} Are you ready to help people and the nature again ?
         </h1>
     </div>
 
 
     <div class="dash-user-fund-detail__container">
         <div class="dash-user-fund-detail__container__header">
-            <h1 class="dash-user-fund-detail__container__header__title">Help Sami to Beat cancer</h1>
+            <h1 class="dash-user-fund-detail__container__header__title"> this is a fund </h1>
         </div>
 
         <div class="dash-user-fund-detail__container__body">
@@ -89,9 +97,38 @@
                         {{ form_row(form.date_donation,{'attr': {'class': 'product-add-form__input'}} ) }}
                         {{ form_errors(form.date_donation) }}
                         <br>
+                          <div class="container">
+                          <div class="row justify-content-center">
+                              <div class="col-4">
+                                  <div class="card">
+                                      <div class="card-body">
+                                          {% for message in app.flashes('success') %}
+                                              <div 
+                                                  style="color: green;
+                                                      border: 2px green solid;
+                                                      text-align: center;
+                                                      padding: 5px;margin-bottom: 10px;">
+                                                  {{ message }}
+                                              </div>
+                                          {% endfor %}
+                          
+                                          <form id='checkout-form' method='post' action="{{ path('app_stripe_charge1') }}">             
+                                              <input type='hidden' name='stripeToken' id='stripe-token-id'>                              
+                                              <label for="card-element" class="mb-5">Checkout Forms</label>
+                                              <br>
+                                              <div id="card-element" class="form-control" ></div>
+                                              <button 
+                                                  id='pay-btn'
+                                                  class="btn btn-success mt-3"
+                                                  type="button"
+                                                  style="margin-top: 20px; width: 100%;padding: 7px;"
+                                                  onclick="createToken()">PAY $5
+                                              </button>
+                                          <form>
+                                      </div>
                         <br>
                         <br>
-
+                       
                         <div style="position: absolute; left: 50%;">
 
 
@@ -106,16 +143,55 @@
                                         d="M30.511,275.393l-10.246,3.018a6.736,6.736,0,0,1,.5,2.551v.371a3.623,3.623,0,0,1-5.107,3.3l-5.371-2.417a1.055,1.055,0,0,1,.866-1.925l5.371,2.417a1.51,1.51,0,0,0,2.131-1.377v-.371a4.567,4.567,0,0,0-2.722-4.146l-4.641-2.088a6.832,6.832,0,0,0-5.668.025L.628,277.025a1.055,1.055,0,0,0-.618.96v11.229a1.056,1.056,0,0,0,1.431,1.013l7.026-2.677,8.357,2.925a6.8,6.8,0,0,0,5.728-.568l11.369-6.695a4.3,4.3,0,0,0-3.41-7.819Z"
                                         transform="translate(0 -254.841)" fill="#4a5bcf" />
                                 </g>
-                            </svg>
+                            </svg>                
                             {{ button_label|default('Donate')}}
                             </button >  
                             {{ form_end(form) }}
                         </div>
                     </div>
                 </div>
+
+
+
+
             </div>
-        </div>       
+        </div>  
+       
+                </div>
+            </div>
+        </div>
+    </div>     
     </div>
     </div>
-</div>   
+</div>  
+
+   
+<script src="https://js.stripe.com/v3/" ></script>
+<script>
+    var stripe = Stripe("{{stripe_key}}");
+    var elements = stripe.elements();
+    var cardElement = elements.create('card');
+    cardElement.mount('#card-element');
+ 
+    function createToken() {
+        document.getElementById("pay-btn").disabled = true;
+        stripe.createToken(cardElement).then(function(result) {
+ 
+                 
+            if(typeof result.error != 'undefined') {
+                document.getElementById("pay-btn").disabled = false;
+                alert(result.error.message);
+            }
+ 
+            // creating token success
+            if(typeof result.token != 'undefined') {
+                document.getElementById("stripe-token-id").value = result.token.id;
+                document.getElementById('checkout-form').submit();
+            }
+        });
+    }
+</script>
+
+
+
 {% endblock %}

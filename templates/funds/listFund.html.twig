@@ -70,11 +70,11 @@
         </h1>
     </div>
 
- 
+    <input type="text" id="search" class="form-control" placeholder="Search">
+    <div id="tabv">
 
-        <div class="dash-user-fund__container">
-        <input type="text" id="search" class="form-control" placeholder="Search">
-        <div id="tabv">
+    <div class="dash-user-fund__container">
+    
      
         {# {{ include('funds/search.html.twig')}} #}
 <table>
@@ -117,13 +117,13 @@
                     </div>
 
                     <div class="fund--1__item__loader">
-                        <p class="fund--1__item__loader__text">Last donation 2d ago
+                        <p class="fund--1__item__loader__text">Last donation {{ time_diff(stu.dateDon) }}
                         </p>
                         <div class="fund--1__item__loader__container">
                             <div class="fund--1__item__loader__container__current"></div>
                         </div>
                         <p class="fund--1__item__loader__text">
-                            <span>700 DNT</span>
+                            <span>{{stu.total ? : 0 }}</span>
                             raised
                             of
                             <span>{{stu.objectif}}</span>

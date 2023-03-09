@@ -75,4 +75,16 @@ class DonHistoryRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+public function findTopDonator()
+{
+    $qb = $this->createQueryBuilder('cp')
+        ->select('p.id')
+        ->join('cp.don', 'p')
+        ->groupBy('p.Id')
+        ->orderBy('don_count', 'DESC')
+        ->setMaxResults(1);
+    
+    return $qb->getQuery()->getOneOrNullResult();
+}
 }

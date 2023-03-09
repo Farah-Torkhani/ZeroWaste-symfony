@@ -15,6 +15,9 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+use Stripe\Charge;
+use Stripe\Stripe;
+
 #[Route('/don/history')]
 class DonHistoryController extends AbstractController
 {
@@ -64,8 +67,10 @@ class DonHistoryController extends AbstractController
             'don_history' => $donHistory,
             'form' => $form,
             'user' => $user,
+            'stripe_key' => $_ENV["STRIPE_PUBLIC_KEY"],
         ]);
     }
+    
 
     #[Route('/afficherDon', name: 'app_don_history_show', methods: ['GET'])]
     public function afficher(DonHistory $donHistory): Response
@@ -110,5 +115,33 @@ class DonHistoryController extends AbstractController
         }
 
         return $this->redirectToRoute('app_don_history_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    //payment stripe
+    #[Route('/payment1', name: 'app_payment1')]
+    
+    public function paymentindex(): Response
+    {
+        return $this->render('don_history/afficherDon.html.twig', [
+            'controller_name' => 'PaymentController',
+            'stripe_key' => $_ENV["STRIPE_PUBLIC_KEY"],
+        ]);
+    }
+
+    #[Route('/payment/create-charge1', name: 'app_stripe_charge1', methods: ['POST'])]
+    public function createCharge(Request $request)
+    {
+        Stripe::setApiKey($_ENV["STRIPE_SECRET_KEY"]);
+        Charge::create ([
+                "amount" => 5 * 100,
+                "currency" => "usd",
+                "source" => $request->request->get('stripeToken'),
+                "description" => "Binaryboxtuts Payment Test"
+        ]);
+        $this->addFlash(
+            'success',
+            'Payment Successful!'
+        );
+        return $this->redirectToRoute('app_payment1', [], Response::HTTP_SEE_OTHER);
     }
 }

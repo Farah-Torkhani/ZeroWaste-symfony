@@ -63,30 +63,35 @@ class FundsController extends AbstractController
 
     }
 
-    #[Route('/afficherFundsMobile', name: 'afficher_funds_mobile')]
-    public function afficherMobile(FundrisingRepository $Fundrising, ManagerRegistry $doct): Response
-    {
+    // #[Route('/afficherFundsMobile', name: 'afficher_funds_mobile')]
+    // public function afficherMobile(FundrisingRepository $Fundrising, ManagerRegistry $doct): Response
+    // {
 
-        $stu = $Fundrising->findAll();
-        foreach($stu as $item) {
-            $arrayCollection[] = array(
-                'id' => $item->getId(),
-                'titreDon' => $item->getTitreDon(),
-                'description' => $item->getDescriptionDon(),
-                'ImageDon' => $item->getImageDon(),
-                'Date don' => $item->getDateDon(),
-                'Date don limite' => $item->getDateDonLimite(),
-                'etat' => $item->getEtat(),
-                'objectif' => $item->getObjectif(),
+    //     $stu = $Fundrising->findAll();
+    //     foreach($stu as $item) {
+    //         $arrayCollection[] = array(
+    //             'id' => $item->getId(),
+    //             'titreDon' => $item->getTitreDon(),
+    //             'description' => $item->getDescriptionDon(),
+    //             'ImageDon' => $item->getImageDon(),
+    //             'Date don' => $item->getDateDon(),
+    //             'Date don limite' => $item->getDateDonLimite(),
+    //             'etat' => $item->getEtat(),
+    //             'objectif' => $item->getObjectif(),
                 
-            );
-       }
-               return $this->json([
-                $arrayCollection
-            ]);
-               
-              
-
+    //         );
+    //    }
+    //            return $this->json([
+    //             $arrayCollection
+    //         ]);
+                 
+    // }
+    #[Route('afficherFundsMobilee', name:'listfunds')]
+    public function getFunds(FundrisingRepository $Fundrising, NormalizerInterface $normalizer)
+    {
+        $stu = $Fundrising->findAll();
+        $jsonContent = $normalizer->normalize($stu, 'json', ['groups' => "funds"]);
+        return new Response(json_encode($jsonContent));
     }
 
     #[Route('/addFunds1', name: 'app_addFundrising')]
@@ -136,53 +141,52 @@ return $this->renderForm("funds/association-Don-Add.html.twig", [
     
 
 
-#[Route('/addFunds1_mobile', name: 'app_addFundrising_mobile')]
-public function addfundsMobile(\Doctrine\Persistence\ManagerRegistry $doctrine, Request $request , SluggerInterface $slugger)
-{
-    $Fundrising = new Fundrising();
-    $form = $this->createForm(FundrisingType::class, $Fundrising);
-    $form->handleRequest($request);
-    if ($form->isSubmitted() && $form->isValid() ) {
-        $em = $doctrine->getManager();
-        
-        $photo = $form['imageDon']->getData();
-        if ($photo) {
-            $originalFilename = pathinfo($photo->getClientOriginalName(), PATHINFO_FILENAME);
-            // this is needed to safely include the file name as part of the URL
-            $safeFilename = $slugger->slug($originalFilename);
-            $newFilename = $safeFilename.'-'.uniqid().'.'.$photo->guessExtension();
 
-            // Move the file to the directory where brochures are stored
-            try {
-                $photo->move(
-                    $this->getParameter(name :'fund_directory'),
-                    $newFilename
-                );
-            } catch (FileException $e) {
-                // ... handle exception if something happens during file upload
-            }
 
-            // updates the 'photo$photoname' property to store the PDF file name
-            // instead of its contents
-            $Fundrising->setImageDon($newFilename);
-        }
 
-        $em->persist($Fundrising);
-        $em->flush();
-        
+
+    #[Route('/addFunds1_mobile', name: 'app_addFundrising_mobile')]
+    public function ajoutfunds(Request $req,NormalizerInterface $Normalizer,\Doctrine\Persistence\ManagerRegistry $doctrine,)
+    {
+       $em = $this->getDoctrine()->getManager();
+       $Fundrising = new Fundrising();
+
+       $Fundrising->setTitreDon($req->get('TitreDon'));
+       $Fundrising->setDescriptionDon($req->get('descriptionDon'));
+       $Fundrising->setEtat("");
+       $Fundrising->setObjectif(0);
+       $em->persist($Fundrising);
+       $em->flush();
+       $FundrisingNormalises = $Normalizer->normalize($Fundrising,'json',['groups' => "funds"]);
+       $json = json_encode($FundrisingNormalises);
+       return new Response($json);
+    }
+     #[Route('deleteFundsMobilee/{id}' , name: 'deletefundsMobile')]
+    public function deleteFundsMobile(FundrisingRepository $Fundrising, ManagerRegistry $man,ManagerRegistry $doct,$id,NormalizerInterface $normalizer ): Response
+    {
+       
+        $stu = $Fundrising->find($id);
+        $EntityManager = $man->getManager();
+        $funds = $Fundrising->find($id) ;
+        $EntityManager->remove($stu);
+        $EntityManager->flush();
+        $donNormalizes = $normalizer->normalize($funds, 'json', ["groups"=>"funds"]);
+       $json = json_encode($donNormalizes) ;
+        return new Response( "don deleted successfully" . $json) ;
     }
 
-    return $this->json([
-        'id'=>$Fundrising->getId() ,
-        'titreDon' => $Fundrising->getTitreDon(),
-        'description' => $Fundrising->getDescriptionDon(),
-        'ImageDon' => $Fundrising->getImageDon(),
-        'Date don' => $Fundrising->getDateDon(),
-        'Date don limite' => $Fundrising->getDateDonLimite(),
-        'etat' => $Fundrising->getEtat(),
-        'objectif' => $Fundrising->getObjectif(),     
-          ]);
+
+    #[Route('/RgetbyidMOBILE/{id}', name: 'funds_parid', methods:'GET')]
+    
+    public function fundsparid(  FundrisingRepository $repo , NormalizerInterface $normalizer , $id): Response
+    {
+   $funds = $repo->find($id) ;
+   $fundsNormalises = $normalizer->normalize($funds,'json' , ['groups'=>"funds:read"]) ;
+$json = json_encode($fundsNormalises) ;
+      return new Response($json) ;
     }
+
+
 
     #[Route('/afficherFundrising_dashA', name: 'app_afficherFundrising_dashA')]
     
@@ -294,6 +298,9 @@ public function addfundsMobile(\Doctrine\Persistence\ManagerRegistry $doctrine, 
 
 
  
+
+
+ 
     #[Route('/find', name: 'app_fundfind')]
     public function product(FundrisingRepository $Fundrising,ManagerRegistry $man, ManagerRegistry $doctrine): Response
     {
@@ -342,5 +349,8 @@ public function addfundsMobile(\Doctrine\Persistence\ManagerRegistry $doctrine, 
     
         return new Response($html);
     }
+
+
+
 
 }

@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 
 #[ORM\Entity(repositoryClass: FundrisingRepository::class)]
@@ -17,25 +18,33 @@ class Fundrising
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups("funds")]
     private ?int $id = null;
     #[Assert\NotBlank(message:"Title fundrising is required")]
     #[ORM\Column(length: 255)]
+    #[Groups("funds")]
     private ?string $TitreDon = null;
     #[Assert\NotBlank(message:"description fundrising is required")]
     #[ORM\Column(length: 255)]
+    #[Groups("funds")]
     private ?string $descriptionDon = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups("funds")]
     private ?string $imageDon = null;
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Groups("funds")]
     private ?\DateTimeInterface $date_Don = null;
     #[Assert\NotBlank(message:"date limit  fundrising is required")]
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Groups("funds")]
     private ?\DateTimeInterface $date_don_limite = null;
     #[ORM\Column(length: 255)]
+    #[Groups("funds")]
     private ?string $etat = null;
     #[Assert\NotBlank(message:"Objectif fundrising is required")]
     #[ORM\Column]
+    #[Groups("funds")]
     private ?float $objectif = null;
 
     #[ORM\OneToMany(mappedBy: 'fundsID', targetEntity: DonHistory::class)]
