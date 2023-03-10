@@ -304,11 +304,13 @@ $json = json_encode($fundsNormalises) ;
     #[Route('/find', name: 'app_fundfind')]
     public function product(FundrisingRepository $Fundrising,ManagerRegistry $man, ManagerRegistry $doctrine): Response
     {
+        $notCompleted_funds = $Fundrising->findBy(['etat' => 2]);
         $user = $doctrine->getRepository(User::class)->findOneBy(['email' => $this->getUser()->getUserIdentifier()]);
         $Fundrising = $Fundrising->findAll();
         $funds = $man->getRepository(Fundrising::class)->findAll();
 
-        return $this->render('funds/association-Don.html.twig', array("Funds"=>$Fundrising,"fundrising1"=>$funds, 'user'=>$user    ));
+        return $this->render('funds/association-Don.html.twig', array("Funds"=>$Fundrising,"fundrising1"=>$funds, 'user'=>$user , "funds_notCompleted" => count($notCompleted_funds)));
+       
     }
 
  
@@ -317,7 +319,7 @@ $json = json_encode($fundsNormalises) ;
     public function updatep(Request $request, ManagerRegistry $doctrine, $id):Response{
         $user = $doctrine->getRepository(User::class)->findOneBy(['email' => $this->getUser()->getUserIdentifier()]);
     $Fundrising = $doctrine->getRepository(Fundrising::class)->find($id);
-
+    $notCompleted_funds = $Fundrising->findBy(['etat' => 2]);
     $form = $this->createForm(FundrisingType::class, $Fundrising);
     $form->handleRequest($request);
     if ($form->isSubmitted() && $form->isValid()) {
@@ -330,6 +332,8 @@ $json = json_encode($fundsNormalises) ;
     return $this->renderForm('funds/association-Don-Add.html.twig', [
         'form' => $form ,
         'user' => $user,
+        "funds_notCompleted" => count($notCompleted_funds)
+   
     ]);
 
     }

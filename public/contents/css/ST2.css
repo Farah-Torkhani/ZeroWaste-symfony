@@ -479,6 +479,9 @@ section:nth-child(even){
     padding:1rem 0;
 }
 
+
+
+
 .footer .box-container{
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(22rem, 1fr));
@@ -587,3 +590,4 @@ section:nth-child(even){
     }
 
 }
+

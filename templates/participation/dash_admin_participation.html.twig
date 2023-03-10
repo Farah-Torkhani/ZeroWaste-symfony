@@ -1,0 +1,206 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Zero Waste{% endblock %}
+
+{% block stylesheets %}
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<link rel="stylesheet" href="{{asset('./contents/css/ST3.css')}}" />
+
+<link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<link rel="stylesheet" href="{{asset('./contents/css/ST.css')}}">
+<link rel="icon" href="{{asset('./contents/img/logo1.png')}}" />          
+ {% endblock %}
+
+
+
+{% block body %}
+
+ <div class="dash">
+      <nav class="dash__side-bar">
+        <header>
+          <div class="image-text">
+            <span class="image">
+              <img class="logo" src="{{asset('./contents/img/logo.png')}}" alt="logo" />
+              
+            </span>
+
+           
+          </div>
+
+          <i class="bx bx-chevron-right toggle"></i>
+        </header>
+
+        <div class="menu-bar">
+          <div class="menu">
+            <ul class="menu-links">
+              <li class="nav-links">
+                <a href="./dash-admin-home.html" class="nav-links-item ">
+                  <i class="bx bx-home icon"></i>
+                  <span class="text nav-text">Dashboard</span>
+                </a>
+              </li>
+
+              <li class="nav-links">
+                <a href="#" class="nav-links-item">
+                  <i class="bx bx-user icon"></i>
+                  <span class="text nav-text">Users</span>
+                </a>
+              </li>
+
+              <li class="nav-links">
+                <a href="#" class="nav-links-item">
+                  <i class='bx bx-donate-heart icon'></i>
+                  <span class="text nav-text">Fundrising</span>
+                </a>
+              </li>
+
+              <li class="nav-links">
+                <a href="#" class="nav-links-item">
+                  <i class='bx bx-store icon'></i>
+                  <span class="text nav-text">Products</span>
+                </a>
+              </li>
+
+              <li class="nav-links">
+                <a href="{{path('admine_collecte')}}" class="nav-links-item active">
+                  <i class='bx bx-coin-stack icon'></i>
+                  <span class="text nav-text">Collect</span>
+                </a>
+              </li>
+
+              <li class="nav-links">
+                <a href="#" class="nav-links-item">
+                  <i class="bx bx-cart icon"></i>
+                  <span class="text nav-text">Commands</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="bottom-content">
+            <li class="nav-links">
+              <a href="#" class="nav-links-item">
+                <i class="bx bx-log-out icon"></i>
+                <span class="text nav-text">Logout</span>
+              </a>
+            </li>
+
+            <li class="nav-links mode">
+              <div class="moon-sun">
+                <i class="bx bx-moon icon moon"></i>
+                <i class="bx bx-sun icon sun"></i>
+              </div>
+              <span class="mode-text text">Dark Mode</span>
+
+              <div class="toggle-switch">
+                <span class="switch"></span>
+              </div>
+            </li>
+          </div>
+        </div>
+      </nav>
+
+      <div class="dash__container">
+        <nav class="dash__navbar">
+          <div class="dash__navbar-text">Dashboard</div>
+          <div class="navbar__items">
+            <span class="navbar__item">
+              <i class="bx bx-log-out item"></i>
+            </span>
+
+            <div class="notification-icon">
+              <span class="cart-icon__span">3</span>
+              <span class="navbar__item">
+                <i class="bx bx-bell item"></i>
+              </span>
+            </div>
+
+            <span class="dash__top-bar__fullname"> Elghoul kaiss </span>
+
+            <div class="dash__top-bar__img-container">
+              <a href="#">
+                <img
+                  src="{{asset('./contents/img/avatar2.png')}}"
+                  class="dash__top-bar__img"
+                  alt="profile"
+                />
+              </a>
+            </div>
+          </div>
+        </nav>
+        <!--end dash__navbar-->
+
+        <div class="dash__container-card">          
+            <div class="dash__card-title">Participant List</div>
+            <div class="users">
+              <div class="users-list">
+                <div class="users-list__body">
+                  <table class="user-table">
+                    <thead>
+                      <tr>
+                        <th>Full name</th>
+                        <th>email</th>
+                        <th>phone</th>
+                        <th>quantite</th>
+                        <th>Point</th>
+                        <th>request</th>
+                        <th>#</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                     {% for participation in participations %}
+                      <tr class="one-user">
+                        <td class="fullname-td">
+                          <div class="fullname-td__container">
+                            <div class="fullname-td__img-container">
+                              <img src="{{asset('./contents/img/avatar2.png')}}" alt="" class="fullname-td__img-container__img">
+                            </div>
+                            <div class="fullname-td__fullname-username">
+                              <p class="fullname-td__fullname-username__fullname">Elghoul kaiss</p>
+                              <p class="fullname-td__fullname-username__username">kaiss</p>
+                            </div>
+                          </div>
+                        </td>
+                        <td>{{ participation.email }}</td>
+                        <td>{{ participation.phone }}</td>
+                        <td>{{ participation.quantite }}</td>
+                        <td>{{ participation.image }}</td>
+                        <td class="stet-td">
+                          <span class="state-td__active">{% for c in participation.getCollecteId() %} {{c.Nomcollecte}} {% endfor %}</span>
+                        </td>
+                        <td class="btn-td">
+                          <div >
+                            <a style="display:flex; justify-content:center;" href="{{ path('app_participation_delete', {'id': participation.id}) }}" class="btn-td__btn">
+                              <img src="{{asset('./contents/img/lock-icon.png')}}" alt="" class="btn-td__btn__icon block-icon">
+                            </a>
+                          </div> 
+                          <div >
+                           <a style="background-color: transparent;border: none;" href="{{ path('app_sendmail', {'id': participation.id}) }}" class="btn-td__bt">
+                              <i  class="bx bxs-edit btn-td__btn"> </i>
+                            </a>
+                          </div>
+                        </td>
+                      </tr>
+                    {% endfor %}
+
+
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+
+
+      </div>
+    </div>
+
+{% block JsScript %} 
+<script src="{{asset('./contents/js/SC3.js')}}"> </script> 
+{% endblock %}   
+{% endblock %}
+
+
+
+

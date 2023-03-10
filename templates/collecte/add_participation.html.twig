@@ -1,0 +1,155 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Zero Waste{% endblock %}
+
+ {% block stylesheets %}
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<link rel="stylesheet" href="{{asset('./contents/css/ST1.css')}}" />
+<link rel="stylesheet" href="{{asset('./contents/css/ST2.css')}}" />
+<link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<link rel="icon" href="{{asset('./contents/img/logo1.png')}}" />          
+ {% endblock %}
+
+
+{% block body %}
+
+<nav class="front__navbar front__navbar-scrolled-up">
+    <div class="front__navbar-img-container">
+      <img
+        src="{{asset('./contents/img/logo.png')}}"
+        class="front__navbar-img-container"
+        alt=""
+      />
+    </div>
+
+    <ul class="front__navbar__link">
+      <li>Home</li>
+      <li>Fundraising</li>
+      <li>Shop</li>
+      <a href="dash_user_collect.html"> <li>Collect</li></a>
+    </ul>
+
+    <div class="navbar__items">
+      <div
+        class="notification-icon"
+        style="position: relative; top: 0.1rem"
+      >
+        <span class="cart-icon__span">3</span>
+        <span class="navbar__item">
+          <i class="bx bx-bell item"></i>
+        </span>
+      </div>
+
+      <span class="dash__top-bar__fullname"> Braiek Ali </span>
+
+      <div class="dash__top-bar__img-container">
+        <a href="#">
+          <img
+            src="{{asset('./contents/img/ali.jpg')}}"
+            class="dash__top-bar__img"
+            alt="profile"
+          />
+        </a>
+      </div>
+    </div>
+  </nav>
+  <!--end dash__navbar-->
+
+
+
+
+
+<section class="book" id="book">
+
+    <h1 class="heading"> <span>join</span>to Collect </h1>    
+
+    <div class="row">
+
+        <div class="image">
+            <img src="{{asset('./contents/image/look.svg')}}" alt="">
+        </div>
+
+        {{ form_start(form,{'attr':{'novalidate':'novalidate'}})}}
+            <h3>appointment</h3>
+            
+             
+
+             {{ form_widget(form.email,{'attr':{'class':'box','type':'email','placeholder':'your email'}}) }}
+              {{ form_errors(form.email,{'attr':{'class':'form__input'}})}}
+             {{ form_widget(form.phone,{'attr':{'class':'box','type':'number','placeholder':'your phone'}})}}
+               {{ form_errors(form.phone,{'attr':{'class':'form__input'}})}}
+             {{ form_widget(form.quantite,{'attr':{'class':'box','type':'number','placeholder':'quantite'}}) }}
+                {{ form_errors(form.quantite,{'attr':{'class':'form__input'}})}}
+             
+             {{ form_widget(form.verification_p,{'attr':{'class':'box','type':'email','placeholder':'verification_p'}}) }}
+              {{ form_errors(form.verification_p,{'attr':{'class':'form__input'}})}}
+            <div class="product-add-form__input__group">
+            <label for="productImage" class="product-add-form__input__label"
+              >Image <span>*</span></label
+            >
+            <div class="product-add-form-image">
+              <div class="prouct-add-form-image__container">
+                <i class="bx bx-cloud-upload"></i>
+                <img
+                  class="prouct-add-form-image__img"
+                  src=""
+                  alt=""
+                  id="prouct-add-form-image__img"
+                  accept="image/*"
+                  style="display: none"
+                />
+              </div>
+              <div class="prouct-add-form-image__description">
+                <p>
+                  Resolution : 1920x1080 px <br />
+                  Supported file types : jpg, <br />
+                  .jpeg ,. gif ou .png No text<br />
+                  on the image.
+                </p>
+                <div class="prouct-add-form-image__add">
+                  {{ form_label(form.image,'Choose a photo:', {'label_attr': {'class': 'prouct-add-form-image__addBtn','for': 'prouct-add-form-image__file-btn'}}) }}
+                  {{form_widget(form.image,{'attr':{'class':'prouct-add-form-image__file-btn','name':'prouct-add-form-image__file-btn','id':'prouct-add-form-image__file-btn','style':'display:none'}})}}
+                </div>
+              </div>
+            </div>
+          </div>
+            
+            
+            <button class="btn">{{ button_label|default('confirm') }}</button>
+        {{ form_end(form) }}
+
+    </div>
+
+</section>
+
+{% block JsScript %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
+
+
+    <script>
+    console.log("Hello world!");
+    $(function () {
+  $("#collecte_imageCollect").change(function (event) {
+    console.log("test");
+    var x = URL.createObjectURL(event.target.files[0]);
+    $("#prouct-add-form-image__img").attr("src", x);
+    $("#prouct-add-form-image__img").show(0);
+    $(".bx-cloud-upload").hide(0);
+
+  });
+  });
+    </script> 
+
+
+{% endblock %}   
+{% endblock %}
+
+
+
+
+
+
+    
+
+

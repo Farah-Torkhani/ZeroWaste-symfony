@@ -1,0 +1,111 @@
+{% extends 'collecte/new.html.twig' %}
+
+{% block stylesheets %}
+  <link rel="stylesheet" href="{{asset('./contents/css/ST3.css')}}">
+	<link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"/>    
+	<link rel="icon" href="{{asset('./contents/img/logo1.png')}}">
+{% endblock %}
+{% block add_collect %} 
+<div id="event-forum-model" class="event-forum-model" style="right: 0%;">
+          <div class="event-forum-model__header">
+            <h3 class="event-forum-model__header-title">Add Collect</h3>
+            <span
+              id="event-forum-model__header-closeBtn"
+              class="event-forum-model__header-closeBtn"
+              > <a href="{{path('admine_collecte')}}"><i class="bx bx-x closeModelBtn"></i
+            ></a></span>
+          </div>
+
+        {{ form_start(form,{'attr':{'novalidate':'novalidate'}}) }}
+          <div  class="event-forum-model__body">
+          
+            {{ form_widget(form.nomCollecte,{'attr':{'class':'form__input','placeholder':'Collect'}})}}
+            {{ form_errors(form.nomCollecte,{'attr':{'class':'form__input'}})}}
+ 
+          
+            {{ form_widget(form.collecteCategorie,{'attr':{'class':'form__input','placeholder':'Category'}})}}
+            {{ form_errors(form.collecteCategorie,{'attr':{'class':'form__input'}})}}
+           
+            {{ form_widget(form.date_deb,{'attr':{'class':'form__input','placeholder':'Start date'}})}}
+            {{ form_errors(form.date_deb,{'attr':{'class':'form__input'}})}}
+            
+            {{ form_widget(form.date_fin,{'attr':{'id':'event_endDate','name':'event_endDate','class':'form__input','type':'datetime-local','placeholder': 'jj/mm/aaaa --:-- --'}})}}
+            {{ form_errors(form.date_fin,{'attr':{'class':'form__input'}})}}
+            
+           
+            {{ form_widget(form.adresse,{'attr':{'class':'form__input','placeholder':'Location'}})}}
+            {{ form_errors(form.adresse,{'attr':{'class':'form__input'}})}}
+            {{ form_widget(form.description,{'attr':{'type':'datetime-local','class':'form__input event_description','placeholder':'Description'}})}}
+            {{ form_errors(form.description,{'attr':{'type':'datetime-local','class':'form__input' }})}}
+            {{ form_widget(form.etat,{'attr':{'class':'form__input'}})}}
+            {{ form_errors(form.etat,{'attr':{'class':'form__input'}})}}
+         
+            <hr class="hr-border hr-border-2" />
+          <div class="product-add-form__input__group">
+            <label for="productImage" class="product-add-form__input__label"
+              >Image <span>*</span></label
+            >
+            <div class="product-add-form-image">
+              <div class="prouct-add-form-image__container">
+                <i class="bx bx-cloud-upload"></i>
+                <img
+                  class="prouct-add-form-image__img"
+                  src=""
+                  alt=""
+                  id="prouct-add-form-image__img"
+                  accept="image/*"
+                  style="display: none"
+                />
+              </div>
+              <div class="prouct-add-form-image__description">
+                <p>
+                  Resolution : 1920x1080 px <br />
+                  Supported file types : jpg, <br />
+                  .jpeg ,. gif ou .png No text<br />
+                  on the image.
+                </p>
+                <div class="prouct-add-form-image__add">
+                  {{ form_label(form.imageCollect,'Choose a photo:', {'label_attr': {'class': 'prouct-add-form-image__addBtn','for': 'prouct-add-form-image__file-btn'}}) }}
+                  {{form_widget(form.imageCollect,{'attr':{'class':'prouct-add-form-image__file-btn','name':'prouct-add-form-image__file-btn','id':'prouct-add-form-image__file-btn','style':'display:none'}})}}
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr class="hr-border hr-border-2" />
+           
+
+            <div class="event-forum-btn">
+              <button class="submit-btn-event">
+                {{ button_label|default('Save') }}
+              </button>
+             
+            </div>
+            
+              
+
+        {{ form_end(form) }}
+        </div>
+      </div>
+{% endblock %}   
+
+{% block JsScript %}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+    console.log("Hello world!");
+    $(function () {
+  $("#collecte_imageCollect").change(function (event) {
+    console.log("test");
+    var x = URL.createObjectURL(event.target.files[0]);
+    $("#prouct-add-form-image__img").attr("src", x);
+    $("#prouct-add-form-image__img").show(0);
+    $(".bx-cloud-upload").hide(0);
+
+  });
+});
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.1/index.global.min.js"></script>  
+<script src="{{asset('./contents/js/calendar.js')}}"></script> 
+{% endblock %}

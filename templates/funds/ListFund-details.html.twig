@@ -31,7 +31,7 @@
       <li><a href="{{path('app_landing_page')}}" class="text-decoration">Home</a></li>
       <li><a href="{{path('afficher_funds')}}" class="text-decoration">Fundraising</a></li>
       <li><a href="{{path('app_products')}}" class="text-decoration">shop</a></li>
-      <li><a href="" class="text-decoration">Collect</a></li>
+      <li><a href="{{path('app_collecte_index')}}" class="text-decoration">Collect</a></li>
     </ul>
 
     <div class="navbar__items">
@@ -124,10 +124,10 @@
                                   
                            
                                     <div class="dash-user-fund-detail__donation__item__right">
-                                        <div class="dash-user-fund-detail__donation__item__info">
+                                    <div class="dash-user-fund-detail__donation__item__info">
                                     
-                                            <h1 class="dash-user-fund-detail__donation__item__info__name"><span>{{c.userID.fullName}} </span> donated <span>{{c.donationPrice}} DNT</span>
-                                            </h1>
+                                    <h1 class="dash-user-fund-detail__donation__item__info__name"><span>{{c.userID.fullName}} </span> donated <span>{{c.donationPrice}} DNT</span>
+</h1>
                                             <p class="dash-user-fund-detail__donation__item__info__comment">
                                                 {{c.comment}}
                                             </p>

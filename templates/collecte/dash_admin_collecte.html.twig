@@ -1,0 +1,289 @@
+{% extends 'collecte/collect_base.html.twig' %}
+
+
+{% block title %}New CollecteCategorie{% endblock %}
+
+{% block stylesheets %}
+  <link rel="stylesheet" href="{{asset('./contents/css/ST3.css')}}">
+	<link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"/>    
+	<link rel="icon" href="{{asset('./contents/img/logo1.png')}}">
+   <style>
+        #calendrier{
+            width: 80%;
+            margin: auto;
+        }
+    </style>
+{% endblock %}
+   {% block nav %}
+{% endblock %}
+{% block admin_collect %} 
+
+            
+
+        <div class="dash__container">
+        <nav class="dash__navbar">
+          <div class="dash__navbar-text">Dashboard</div>
+          <div class="navbar__items">
+            <span class="navbar__item">
+              <i class="bx bx-log-out item"></i>
+            </span>
+
+            <div class="notification-icon">
+              <span class="cart-icon__span">3</span>
+              <span class="navbar__item">
+                <i class="bx bx-bell item"></i>
+              </span>
+            </div>
+
+            <span class="dash__top-bar__fullname"> ELghoul Kaiss </span>
+
+            <div class="dash__top-bar__img-container">
+              <a href="#">
+                <img
+                  src="{{asset('./contents/img/avatar.png')}}"
+                  class="dash__top-bar__img"
+                  alt="profile"
+                />
+              </a>
+            </div>
+          </div>
+        </nav>
+        <!--end dash__navbar-->
+     
+             
+
+        <div class="dash__container-card">
+          <div class="dash__card">
+            <div class="dash__card-rightSide">
+              <div class="dash__card-rightSide__first-row">
+                <a
+                  href="{{path('app_participation_index')}}"
+                  class="dash__card-rightSide__btn-container list-plus"
+                  id="add-participant"
+                >
+                  <i class="bx bx-user-check"></i>
+                  <div
+                    class="btn-hover-container Categories-hover"
+                    id="add-btn-hover-container2"
+                  >
+                    participant
+                  </div>
+                </a>
+
+                <a
+                  href="{{path('app_collecte_new')}}"
+                  class="dash__card-rightSide__btn-container list-plus"
+                  id="add-event-btn"
+                >
+                  <i class="bx bx-list-plus"></i>
+                  <div class="btn-hover-container" id="add-btn-hover-container">
+                    Add collect
+                  </div>
+                </a>
+                
+                <a
+                   href="{{path('app_collecte_categorie_new')}}"
+                  class="dash__card-rightSide__btn-container"
+                  id="category-btn-rightSide"
+                >
+                  <i class="bx bx-category"></i>
+                  <div
+                    class="btn-hover-container Categories-hover"
+                    id="category-btn-hover-container"
+                  >
+                    Categories
+                  </div>
+                </a>
+               
+              </div>
+             
+            </div>
+
+            <div class="calendar-container">
+              
+              <div id="calendrier"> </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="event-forum-model" class="event-forum-model">
+          <div class="event-forum-model__header">
+            <h3 class="event-forum-model__header-title">Add Collect</h3>
+            <span
+              id="event-forum-model__header-closeBtn"
+              class="event-forum-model__header-closeBtn">
+              <a href=""><i class="bx bx-x closeModelBtn"></i></span></a>
+          </div>
+
+          
+            <input
+              id="event_title"
+              name="event_title"
+              type="text"
+              class="form__input"
+              placeholder="Collect"
+            />
+            
+            <select
+              id="select_category"
+              name="select_category"
+              type="text"
+              class="form__input"
+              placeholder="Category"
+            >
+              <option selected disabled>Category</option>
+              <option value="pdf">Pdf</option>
+              <option value="text">Text</option>
+              <option value="aloo">aloo</option>
+            </select>
+
+            <input
+              id="event_startDate"
+              name="event_startDate"
+              type="datetime-local"
+              class="form__input"
+              placeholder="Start date"
+            />
+            <input
+              id="event_endDate"
+              name="event_endDate"
+              type="datetime-local"
+              class="form__input"
+            />
+       
+            <input
+              id="event_location"
+              name="event_location"
+              type="text"
+              class="form__input"
+              placeholder="Location"
+            />
+            <textarea
+              id="event_description"
+              name="event_description"
+              class="form__input event_description"
+              placeholder="Description"
+            ></textarea>
+            <input
+              id="event_image"
+              name="event_image"
+              type="file"
+              class="form__input_image"
+              placeholder="Image"
+              accept="image/*"
+            />
+
+            <div class="event-forum-btn">
+              <input class="submit-btn-event" type="submit" value="Submit" />
+              <button class="cancel-btn-event">Cancel</button>
+            </div>
+          
+        </div>
+      </div>
+
+    </div>
+
+
+
+
+{% endblock %}
+
+{% block javascripts %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+
+    window.onload = () => {
+        let calendarElt = document.querySelector("#calendrier")
+
+        let calendar = new FullCalendar.Calendar(calendarElt, {
+             initialView: "dayGridMonth",
+            locale: 'fr',
+            timeZone: 'Affrique/Tunisie',
+            headerToolbar: {
+                 start: "prev,next,today",
+                 center: "title",
+                 end: "dayGridMonth,timeGridWeek,timeGridDay,listWeek",
+            },
+            events: {{ data|raw }},
+            editable: true,
+            navLinks: true,
+
+            eventResizableFromStart: true,
+            height: 600,
+
+            dateClick: function (info) {
+            alert("Date: " + info.dateStr);
+            alert("Resource ID: " + info.resource.id);
+            info.dayEl.style.backgroundColor = "red";
+            },
+        })
+
+        /*calendar.on('eventChange', (e) => {
+            let url = `/api/${e.event.id}/edit`
+            let donnees = {
+                "title": e.event.nomCollecte,
+                "description": e.event.extendedProps.description,
+                "start": e.event.date_deb,
+                "end": e.event.date_fin,
+                'etat': e.event.id,
+                'adresse': e.event.adresse,
+                'image':e.event.imageCollect,
+            }
+            console.log(donnees);
+            
+            let xhr = new XMLHttpRequest
+
+            xhr.send(JSON.stringify(donnees))
+        })*/
+
+
+        calendar.on('eventChange', function(e) {
+    let url = `/api/${e.event.id}/edit`;
+    var data=[];
+    data.push({
+      title: e.event.title,
+      description: e.event.extendedProps.description,
+        start: e.event.start,
+        end: e.event.end,
+        etat: e.event.id,
+        adresse: e.event.adresse,
+        image:e.event.imageCollect,
+
+    });
+    console.log(data[0].title);
+
+    let donnees = {
+        "title": e.event.title,
+        "description": e.event.extendedProps.description,
+        "start": e.event.start,
+        "end": e.event.end,
+        'etat': e.event.id,
+        'adresse': e.event.adresse,
+        'image':e.event.imageCollect,
+    };
+    console.log(donnees);
+    $.ajax({
+        url: "{{path('api_event_edit')}}",
+        method: 'GET',
+        data: {
+          donneesT: donnees.title,
+          donneesS: donnees.start,
+          donneesE: donnees.end,
+          },
+        success: function(response) {
+            console.log(response);
+        },
+        error: function(xhr, status, error) {
+            console.log(error);
+        }
+    });
+});
+
+        calendar.render()
+    }
+</script>
+
+
+
+{% endblock %}

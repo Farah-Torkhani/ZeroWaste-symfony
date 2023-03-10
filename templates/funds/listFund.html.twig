@@ -31,7 +31,7 @@
       <li><a href="{{path('app_landing_page')}}" class="text-decoration">Home</a></li>
       <li><a href="{{path('afficher_funds')}}" class="text-decoration">Fundraising</a></li>
       <li><a href="{{path('app_products')}}" class="text-decoration">shop</a></li>
-      <li><a href="" class="text-decoration">Collect</a></li>
+      <li><a href="{{path('app_collecte_index')}}" class="text-decoration">Collect</a></li>
     </ul>
 
     <div class="navbar__items">
@@ -78,7 +78,7 @@
      
         {# {{ include('funds/search.html.twig')}} #}
 <table>
-        <div class="dash-user-fund__container--right">
+        
  {% for stu in Funds %}
             <div class="fund--1__item" id="test">
                 <div class="fund--1__item__img__container">
@@ -144,8 +144,7 @@
                     </div>
                 </div>
 
-            </div>
-
+          
 {% endfor %}
 </table>
 

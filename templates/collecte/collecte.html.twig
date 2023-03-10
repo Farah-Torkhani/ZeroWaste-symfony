@@ -1,0 +1,276 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Collecte index{% endblock %}
+
+
+
+
+
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{asset('./contents/css/ST1.css')}}">
+    <link rel="stylesheet" href="{{asset('./contents/css/ST2.css')}}">
+   <link rel="stylesheet" href="{{asset('./contents/css/style.css')}}" />
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>    
+	<link rel="icon" href="{{asset('./contents/img/logo1.png')}}">
+{% endblock %}
+
+
+    {% block nav %}
+    {% endblock %}
+
+{% block body %}
+
+<nav class="front__navbar front__navbar-scrolled-up">
+    <div class="front__navbar-img-container">
+      <img
+        src="{{asset('./contents/img/logo.png')}}"
+        class="front__navbar-img-container"
+        alt=""
+      />
+    </div>
+
+   <ul class="front__navbar__link" style="position: relative; right: -2rem">
+      <li><a href="{{path('app_landing_page')}}" class="text-decoration">Home</a></li>
+      <li><a href="{{path('afficher_funds')}}" class="text-decoration">Fundraising</a></li>
+      <li><a href="{{path('app_products')}}" class="text-decoration">shop</a></li>
+      <li><a href="{{path('app_collecte_index')}}" class="text-decoration">Collect</a></li>
+    </ul>
+
+    <div class="navbar__items">
+      <div
+        class="notification-icon"
+        style="position: relative; top: 0.1rem"
+      >
+        <span class="cart-icon__span">3</span>
+        <span class="navbar__item">
+          <i class="bx bx-bell item"></i>
+        </span>
+      </div>
+
+      <span class="dash__top-bar__fullname"> Elghoul Kaiss </span>
+
+      <div class="dash__top-bar__img-container">
+        <a href="#">
+          <img
+            src="{{asset('./contents/img/ali.jpg')}}"
+            class="dash__top-bar__img"
+            alt="profile"
+          />
+        </a>
+      </div>
+    </div>
+  </nav>
+ 
+<section class="blogs" >
+    <h1 class="heading"> our <span>collect</span> </h1>
+    <!-- blogs section starts  -->
+     <div class="bx-chevron-left-container wrapper"><i id="left" class='bx bx-chevron-left'></i></div>
+      <div class="shop-items__categories-container">
+         {% for c in categorie %}
+           <div class="shop-items__one-category-container" onclick="filterCategories( x='{{c.id}}'  )" data-id="{{c.id}}" id="shop-items__one-category-container{{c.id}}">
+              <div class="shop-items__one-category">
+                <div class="shop-items__category-img-container">
+                  <img src="{{asset('./contents/uploads/products/blog-2-640366d85a9c3.jpg')}}" class="shop-items__category-img" />
+                </div>
+                <div class="shop-items__category-name">
+                  {{c.nomCollectCat}}
+                </div>
+              </div>
+            </div>
+         {% endfor %}
+        </div> 
+      <div class="bx-chevron-right-container__full"><div class="bx-chevron-right-container wrapper"><i id="right" class='bx bx-chevron-right'></i></div>
+         
+{#--------------end one category--------------#}  
+ <div class="box-container">
+        {% for c in collectes %}
+        {% if c.getDateDeb()|date('Y-m-d') >= 'now'|date('Y-m-d') %}
+        <div class="box">
+            <div class="image">
+                <img src="{{asset('./contents/uploads/products/') ~ c.imageCollect}}" alt="">
+            </div>
+            <div class="content">
+                <div class="icon">
+                    <a href="#"> <i class="fas fa-calendar"></i>{{c.collecteCategorie}}</a>
+                    <a href="#"> <i class="fas fa-user"></i> {{c.adresse}} </a>
+                </div>
+                <h3>{{c.nomCollecte}}</h3>
+                <p>{{c.description}}</p>
+                <a href="{{path('app_participation_new',{'id': c.id})}}" class="btn"> Rejoindre <span class="fas fa-chevron-right"></span> </a>
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+ </div>  
+
+  <section class="blogs" id="blogsID">
+  </section>
+  <div class="heading">
+      <div>
+        <button class="btn" type="button" disabled="disabled" data-bs-toggle="tooltip" data-bs-placement="top" title="Prev"><span class="fas fa-chevron-left"></span></button>
+        <a class="btn btn-sm btn-falcon-default text-primary me-2" href="#!">1</a>
+        <a class="btn btn-sm btn-falcon-default me-2" href="#!">2</a>
+        <a class="btn btn-sm btn-falcon-default me-2" href="#!">3</a>
+        <button class="btn" type="button" data-bs-toggle="tooltip" data-bs-placement="top" title="Next"><span class="fas fa-chevron-right"></span></button>
+    </div>
+</div>  
+</section>
+
+  
+
+
+
+
+
+<!-- blogs section ends -->
+
+<!-- footer section starts  -->
+
+<section class="footer">
+
+    <div class="box-container">
+
+        <div class="box">
+            <h3>quick links</h3>
+            <a href="#"> <i class="fas fa-chevron-right"></i> home </a>
+            <a href="#"> <i class="fas fa-chevron-right"></i> services </a>
+            <a href="#"> <i class="fas fa-chevron-right"></i> about </a>
+            <a href="#"> <i class="fas fa-chevron-right"></i> doctors </a>
+            <a href="#"> <i class="fas fa-chevron-right"></i> book </a>
+            <a href="#"> <i class="fas fa-chevron-right"></i> review </a>
+            <a href="#"> <i class="fas fa-chevron-right"></i> blogs </a>
+        </div>
+
+        <div class="box">
+            <h3>our services</h3>
+            <a href="#"> <i class="fas fa-chevron-right"></i> dental care </a>
+            <a href="#"> <i class="fas fa-chevron-right"></i> message therapy </a>
+            <a href="#"> <i class="fas fa-chevron-right"></i> cardioloty </a>
+            <a href="#"> <i class="fas fa-chevron-right"></i> diagnosis </a>
+            <a href="#"> <i class="fas fa-chevron-right"></i> ambulance service </a>
+        </div>
+
+        <div class="box">
+            <h3>contact info</h3>
+            <a href="#"> <i class="fas fa-phone"></i> +123-456-7890 </a>
+            <a href="#"> <i class="fas fa-phone"></i> +111-222-3333 </a>
+            <a href="#"> <i class="fas fa-envelope"></i> shaikhanas@gmail.com </a>
+            <a href="#"> <i class="fas fa-envelope"></i> anasbhai@gmail.com </a>
+            <a href="#"> <i class="fas fa-map-marker-alt"></i> mumbai, india - 400104 </a>
+        </div>
+
+        <div class="box">
+            <h3>follow us</h3>
+            <a href="#"> <i class="fab fa-facebook-f"></i> facebook </a>
+            <a href="#"> <i class="fab fa-twitter"></i> twitter </a>
+            <a href="#"> <i class="fab fa-twitter"></i> twitter </a>
+            <a href="#"> <i class="fab fa-instagram"></i> instagram </a>
+            <a href="#"> <i class="fab fa-linkedin"></i> linkedin </a>
+            <a href="#"> <i class="fab fa-pinterest"></i> pinterest </a>
+        </div>
+
+    </div>
+
+    
+
+</section>
+
+{% block Js %} 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+
+      function filterCategories(x) {
+  //$("#chevron-down" + x).toggle(0);
+  const categoryId = $("#shop-items__one-category-container" + x).data("id");
+  console.log(categoryId);
+
+  var categoryIdData = [];
+  categoryIdData.push({
+    id: categoryId,
+  });
+
+  console.log(categoryIdData);
+
+  $.ajax({
+    type: "GET",
+    url: "{{ path('filterCategories') }}",
+    data: { categoryIdData: categoryIdData },
+
+    success: function (result) {
+      console.log("result");
+      if (result) {
+        console.log(result);
+        
+        $(".box-container").empty();
+        $(".box-container").hide();
+        $(".blogs").empty();
+        $("#blogsID").show();
+
+        $.each(JSON.parse(result), function (i, obj) {
+          console.log(obj);
+        
+        
+          //newDiv1 : div container: contains newDiv2 newDiv3 newDiv4
+          var $newDiv0_1 = $("<div></div>").addClass("box-container");
+          var $newDiv1 = $("<div></div>").addClass("box");
+
+          var $newDiv2 = $("<div></div>").addClass("image");
+          
+        
+
+          //in $newDiv2
+          var $newImg = $("<img />")
+          var imagePath = "{{ app.request.basePath }}contents/uploads/products/" + obj.imageCollect;
+          $newImg.attr("src", imagePath);
+
+          //in newdiv3
+          var $newDiv3 = $("<div></div>").addClass("content");
+          var $newDiv4 = $("<div></div>").addClass("icon");
+          var $newa1 = $("<a>" + obj.collecteCategorie + "</a>").addClass(
+            "fas fa-calendar"
+          );
+
+          var $newa2 = $("<a>" + obj.adresse + "</a>").addClass(
+            "fas fa-user"
+          );
+
+          var $newh = $("<h3>" + obj.nomCollecte + "</h3>");
+          var $newp = $("<p>" + obj.description + "</p>");
+
+          var $newLink = $("<a></a>").attr("href", "/collecte/participation/new/" + obj.id + "").addClass("btn").text("Rejoindre");
+          var $span = $("<span></span>").addClass("fas fa-chevron-right");
+          //in newdiv4
+          
+
+          $(".blogs").append($newDiv0_1);
+          $newDiv0_1.append($newDiv1);
+          $newDiv1.append($newDiv2);
+          $newDiv1.append($newDiv3);
+          $newDiv2.append($newImg);
+
+          $newDiv3.append($newImg);
+
+          $newDiv3.append($newDiv4);
+          $newDiv3.append($newh);
+          $newDiv3.append($newp);
+          $newDiv3.append($newLink);
+
+          $newDiv4.append($newa1);
+          $newDiv4.append($newa2);
+          $newLink.append($span);
+        });
+      }
+    },
+    error: function (xhr, status, error) {
+      console.log("Error: " + error);
+    },
+  });
+}
+</script>
+{% endblock %}
+
+
+{% endblock %}

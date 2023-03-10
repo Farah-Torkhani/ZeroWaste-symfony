@@ -1,0 +1,256 @@
+{% extends 'collecte_categorie/collect_base.html.twig' %}
+
+
+{% block title %}New CollecteCategorie{% endblock %}
+
+{% block stylesheets %}
+  <link rel="stylesheet" href="{{asset('./contents/css/style.css')}}">
+	<link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"/>    
+	<link rel="icon" href="{{asset('./contents/img/logo1.png')}}">
+{% endblock %}
+
+{% block admin_collect %} 
+
+            
+
+        <div class="dash__container">
+        <nav class="dash__navbar">
+          <div class="dash__navbar-text">Dashboard</div>
+          <div class="navbar__items">
+            <span class="navbar__item">
+              <i class="bx bx-log-out item"></i>
+            </span>
+
+            <div class="notification-icon">
+              <span class="cart-icon__span">3</span>
+              <span class="navbar__item">
+                <i class="bx bx-bell item"></i>
+              </span>
+            </div>
+
+            <span class="dash__top-bar__fullname"> ELghoul Kaiss </span>
+
+            <div class="dash__top-bar__img-container">
+              <a href="#">
+                <img
+                  src="{{asset('./contents/img/avatar.png')}}"
+                  class="dash__top-bar__img"
+                  alt="profile"
+                />
+              </a>
+            </div>
+          </div>
+        </nav>
+        <!--end dash__navbar-->
+     
+             
+
+        <div class="dash__container-card">
+          <div class="dash__card">
+            <div class="dash__card-rightSide">
+              <div class="dash__card-rightSide__first-row">
+                <a
+                  href=""
+                  class="dash__card-rightSide__btn-container list-plus"
+                  id="add-participant"
+                >
+                  <i class="bx bx-user-check"></i>
+                  <div
+                    class="btn-hover-container Categories-hover"
+                    id="add-btn-hover-container2"
+                  >
+                    participant
+                  </div>
+                </a>
+
+                <a
+                  class="dash__card-rightSide__btn-container list-plus"
+                  id="add-event-btn"
+                >
+                  <i class="bx bx-list-plus"></i>
+                  <div class="btn-hover-container" id="add-btn-hover-container">
+                    Add collect
+                  </div>
+                </a>
+                <button
+                  class="dash__card-rightSide__btn-container"
+                  id="category-btn-rightSide"
+                >
+                  <i class="bx bx-category"></i>
+                  <div
+                    class="btn-hover-container Categories-hover"
+                    id="category-btn-hover-container"
+                  >
+                    Categories
+                  </div>
+                </button>
+              </div>
+            </div>
+
+            <div class="calendar-container">
+              <div id="calendar"></div>
+            </div>
+          </div>
+        </div>
+
+        <div id="event-forum-model" class="event-forum-model">
+          <div class="event-forum-model__header">
+            <h3 class="event-forum-model__header-title">Add Collect</h3>
+            <span
+              id="event-forum-model__header-closeBtn"
+              class="event-forum-model__header-closeBtn"
+              ><i class="bx bx-x closeModelBtn"></i
+            ></span>
+          </div>
+
+          
+            <input
+              id="event_title"
+              name="event_title"
+              type="text"
+              class="form__input"
+              placeholder="Collect"
+            />
+            
+            <select
+              id="select_category"
+              name="select_category"
+              type="text"
+              class="form__input"
+              placeholder="Category"
+            >
+              <option selected disabled>Category</option>
+              <option value="pdf">Pdf</option>
+              <option value="text">Text</option>
+              <option value="aloo">aloo</option>
+            </select>
+
+            <input
+              id="event_startDate"
+              name="event_startDate"
+              type="datetime-local"
+              class="form__input"
+              placeholder="Start date"
+            />
+            <input
+              id="event_endDate"
+              name="event_endDate"
+              type="datetime-local"
+              class="form__input"
+            />
+       
+            <input
+              id="event_location"
+              name="event_location"
+              type="text"
+              class="form__input"
+              placeholder="Location"
+            />
+            <textarea
+              id="event_description"
+              name="event_description"
+              class="form__input event_description"
+              placeholder="Description"
+            ></textarea>
+            <input
+              id="event_image"
+              name="event_image"
+              type="file"
+              class="form__input_image"
+              placeholder="Image"
+              accept="image/*"
+            />
+
+            <div class="event-forum-btn">
+              <input class="submit-btn-event" type="submit" value="Submit" />
+              <button class="cancel-btn-event">Cancel</button>
+            </div>
+          
+        </div>
+      </div>
+      <div
+        id="event-forum-masque"
+        class="event-forum"
+        style="display: none"
+      ></div>
+       <div class="product-categories-model" id="product-categories-model"  style="display:block" >
+        <div class="product-categories-model__card">
+          <div class="product-categories-model__card-header">
+            <h1>Categories</h1>
+            <div><a href="{{path('admine_collecte')}}" class="bx bx-x closeModelBtn"></a></div>
+          </div>
+          <hr class="hr-border-categories" />
+          <div class="product-categories-model__card-content">
+            <div
+              class="product-categories-model__card-content-btn-container"
+              id="add-new-category__id"
+            >
+              <i class="bx bx-folder-plus"></i>
+              <p class="product-categories-model__card-content-btn">
+                Add New Category
+              </p>
+            </div>
+          
+            
+
+            {{ form_start(form,{'attr':{'novalidate':'novalidate'}}) }}
+              <div  id="add-category__form-id" >
+                <div class="product-add-form__input__group product-add-form__input__group-category">
+                    <label for="productName" class="product-add-form__input__label"
+                      >Name <span>*</span></label
+                    >
+                    {{ form_widget(form.nomCollectCat,{'attr':{'class':'product-add-form__input category-input'}})}}
+                    {{ form_errors(form.nomCollectCat,{'attr':{'class':'form_errors-product'}})}}
+                </div>
+                
+                <div class="product-add-form__input__group product-add-form__input__group-category">
+                  <label for="productName" class="product-add-form__input__label"
+                    >Point<span>*</span></label
+                  >
+                  {{ form_widget(form.pointCategorie,{'attr':{'class':'product-add-form__input category-input'}})}}
+                  {{ form_errors(form.pointCategorie,{'attr':{'class':'form_errors-product'}})}}
+                </div>
+
+                
+      
+                <div class="product-categories-model__card-content">
+                    <div class="product-categories-model__card-content-btn-container" id="add-new-category__id">
+                        <i class="bx bx-folder-plus"></i>
+                        <button class="product-categories-model__card-content-btn">{{button_label | default('Add')}}</button>
+                    </div>
+              
+                </div>
+                 
+              </div>
+            {{ form_end(form) }}
+            <h2 class="categories-list__title">Categories List</h2>
+            
+            {% for c in collecte_categories %}
+            
+             <div class="categories-list-one">
+              <div class="categories-list-one-img">
+                <img
+                 src="{{asset('./contents/img/sac-isotherme-ecologique.jpg')}}"
+                  alt=""
+                  class="categories-list-one-image"
+                />
+              </div>
+              <div class="categories-list-one-content">
+                <div class="categories-list-one-name">{{c.nomCollectCat}}</div>
+                <div class="categories-list-one-btns">
+                  <a href="{{path('app_collecte_categorie_edit',{'id':c.id})}}" class="categories-list-one-btn">
+                    <i class="bx bx-edit" id="edit-btn__category"></i>
+                  </a>
+                  <a href="{{path('app_collecte_categorie_delete',{'id': c.id})}}" class="categories-list-one-btn">
+                    <i class="bx bx-trash"> </i>
+                  </a>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+
+{% endblock %}

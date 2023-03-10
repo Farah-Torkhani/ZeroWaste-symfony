@@ -3,7 +3,11 @@
 namespace App\Entity;
 
 use App\Repository\ParticipationRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 #[ORM\Entity(repositoryClass: ParticipationRepository::class)]
 class Participation
@@ -12,21 +16,35 @@ class Participation
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-
+    
+    #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Assert\NotBlank(message:"le champ est vide") ]
     private ?int $verification_p = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message:"le champ est vide") ]
+    #[Assert\Email(message:"Le format de l'adresse email est invalide") ]
     private ?string $email = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message:"le champ est vide") ]
     private ?int $phone = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message:"le champ est vide") ]
     private ?int $quantite = null;
 
     #[ORM\Column(length: 255)]
     private ?string $image = null;
+
+    #[ORM\ManyToMany(targetEntity: Collecte::class, inversedBy: 'participations')]
+    private Collection $collecte_id;
+
+    public function __construct()
+    {
+        $this->collecte_id = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -89,6 +107,37 @@ class Participation
     public function setImage(string $image): self
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Collecte>
+     */
+    public function getCollecteId(): Collection
+    {
+        return $this->collecte_id;
+    }
+    
+    public function setCollecteId(int $collecte_id): self
+    {
+        $this->collecte_id = $collecte_id;
+
+        return $this;
+    }
+    
+    public function addCollecteId(Collecte $collecteId): self
+    {
+        if (!$this->collecte_id->contains($collecteId)) {
+            $this->collecte_id->add($collecteId);
+        }
+
+        return $this;
+    }
+
+    public function removeCollecteId(Collecte $collecteId): self
+    {
+        $this->collecte_id->removeElement($collecteId);
 
         return $this;
     }

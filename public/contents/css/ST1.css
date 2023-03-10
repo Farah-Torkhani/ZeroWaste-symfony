@@ -878,7 +878,7 @@ td {
   color: black;
   z-index: 1000;
   box-shadow: 0 0.32rem 1.6rem rgb(0 0 0 / 16%);
-
+      overflow-y: scroll;
   transition: 0.7s;
 }
 .event {
@@ -2330,3 +2330,5 @@ td {
   margin-bottom: 2rem !important;
   margin-top: 1rem;
 }
+
+

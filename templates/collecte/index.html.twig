@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Calendrier{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        #calendrier{
+            width: 80%;
+            margin: auto;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    {% block calendrier %}
+    <div id="calendrier"> </div>
+    {% endblock %}
+{% endblock %}
+
+{% block javascripts %}
+
+<script>
+    window.onload = () => {
+        let calendarElt = document.querySelector("#calendrier")
+
+        let calendar = new FullCalendar.Calendar(calendarElt, {
+             initialView: "dayGridMonth",
+            locale: 'fr',
+            timeZone: 'Affrique/Tunisie',
+            headerToolbar: {
+                 start: "prev,next,today",
+                 center: "title",
+                 end: "dayGridMonth,timeGridWeek,timeGridDay,listWeek",
+            },
+            events: {{ data|raw }},
+            editable: true,
+            navLinks: true,
+
+            eventResizableFromStart: true,
+            height: 600,
+
+            dateClick: function (info) {
+            alert("Date: " + info.dateStr);
+            alert("Resource ID: " + info.resource.id);
+            info.dayEl.style.backgroundColor = "red";
+            },
+        })
+
+        calendar.on('eventChange', (e) => {
+            let url = `/api/${e.event.id}/edit`
+            let donnees = {
+                "title": e.event.nomCollecte,
+                "description": e.event.extendedProps.description,
+                "start": e.event.date_deb,
+                "end": e.event.date_fin,
+                'etat': e.event.id,
+                'adresse': e.event.adresse,
+                'image':e.event.imageCollect,
+            }
+            
+            let xhr = new XMLHttpRequest
+
+            xhr.open("PUT", url)
+            xhr.send(JSON.stringify(donnees))
+        })
+
+        calendar.render()
+    }
+</script>
+
+{% endblock %}
