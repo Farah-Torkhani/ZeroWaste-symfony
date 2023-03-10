@@ -52,7 +52,7 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
         // For example:
         $user = $token->getUser();
         if (in_array('ROLE_ADMIN', $user->getRoles(), true)) {
-            return new RedirectResponse($this->urlGenerator->generate('app_dash_admin_users'));
+            return new RedirectResponse($this->urlGenerator->generate('app_dash_admin_home'));
         }
         return new RedirectResponse($this->urlGenerator->generate('app_dash_user_home'));
         throw new \Exception('TODO: provide a valid redirect inside ' . __FILE__);
@@ -60,7 +60,7 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
 
     protected function getLoginUrl(Request $request): string
     {
-        $request->getSession()->getFlashBag()->add('warning', 'You are not authorized');
+        // $request->getSession()->getFlashBag()->add('warning', 'You are not authorized');
 
 
         return $this->urlGenerator->generate(self::LOGIN_ROUTE);

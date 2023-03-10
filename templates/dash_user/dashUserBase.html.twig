@@ -25,7 +25,8 @@
 		<header class="header-nav-logo">
 			<div class="image-text">
 				<span class="image">
-					<img class="logo logo-toggled-width" src="{{asset('./contents/img/logo4.png')}}" alt="logo" />
+					<img style="margin-top: -7rem;" class="logo logo-toggled-width"
+						src="{{asset('./contents/img/logo4.png')}}" alt="logo" />
 				</span>
 			</div>
 			<i class="bx bx-chevron-right toggle"></i>
@@ -59,8 +60,8 @@
 					</li>
 
 					<li class="nav-links">
-						<a href="{{path('app_dash_user_shop')}}"
-							class="nav-links-item {% if app.request.attributes.get('_route') == 'app_dash_user_shop' %}active{% endif %}">
+						<a href="{{path('app_products')}}"
+							class="nav-links-item {% if app.request.attributes.get('_route') == 'app_products' %}active{% endif %}">
 							<i class='bx bx-store icon'></i>
 							<span class="text nav-text">Shop</span>
 						</a>
@@ -75,8 +76,8 @@
 					</li>
 
 					<li class="nav-links">
-						<a href="#"
-							class="nav-links-item {% if app.request.attributes.get('_route') == 'app_dash_user_commands' %}active{% endif %}">
+						<a href="{{path('app_commands')}}"
+							class="nav-links-item {% if app.request.attributes.get('_route') == 'app_commands' %}active{% endif %}">
 							<i class="bx bx-cart icon"></i>
 							<span class="text nav-text">Commands</span>
 						</a>

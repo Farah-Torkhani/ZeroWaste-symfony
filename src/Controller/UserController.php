@@ -21,6 +21,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
+use Symfony\UX\Chartjs\Model\Chart;
 
 class UserController extends AbstractController
 {
@@ -341,7 +344,7 @@ class UserController extends AbstractController
 
                 // updates the 'brochureFilename' property to store the PDF file name
                 // instead of its contents
-                $user->setImgUrl($newFilename);
+                $updatedUser->setImgUrl($newFilename);
             }
 
 
@@ -364,6 +367,64 @@ class UserController extends AbstractController
             'updatedUser' => $updatedUser,
             'registreForm' => $updateForm->createView(),
 
+        ]);
+    }
+
+    #[Route('/dash/admin/home', name: 'app_dash_admin_home')]
+    public function dashAdminHome(Request $request, ManagerRegistry $doct, ChartBuilderInterface $chartBuilder, UserRepository $userRepo): Response
+    {
+        $user = $doct->getRepository(User::class)->findOneBy(['email' => $this->getUser()->getUserIdentifier()]);
+
+        $nbIndiv = count($userRepo->findByRole('["ROLE_USER"]'));
+        $nbAssocitiation = count($userRepo->findByRole('["ROLE_ASSOCIATION"]'));
+
+        $nbActiveUser = count($userRepo->findByState(true));
+        $nbUnactiveeUser = count($userRepo->findByState(false));
+
+        $chart = $chartBuilder->createChart(Chart::TYPE_BAR);
+        $chart->setData([
+            'labels' => ['Individuals', 'Association'],
+            'datasets' => [
+                [
+                    'label' => 'number of users is',
+                    'backgroundColor' => '#5BA890',
+                    'borderColor' => '#43882B',
+                    'data' => [$nbIndiv, $nbAssocitiation],
+                ],
+            ],
+        ]);
+
+
+
+        $chart2 = $chartBuilder->createChart(Chart::TYPE_DOUGHNUT);
+        $chart2->setData([
+            'labels' => ['Active', 'Unactive'],
+            'datasets' => [
+                [
+                    'backgroundColor' => ['#5BA890', '#FF1E00'],
+                    // 'borderColor' => '#43882B',
+                    'data' => [$nbActiveUser, $nbUnactiveeUser],
+                ],
+
+            ],
+        ]);
+
+        $chart->setOptions([
+            'scales' => [
+                'y' => [
+                    'suggestedMin' => 0,
+                    'suggestedMax' => 50,
+                ],
+            ],
+        ]);
+
+
+
+        return $this->render('dash_admin/dash-admin-home.html.twig', [
+            'title' => 'Zero Waste',
+            'user' => $user,
+            'chart' => $chart,
+            'chart2' => $chart2,
         ]);
     }
 }

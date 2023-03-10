@@ -918,23 +918,43 @@ input[type=number] {
   box-shadow: none !important;
 }
 
-.dash__side-bar .image {
+/*.dash__side-bar .image {
   min-width: 7rem;
   min-height: 20rem;
   display: flex;
   align-items: start;
   justify-content: center;
+  // margin: 0 auto;
   position: relative;
   bottom: -1.6rem;
   left: 1rem;
+}*/
+.dash__side-bar .image {
+  min-width: 7rem;
+  min-height: 20rem;
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
+  position: relative;
+  bottom: 0.8rem;
 }
 
+/*
 .dash__side-bar .image-text img {
   width: 10rem;
   border-radius: 0.6rem;
   display: flex;
   transition: 0.4s;
   margin: 0 auto;
+}*/
+.dash__side-bar .image-text img {
+  width: 20rem;
+  border-radius: 0.6rem;
+  display: flex;
+  transition: 0.4s;
+  margin: 0 auto;
+  position: relative;
+  right: 1rem;
 }
 
 .logo-toggled-width {
@@ -981,7 +1001,7 @@ input[type=number] {
 }
 
 .dash__container-card {
-  background-color: #F7F7FC;
+  background-color: #f7f7fc;
   padding: 2rem 3rem;
 }
 
@@ -1942,14 +1962,22 @@ input[type=number] {
   padding: 1rem 2rem;
 }
 .dash-user-profile__img {
+  height: 100%;
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 100rem;
+}
+.dash-user-profile__img__container {
   position: absolute;
   top: -6rem;
   left: 50%;
-  transform: translateX(-50%);
   width: 13rem;
+  height: 13rem;
+  transform: translateX(-50%);
   border-radius: 100rem;
-  border: 0.5rem solid #DEFEE6;
   box-shadow: 0.5rem 0.5rem 3rem rgba(222, 254, 230, 0.262);
+  border: 0.5rem solid #DEFEE6;
 }
 .dash-user-profile__description {
   padding: 2rem;
@@ -2093,6 +2121,19 @@ input[type=number] {
 .t__open {
   display: block;
   opacity: 1;
+}
+
+.dash-admin-home__chart__container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.dash-admin-home__chart__container--1 {
+  flex: 2;
+  margin-right: 5rem;
+}
+.dash-admin-home__chart__container--2 {
+  flex: 1;
 }
 
 .form {

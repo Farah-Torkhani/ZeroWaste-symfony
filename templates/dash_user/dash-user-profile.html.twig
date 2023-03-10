@@ -117,8 +117,9 @@
             </div>
         </div>
 
-
-        <img src="{{asset('./assets/uploads/img/' ~ user.imgUrl)}}" alt="" class="dash-user-profile__img">
+        <div class="dash-user-profile__img__container">
+            <img src="{{asset('./assets/uploads/img/' ~ user.imgUrl)}}" alt="" class="dash-user-profile__img">
+        </div>
         <div class="dash-user-profile__description">
             <h1 class="dash-user-profile__description__title">Description</h1>
             <p class="dash-user-profile__description__parag">

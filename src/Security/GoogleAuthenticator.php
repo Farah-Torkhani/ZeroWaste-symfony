@@ -74,7 +74,7 @@ class GoogleAuthenticator extends OAuth2Authenticator implements AuthenticationE
         // change "app_homepage" to some route in your app
         $user = $token->getUser();
         if (in_array('ROLE_ADMIN', $user->getRoles(), true)) {
-            $targetUrl = $this->router->generate('app_dash_admin_users');
+            $targetUrl = $this->router->generate('app_dash_admin_home');
             return new RedirectResponse($targetUrl);
         }
         $targetUrl = $this->router->generate('app_dash_user_home');

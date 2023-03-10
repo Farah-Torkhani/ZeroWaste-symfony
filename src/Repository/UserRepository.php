@@ -77,6 +77,17 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         return $query->getQuery()->getResult();
     }
 
+    public function findByState(bool $state)
+    {
+        $query = $this->createQueryBuilder('u')
+            ->where('u.roles LIKE :val OR u.roles LIKE :val2')
+            ->andWhere('u.state = :state')
+            ->setParameter('val', '["ROLE_USER"]')
+            ->setParameter('val2', '["ROLE_ASSOCIATION"]')
+            ->setParameter('state', $state);
+        return $query->getQuery()->getResult();
+    }
+
     //    /**
     //     * @return User[] Returns an array of User objects
     //     */

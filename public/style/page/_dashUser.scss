@@ -1158,14 +1158,24 @@
   
 
   &__img{
-    position: absolute;
-    top: -6rem;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 13rem;
+
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
     border-radius: 100rem;
-    border: 0.5rem solid $primary-extra-light;
-    box-shadow: 0.5rem 0.5rem 3rem rgba(222, 254, 230, 0.262);
+    
+
+    &__container{
+      position: absolute;
+      top: -6rem;
+      left: 50%;
+      width: 13rem;
+      height: 13rem;
+      transform: translateX(-50%);
+      border-radius: 100rem;
+      box-shadow: 0.5rem 0.5rem 3rem rgba(222, 254, 230, 0.262);
+      border: 0.5rem solid $primary-extra-light;
+    }
   }
 
 
@@ -1350,5 +1360,30 @@
   &__open{
     display: block;
     opacity: 1;
+  }
+}
+
+.dash-admin-home{
+
+  &__container{
+
+  }
+
+  &__chart{
+
+    &__container{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      &--1{
+        flex: 2;
+        margin-right: 5rem;
+      }
+
+      &--2{
+        flex: 1;
+      }
+    }
   }
 }

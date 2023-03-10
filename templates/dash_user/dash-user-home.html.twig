@@ -6,9 +6,22 @@
 	<div class="dash-user-home__greeting">
 		<span class="dash-user-home__greeting--span-1">Home |</span>
 		<h1 class="dash-user-home__greeting--span-2">
-			Hello Nabil, Are you ready to help people and the nature again ?
+			Hello
+			{{user.fullname}}, Are you ready to help people and the nature again ?
 		</h1>
 	</div>
+
+	{% for message in app.flashes('warning') %}
+	<div style="top:1rem;left:2rem" class="flash flash__error">
+		{{ message }}
+	</div>
+	{% endfor %}
+
+	{% for message in app.flashes('success') %}
+	<div class="flash flash__success">
+		{{ message }}
+	</div>
+	{% endfor %}
 
 	<div class="dash-user-home__container">
 		<div class="dash-user-home__container--left">
@@ -20,7 +33,7 @@
 						<lottie-player class="dash-user-home__balance__card__animation"
 							src="{{asset('./contents/jsonAnimation/balance.json')}}" background="transparent" speed="1"
 							loop autoplay></lottie-player>
-						<h1 class="dash-user-home__balance__card__balance">1500DNT</h1>
+						<h1 class="dash-user-home__balance__card__balance">{{user.point}}Point</h1>
 					</div>
 				</div>
 

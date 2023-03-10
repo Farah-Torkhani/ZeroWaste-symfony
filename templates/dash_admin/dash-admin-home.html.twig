@@ -1,22 +1,19 @@
-{% extends 'dash_admin/dashAdminBase.html.twig' %} 
+{% extends 'dash_admin/dashAdminBase.html.twig' %}
 
-{% block dashboard_active %}active {% endblock %}
 
-{% block stylesheets %}
-  <link rel="stylesheet" href="{{asset('./contents/css/style.css')}}" />
-  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet"/>
-  <link rel="icon" href="{{asset('./contents/img/logo.png')}}" />
+{% block dashboard_active %}active
 {% endblock %}
 
 {% block dashContent %}
+<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 
 <div class="dash__container">
   <nav class="dash__navbar">
-    <div class="dash__navbar-text">Dashboard</div>
+    <div class="dash__navbar-text"></div>
     <div class="navbar__items">
-      <span class="navbar__item">
+      <a style="text-decoration: none;" href="{{path('app_logout')}}" class="navbar__item">
         <i class="bx bx-log-out item"></i>
-      </span>
+      </a>
 
       <div class="notification-icon">
         <span class="cart-icon__span">3</span>
@@ -25,15 +22,11 @@
         </span>
       </div>
 
-      <span class="dash__top-bar__fullname"> {{userFullname}} </span>
+      <span class="dash__top-bar__fullname">{{user.fullname}}</span>
 
       <div class="dash__top-bar__img-container">
         <a href="#">
-          <img
-            src="{{asset('./contents/img/ali.jpg')}}"
-            class="dash__top-bar__img"
-            alt="profile"
-          />
+          <img src="{{asset('./assets/uploads/img/' ~ user.imgUrl)}}" class="dash__top-bar__img" alt="profile" />
         </a>
       </div>
     </div>
@@ -41,7 +34,42 @@
   <!--end dash__navbar-->
 
   <div class="dash__container-card">
-    <div class="dash__card">hello</div>
+    {% for message in app.flashes('warning') %}
+    <div style="top:1rem;left:2rem" class="flash flash__error">
+      {{ message }}
+    </div>
+    {% endfor %}
+
+    {% for message in app.flashes('success') %}
+    <div class="flash flash__success">
+      {{ message }}
+    </div>
+    {% endfor %}
+
+    <div class="dash-user-home">
+      <div style="margin-bottom: 10rem;" class="dash-user-home__greeting">
+        <span class="dash-user-home__greeting--span-1">Home |</span>
+        <h1 class="dash-user-home__greeting--span-2">
+          Hello
+          {{user.fullname}}, Are you ready to help people and the nature again ?
+        </h1>
+      </div>
+
+      <div class="dash-admin-home__container">
+        <div class="dash-admin-home__chart__container">
+
+          <div class="dash-admin-home__chart__container--1">
+            {{ render_chart(chart) }}
+          </div>
+
+
+          <div class="dash-admin-home__chart__container--2">
+            {{ render_chart(chart2) }}
+          </div>
+
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 

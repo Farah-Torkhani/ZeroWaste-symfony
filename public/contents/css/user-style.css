@@ -64,14 +64,14 @@
 }
 
 .dash__container-card {
-  background-color: #f7f7fc;
+  background-color: #F7F7FC;
   padding: 2rem 3rem;
 }
 
 .table__header {
   width: 100%;
   height: 5rem;
-  background-color: #d6dbfd;
+  background-color: #D6DBFD;
   border-top-right-radius: 3rem;
   border-top-left-radius: 3rem;
   border-bottom-right-radius: 0.9rem;
@@ -82,7 +82,7 @@
 }
 .table__header__title {
   font-size: 2rem;
-  color: #7262af;
+  color: #7262AF;
 }
 .table__body {
   margin-top: 2rem;
@@ -103,15 +103,15 @@
   margin-bottom: 4rem;
 }
 .dash-user-home__greeting--span-1 {
-  color: #8980f5;
-  color: #5ba890;
+  color: #8980F5;
+  color: #5BA890;
   font-size: 2.4rem;
   font-weight: 800;
   display: inline-block;
   margin-right: 1rem;
 }
 .dash-user-home__greeting--span-2 {
-  color: #10036a;
+  color: #10036A;
   font-size: 1.4rem;
   font-weight: 800;
   display: inline-block;
@@ -141,15 +141,15 @@
   width: 40rem;
   height: 22rem;
   border-radius: 3rem;
-  background-color: #fffbeb;
-  background-color: #defee6;
+  background-color: #FFFBEB;
+  background-color: #DEFEE6;
   box-shadow: 0.5rem 0.5rem 3rem rgba(113, 98, 175, 0.15);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 .dash-user-home__balance__card__title {
-  color: #7262af;
+  color: #7262AF;
 }
 .dash-user-home__balance__card__content {
   display: flex;
@@ -161,7 +161,7 @@
   height: 18rem;
 }
 .dash-user-home__balance__card__balance {
-  color: #7262af;
+  color: #7262AF;
   font-size: 3.3rem;
 }
 .dash-user-home__DonationStat__card {
@@ -169,7 +169,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #7262af;
+  background-color: #7262AF;
   padding: 1rem 2rem;
   width: 40rem;
   height: 22rem;
@@ -177,7 +177,7 @@
   box-shadow: 0.5rem 0.5rem 3rem rgba(113, 98, 175, 0.15);
 }
 .dash-user-home__DonationStat__card__title {
-  color: #defee6;
+  color: #DEFEE6;
   font-size: 2.2rem;
 }
 .dash-user-home__DonationStat__card__title--span {
@@ -217,11 +217,11 @@
   border-radius: 8rem;
 }
 .fund-2__container::-webkit-scrollbar-thumb {
-  background-color: #7262af;
+  background-color: #7262AF;
   border-radius: 8rem;
 }
 .fund-2__container::-webkit-scrollbar-track {
-  background-color: #d6dbfd;
+  background-color: #D6DBFD;
   border-radius: 8rem;
 }
 .fund-2__right {
@@ -233,7 +233,7 @@
   padding: 1rem;
   width: 100%;
   height: 23rem;
-  color: #5ba890;
+  color: #5BA890;
   box-shadow: 0.5rem 0.5rem 3rem rgba(113, 98, 175, 0.15);
   margin-bottom: 2rem;
   display: flex;
@@ -241,9 +241,9 @@
 }
 .fund-2__item__img {
   -o-object-fit: cover;
-  object-fit: cover;
+     object-fit: cover;
   -o-object-position: 100% 100%;
-  object-position: 100% 100%;
+     object-position: 100% 100%;
   height: 100%;
   width: 100%;
   border-radius: 5rem;
@@ -282,7 +282,7 @@
   text-align: center;
 }
 .fund-2__item__info__association__divider {
-  background-color: #6eccaf;
+  background-color: #6ECCAF;
   width: 0.7rem;
   height: 0.7rem;
   border-radius: 100rem;
@@ -296,7 +296,7 @@
 .fund-2__item__info__date__icon {
   width: 1.8rem;
   margin-right: 1.3rem;
-  color: #43882b;
+  color: #43882B;
 }
 .fund-2__item__info__date__parag {
   font-weight: 800;
@@ -309,29 +309,23 @@
   justify-content: space-around;
   align-items: center;
 }
-.fund-2__item__info__donation__more-info,
-.fund-2__item__info__donation__more-info:visited,
-.fund-2__item__info__donation__more-info:link {
+.fund-2__item__info__donation__more-info, .fund-2__item__info__donation__more-info:visited, .fund-2__item__info__donation__more-info:link {
   font-weight: 800;
   font-size: 1.4rem;
-  color: #43882b;
-  background-color: #defee6;
+  color: #43882B;
+  background-color: #DEFEE6;
   padding: 1rem 2rem;
   border-radius: 100rem;
   text-decoration: none;
   transition: 0.2s all;
 }
-.fund-2__item__info__donation__more-info--2,
-.fund-2__item__info__donation__more-info:visited--2,
-.fund-2__item__info__donation__more-info:link--2 {
-  background-color: #7262af !important;
-  color: #e5e0ff;
+.fund-2__item__info__donation__more-info--2, .fund-2__item__info__donation__more-info:visited--2, .fund-2__item__info__donation__more-info:link--2 {
+  background-color: #7262AF !important;
+  color: #E5E0FF;
 }
-.fund-2__item__info__donation__more-info:hover,
-.fund-2__item__info__donation__more-info:visited:hover,
-.fund-2__item__info__donation__more-info:link:hover {
-  background-color: #97d158;
-  color: #defee6;
+.fund-2__item__info__donation__more-info:hover, .fund-2__item__info__donation__more-info:visited:hover, .fund-2__item__info__donation__more-info:link:hover {
+  background-color: #97D158;
+  color: #DEFEE6;
 }
 .fund-2__item__info__donation__help {
   display: flex;
@@ -359,7 +353,7 @@
   width: 90%;
   height: 0.8rem;
   border-radius: 100rem;
-  background-color: #defee6;
+  background-color: #DEFEE6;
   margin-bottom: 0.5rem;
 }
 .fund-2__item__loader__container__current {
@@ -370,7 +364,7 @@
   width: 15rem;
   height: 0.8rem;
   border-radius: 100rem;
-  background-color: #6eccaf;
+  background-color: #6ECCAF;
 }
 
 .fund__container {
@@ -384,8 +378,8 @@
   padding: 1rem;
   width: 35rem;
   height: 40rem;
-  border: 0.8rem #ccfccb solid;
-  color: #5ba890;
+  border: 0.8rem #CCFCCB solid;
+  color: #5BA890;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -393,7 +387,7 @@
 }
 .fund__item__img {
   -o-object-fit: cover;
-  object-fit: cover;
+     object-fit: cover;
   height: 100%;
   width: 100%;
   border-radius: 3.5rem;
@@ -431,7 +425,7 @@
   text-align: center;
 }
 .fund__item__info__association__divider {
-  background-color: #6eccaf;
+  background-color: #6ECCAF;
   width: 0.7rem;
   height: 0.7rem;
   border-radius: 100rem;
@@ -445,7 +439,7 @@
 .fund__item__info__date__icon {
   width: 1.8rem;
   margin-right: 1.4rem;
-  color: #43882b;
+  color: #43882B;
 }
 .fund__item__info__date__parag {
   font-weight: 800;
@@ -458,23 +452,19 @@
   justify-content: space-between;
   align-items: center;
 }
-.fund__item__info__donation__more-info,
-.fund__item__info__donation__more-info:visited,
-.fund__item__info__donation__more-info:link {
+.fund__item__info__donation__more-info, .fund__item__info__donation__more-info:visited, .fund__item__info__donation__more-info:link {
   font-weight: 800;
   font-size: 1.2rem;
-  color: #43882b;
-  background-color: #defee6;
+  color: #43882B;
+  background-color: #DEFEE6;
   padding: 1rem 2rem;
   border-radius: 100rem;
   text-decoration: none;
   transition: 0.2s all;
 }
-.fund__item__info__donation__more-info:hover,
-.fund__item__info__donation__more-info:visited:hover,
-.fund__item__info__donation__more-info:link:hover {
-  background-color: #97d158;
-  color: #defee6;
+.fund__item__info__donation__more-info:hover, .fund__item__info__donation__more-info:visited:hover, .fund__item__info__donation__more-info:link:hover {
+  background-color: #97D158;
+  color: #DEFEE6;
 }
 .fund__item__info__donation__help {
   display: flex;
@@ -502,7 +492,7 @@
   width: 25rem;
   height: 0.7rem;
   border-radius: 100rem;
-  background-color: #defee6;
+  background-color: #DEFEE6;
   margin-bottom: 0.5rem;
 }
 .fund__item__loader__container__current {
@@ -513,7 +503,7 @@
   width: 15rem;
   height: 0.7rem;
   border-radius: 100rem;
-  background-color: #6eccaf;
+  background-color: #6ECCAF;
 }
 
 .dash-user-fund {
@@ -553,4 +543,4 @@
 .dash-user-fund__container--right::-webkit-scrollbar-track {
   background-color: #defee6;
   border-radius: 8rem;
-} /*# sourceMappingURL=user-style.css.map */
+}/*# sourceMappingURL=user-style.css.map */

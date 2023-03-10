@@ -3,9 +3,9 @@
 
 	<head>
 		<meta charset="UTF-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
 		<title>
 			{% block title %}Welcome!
 			{% endblock %}
@@ -29,10 +29,17 @@
 					</a>
 
 					<ul class="navigation__list">
-				<li><a href="{{path('app_landing_page')}}" class="text-decoration">Home</a></li>
-				<li><a href="{{path('afficher_funds')}}" class="text-decoration">Fundraising</a></li>
-				<li><a href="{{path('app_products')}}" class="text-decoration">shop</a></li>
-				<li><a href="" class="text-decoration">Collect</a></li>
+						<li class="navigation__item">
+							<a href="{{path('app_landing_page')}}" class="navigation__link">Home</a>
+						</li>
+						<li class="navigation__item">
+							<a href="#ourValue" class="navigation__link">Our Values</a>
+						</li>
+						<li class="navigation__item">
+							<a href="#fund" class="navigation__link">Fund</a>
+						</li>
+						<li class="navigation__item">
+							<a href="#" class="navigation__link">Shop</a>
 						</li>
 
 						<div class="navigation__list--2">
