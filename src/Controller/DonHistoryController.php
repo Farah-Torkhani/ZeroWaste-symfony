@@ -15,9 +15,6 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-use Stripe\Charge;
-use Stripe\Stripe;
-
 #[Route('/don/history')]
 class DonHistoryController extends AbstractController
 {
@@ -54,20 +51,20 @@ class DonHistoryController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $donHistory->setUserID($user);
             $donHistory->setFundsID($fundrising);
+            $donHistory->setDateDonation(new \Datetime);
             $donHistoryRepository->save($donHistory, true);
             $fundrisingRepository->sms();
 
 
            // dd("tttttttttt");
             //return $this->redirectToRoute('afficherFundsdetails/{id}', [], Response::HTTP_SEE_OTHER);
-           return $this->redirectToRoute('afficherFundsdetail', array('id' =>$fundrisingId ));
+           return $this->redirectToRoute('app_payment1');
         }
 
         return $this->renderForm('don_history/new.html.twig', [
             'don_history' => $donHistory,
             'form' => $form,
             'user' => $user,
-            'stripe_key' => $_ENV["STRIPE_PUBLIC_KEY"],
         ]);
     }
     
