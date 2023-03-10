@@ -42,23 +42,31 @@ class FundsController extends AbstractController
     }
 
     #[Route('/afficherFundsdetail/{id}', name: 'afficherFundsdetail')]
-    public function afficherfundsdetail(Request $request, Fundrising $fund, UserRepository $userRepo): Response
+    public function afficherfundsdetail(Request $request, Fundrising $fund, UserRepository $userRepo, DonHistoryRepository $donHistoryRepository,FundrisingRepository $Fundrising,): Response
     {
-
+        $stu = $Fundrising->findAll();
         $user = $userRepo->findOneBy(['email' => $this->getUser()->getUserIdentifier()]);
-        
+        $total = 0;
+        foreach($stu as $fund) {
+            $total = $donHistoryRepository->getTotalDonations($fund->getId());
+            $fund->setTotal($total);
+        }
 
         return $this->render('funds/ListFund-details.html.twig', array('stu' => $fund,"user"=>$user,"donHistory"=>$fund->getDonHistories()));
 
     }
 
     #[Route('/afficherFunds', name: 'afficher_funds')]
-    public function afficher(FundrisingRepository $Fundrising, ManagerRegistry $doct): Response
+    public function afficher(FundrisingRepository $Fundrising, ManagerRegistry $doct, DonHistoryRepository $donHistoryRepository): Response
     {
 
         $user = $doct->getRepository(User::class)->findOneBy(['email' => $this->getUser()->getUserIdentifier()]);
         $stu = $Fundrising->findAll();
-
+        $total = 0;
+        foreach($stu as $fund) {
+            $total = $donHistoryRepository->getTotalDonations($fund->getId());
+            $fund->setTotal($total);
+        }
                return $this->render('funds/listfund.html.twig', array('Funds' => $stu,"user"=>$user));
 
     }
